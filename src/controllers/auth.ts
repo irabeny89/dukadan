@@ -19,20 +19,25 @@ const auth = new Elysia({ prefix: "/api", name: "auth" })
 				return error("Conflict", errRes);
 			}
 
-			const { email, id, username } = User.create(body).save();
-
+			new User(body).save()
+			const user = User.findBy("email", body.email)!
+			
 			cookie.token.set({
 				maxAge: +(Bun.env.EXP || 0),
 				secure: true,
 				sameSite: true,
 				httpOnly: true,
-				value: { userId: id, role: "customer" },
+				value: { userId: user.id, role: "customer" },
 			});
 
 			const res: ResponseT<Pick<User, "id" | "username" | "email">> = {
 				message: "User created",
 				success: true,
-				data: { id, username, email },
+				data: {
+					id: user.id,
+					username: body.username,
+					email: body.email
+				},
 			};
 
 			return res;

@@ -5,12 +5,12 @@ GET {{url}}
 ###
 
 POST {{url}}/api/signup
-Content-Type: : application/json
+Content-Type: application/json
 
 {
-  "username": "dev",
-  "email": "a@b.c",
-  "password": "aaaaaaaaaaaa"
+  "username": "engineer",
+  "email": "dev@sw.com",
+  "password": "developer"
 }
 
 ###

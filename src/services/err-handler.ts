@@ -23,6 +23,8 @@ type CodeT =
 	| "INTERNAL_SERVER_ERROR"
 	| "INVALID_COOKIE_SIGNATURE";
 
+const NOT_PROD = Bun.env.NODE_ENV !== "production"
+	
 const error5xx = {
 	success: false,
 	message: "Something went wrong.",
@@ -52,13 +54,13 @@ const transformValidErr = (
 };
 
 const handleInvalidCookieSignature = (error: ErrorT) => (): ResponseT => {
-	console.log("<handleInvalidCookieSignature>::", error);
+	NOT_PROD && console.log("<handleInvalidCookieSignature>::", error);
 
 	return error5xx;
 };
 
 const handleValidation = (error: ErrorT) => (): ResponseT => {
-	console.log("<handleValidation>::", error);
+	NOT_PROD && console.log("<handleValidation>::", error);
 
 	const errors = (error as ValidationError).all.map(transformValidErr);
 
@@ -69,7 +71,7 @@ const handleValidation = (error: ErrorT) => (): ResponseT => {
 };
 
 const handleNotFound = (error: ErrorT) => (): ResponseT => {
-	console.log("<handleNotFound>::", error);
+	NOT_PROD && console.log("<handleNotFound>::", error);
 
 	return {
 		success: false,
@@ -78,19 +80,19 @@ const handleNotFound = (error: ErrorT) => (): ResponseT => {
 };
 
 const handleInternalServer = (error: ErrorT) => (): ResponseT => {
-	console.log("<handleInternalServer>::", error);
+	NOT_PROD && console.log("<handleInternalServer>::", error);
 
 	return error5xx;
 };
 
 const handleUnknown = (error: ErrorT) => (): ResponseT => {
-	console.log("<handleUnknown>::", error);
+	NOT_PROD && console.log("<handleUnknown>::", error);
 
 	return error5xx;
 };
 
 const handleParse = (error: ErrorT) => (): ResponseT => {
-	console.log("<handleParse>::", error);
+	NOT_PROD && console.log("<handleParse>::", error);
 
 	return error5xx;
 };

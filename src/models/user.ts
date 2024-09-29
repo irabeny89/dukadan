@@ -38,36 +38,47 @@ export class User extends IdAndTimestamp {
 		this.password = Bun.password.hashSync(data.password);
 	}
 
+	/**
+	 * Creates a table for users if not already existing on the database.
+	 */
 	static createTable() {
 		db.run(
-			"CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL, email TEXT NOT NULL UNIQUE, password TEXT NOT NULL, createdAt DATETIME DEFAULT CURRENT_TIMESTAMP, updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP);",
+			"CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL UNIQUE, email TEXT NOT NULL UNIQUE, password TEXT NOT NULL, createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP);",
 		);
 	}
 
-	static create(data: SignupInputT) {
-		return new User(data);
-	}
-
+	/**
+	 * Finds a user by id from the database.
+	 * @param id user id
+	 * @returns user instance
+	 */
 	static findById(id: string) {
-		return db.prepare("SELECT * FROM users WHERE id = $id;").get({ id });
+		return db.prepare<User, string>("SELECT * FROM users WHERE id = ?;").get(id);
 	}
 
-	static findBy(opt: "email" | "username", value: string): UserT | null {
+	/**
+	 * Finds a user by email or username from the database.
+	 * @param opt `email` or `username` option
+	 * @param value email or username value
+	 * @returns user instance
+	 */
+	static findBy(opt: "email" | "username", value: string) {
 		return opt === "email"
-			? (db
-					.prepare("SELECT * FROM users WHERE email = ?1;")
-					.get(value) as UserT | null)
-			: (db
-					.prepare("SELECT * FROM users WHERE username = ?1;")
-					.get(value) as UserT | null);
+			? db
+				.prepare<User, string>("SELECT * FROM users WHERE email = ?;")
+				.get(value)
+			: db
+				.prepare<User, string>("SELECT * FROM users WHERE username = ?;")
+				.get(value);
 	}
 
+	/**
+	 * Saves the user instance data to database.
+	 * @returns void
+	 */
 	save() {
-		// TODO: save to db
-		db.prepare(
+		return db.run(
 			"INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
-		).get(this.username, this.email, this.password);
-
-		return this;
+			[this.username, this.email, this.password]);
 	}
 }

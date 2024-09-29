@@ -1,5 +1,5 @@
 export class IdAndTimestamp {
-	id = undefined;
-	createdAt = undefined;
-	updatedAt = undefined;
+	id?: number;
+	createdAt?: Date;
+	updatedAt?: Date;
 }
