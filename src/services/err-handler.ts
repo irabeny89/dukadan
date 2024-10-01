@@ -23,8 +23,8 @@ type CodeT =
 	| "INTERNAL_SERVER_ERROR"
 	| "INVALID_COOKIE_SIGNATURE";
 
-const NOT_PROD = Bun.env.NODE_ENV !== "production"
-	
+const NOT_PROD = Bun.env.NODE_ENV !== "production";
+
 const error5xx = {
 	success: false,
 	message: "Something went wrong.",

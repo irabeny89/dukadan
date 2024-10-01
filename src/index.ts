@@ -10,7 +10,7 @@ const welcome = `Welcome to ${config.appName} API. For API docs - '/swagger' end
 const app = new Elysia({
 	cookie: {
 		secrets: [Bun.env.SECRET || "secret", Bun.env.SECRET2 || "secret2"],
-		sign: ["token"],
+		sign: ["refresh"],
 	},
 })
 	.onStart(({ server }) => {
@@ -23,8 +23,8 @@ const app = new Elysia({
 			console.log(`${method} ${path}`, { body, params, cookie });
 	})
 	.onError(({ error, code }) => handleErr(error, code))
-	.use(swaggerConfig)
 	.use(cors())
-	.use(auth)
+	.use(swaggerConfig)
 	.get("/", welcome)
+	.group("/api", (app) => app.use(auth))
 	.listen(Bun.env.PORT ?? 3000);

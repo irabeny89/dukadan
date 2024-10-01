@@ -1,5 +1,5 @@
 export class IdAndTimestamp {
 	id?: number;
-	createdAt?: Date;
-	updatedAt?: Date;
+	createdAt?: Date | string;
+	updatedAt?: Date | string;
 }
