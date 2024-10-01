@@ -10,8 +10,8 @@ POST {{host}}{{customerpath}}/signup
 Content-Type: application/json
 
 {
-  "username": "engineer",
-  "email": "dev@sw.com",
+  "username": "dev",
+  "email": "a@b.com",
   "password": "developer"
 }
 

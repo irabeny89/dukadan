@@ -7,7 +7,10 @@ const auth = new Elysia({ name: "auth" })
 	.model("cookie", cookieSchema)
 	.model("signup", signupSchema)
 	.model("login", loginSchema)
-	.onBeforeHandle(() => User.createTable())
+	.onBeforeHandle(() => {
+		User.createTable();
+		User.createUpdatedAtTrigger();
+	})
 	.post(
 		"/logout",
 		({ cookie }) => {
@@ -66,7 +69,7 @@ const auth = new Elysia({ name: "auth" })
 							: User.findBy("username", body.username);
 					if (user) {
 						// update user last seen(updatedAt) and save to db
-						User.update(user.id as number, {
+						User.updateById(user.id as number, {
 							updatedAt: Date.now().toString(),
 						});
 
