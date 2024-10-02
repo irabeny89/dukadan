@@ -1,4 +1,4 @@
-import { db } from "../lib";
+import { db } from "../lib/db";
 import { User } from "./user";
 
 export class Feedback {
@@ -36,19 +36,19 @@ export class Feedback {
        userId INTEGER NOT NULL,
        message TEXT NOT NULL,
        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-       updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      )
-      FOREIGN KEY(userId) REFERENCES ${User.getTableName()}(id) 
-      ON DELETE CASCADE;`,
+       updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+       FOREIGN KEY(userId) REFERENCES ${User.getTableName()}(id) 
+       ON DELETE CASCADE
+			 );`,
 		);
 	}
 
-  // #region createUpdatedAtTrigger
+	// #region createUpdatedAtTrigger
 	/**
 	 * Creates a trigger(if not exist) to update the `updatedAt` field whenever a record is edited on the table.
 	 */
 	static createUpdatedAtTrigger() {
-		db.run(`CREATE TRIGGER updateAt_trigger
+		db.run(`CREATE TRIGGER ${Feedback.getTableName()}_updateAt_trigger
 						AFTER UPDATE ON ${Feedback.getTableName()}
 						BEGIN
    						UPDATE ${Feedback.getTableName()}
