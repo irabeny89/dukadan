@@ -32,35 +32,28 @@ export class Feedback {
 	static createTable() {
 		db.run(
 			`CREATE TABLE IF NOT EXISTS ${Feedback.getTableName()} (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        userId INTEGER NOT NULL,
-        message TEXT NOT NULL,
-        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+       id INTEGER PRIMARY KEY AUTOINCREMENT,
+       userId INTEGER NOT NULL,
+       message TEXT NOT NULL,
+       createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+       updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
-      FOREIGN KEY(userId)
-      REFERENCES ${User.getTableName()}(id) 
+      FOREIGN KEY(userId) REFERENCES ${User.getTableName()}(id) 
       ON DELETE CASCADE;`,
 		);
 	}
 
+  // #region createUpdatedAtTrigger
 	/**
 	 * Creates a trigger(if not exist) to update the `updatedAt` field whenever a record is edited on the table.
 	 */
 	static createUpdatedAtTrigger() {
-		db.run(`BEGIN TRANSACTION;
-            SAVEPOINT ${Feedback.getTableName()}_save
-            
-            CREATE TRIGGER update_timestamp
+		db.run(`CREATE TRIGGER updateAt_trigger
 						AFTER UPDATE ON ${Feedback.getTableName()}
-						FOR EACH ROW
 						BEGIN
    						UPDATE ${Feedback.getTableName()}
    						SET updatedAt = CURRENT_TIMESTAMP
-   						WHERE rowid = NEW.rowid;
-						END;
-            
-            COMMIT;`);
+						END;`);
 	}
 
 	// #region findById
@@ -76,11 +69,11 @@ export class Feedback {
 		return db.prepare<Feedback, string>(sql).get(id);
 	}
 
-	// #region update
+	// #region updateById
 	/**
 	 * Update a record on database.
 	 * @param id record id
-	 * @param user fields to update
+	 * @param feedback fields to update
 	 * @returns fields updated
 	 */
 	static updateById(id: number, feedback: Feedback) {

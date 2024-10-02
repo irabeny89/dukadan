@@ -1,6 +1,8 @@
 @host=http://localhost:3000
 @customerpath=/api/customer
-@logoutpath=
+@logoutpath=/api/logout
+@refreshpath=/api/refresh
+@refreshtoken=eyJhbGciOiJIUzI1NiJ9.MQ.Y25nTfjhdc3QfI5mfAWvYstjxdRoD5wNfofxiVG_sD0
 
 GET {{host}}
 
@@ -21,13 +23,22 @@ POST {{host}}{{customerpath}}/login
 Content-Type: application/json
 
 {
-  "username": "engineer",
+  "username": "dev",
   "password": "developer"
 }
 
 ###
+# refresh
+POST {{host}}{{refreshpath}}
+Content-Type: application/json
+
+{
+  "refresh": "{{refreshtoken}}"
+}
+
+###
 #logout
-POST {{host}}/{{logoutpath}} HTTP/1.1
+POST {{host}}/{{logoutpath}}
 Content-Type: application/json
 
 {

@@ -4,6 +4,7 @@ import { config } from "./config";
 import auth from "./controllers/auth";
 import { handleErr } from "./services/err-handler";
 import { swaggerConfig } from "./services/swagger";
+import feedback from "./controllers/feedback";
 
 const welcome = `Welcome to ${config.appName} API. For API docs - '/swagger' endpoint.`;
 
@@ -26,5 +27,5 @@ const app = new Elysia({
 	.use(cors())
 	.use(swaggerConfig)
 	.get("/", welcome)
-	.group("/api", (app) => app.use(auth))
+	.group("/api", (app) => app.use(auth).use(feedback))
 	.listen(Bun.env.PORT ?? 3000);

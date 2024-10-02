@@ -6,23 +6,25 @@ type CookieT = Record<string, Cookie<string | undefined>> & {
 	refresh: Cookie<string | undefined>;
 };
 
+const SECRET = Bun.env.SECRET || "SECRET"
+const REFRESH_EXP = +(Bun.env.REFRESH_EXP || 0);
+const ACCESS_EXP = +(Bun.env.ACCESS_EXP || 0);
+
 export type TokenT = Record<"access" | "refresh", string>;
 
 const setTokens = (cookie: CookieT, userId: number, username: string) => {
-	const tokenExp = +(Bun.env.EXP || 0);
-
 	// set refresh token
 	const refresh = cookie.refresh.set({
-		maxAge: tokenExp,
+		maxAge: REFRESH_EXP,
 		secure: true,
 		sameSite: "lax",
 		httpOnly: true,
-		value: jwt.sign(userId.toString(), Bun.env.SECRET || "SECRET"),
+		value: jwt.sign(userId.toString(), SECRET),
 	}).value as string;
 
-	const access = jwt.sign({ userId, username }, Bun.env.SECRET || "SECRET", {
+	const access = jwt.sign({ userId, username }, SECRET, {
 		audience: "customer",
-		expiresIn: tokenExp,
+		expiresIn: ACCESS_EXP,
 	});
 
 	return { access, refresh };
@@ -34,5 +36,9 @@ export const setAuthTokens = (cookie: CookieT, user: User) => {
 	}
 	throw new InternalServerError();
 };
+
+export const verifyToken = (token: string) => {
+	return jwt.verify(token, SECRET)
+}
 
 export const clearAuthTokens = (cookie: CookieT) => cookie.refresh.remove();

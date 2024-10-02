@@ -1,7 +1,3 @@
-/** @module plugin setup
- * Plugins setup configurations
- */
-
 import { swagger } from "@elysiajs/swagger";
 import { config } from "../config";
 
@@ -11,6 +7,7 @@ export const swaggerConfig = swagger({
 	documentation: {
 		tags: [
 			{ name: "Auth", description: "Authentication & Authorization Endpoints" },
+			{ name: "Feedback", description: "Customer Feedback Messages" }
 		],
 		info: {
 			title: "Dukadan API Documentations",

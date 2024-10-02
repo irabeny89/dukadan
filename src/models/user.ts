@@ -1,6 +1,14 @@
 import { t } from "elysia";
 import { db } from "../lib";
 
+export const logoutSchema = t.Object({
+	action: t.Boolean(),
+})
+
+export const refreshSchema = t.Optional(t.Object({
+	refresh: t.String()
+}))
+
 export const tokenSchema = t.Object({
 	userId: t.Number(),
 	role: t.UnionEnum(["customer", "driver", "admin", "owner"]),
@@ -97,12 +105,12 @@ export class User {
 	 * @param id record id
 	 * @returns record instance
 	 */
-	static findById(id: string) {
+	static findById(id: number) {
 		return db
 			.prepare<User, string>(`SELECT * 
 															FROM ${User.getTableName()} 
 															WHERE id = ?;`)
-			.get(id);
+			.get(id.toString());
 	}
 
 	// #region findBy
