@@ -2,9 +2,10 @@ import cors from "@elysiajs/cors";
 import { Elysia } from "elysia";
 import { config } from "./config";
 import auth from "./controllers/auth";
+import feedback from "./controllers/feedback";
+import log from "./lib/logger";
 import { handleErr } from "./services/err-handler";
 import { swaggerConfig } from "./services/swagger";
-import feedback from "./controllers/feedback";
 
 const welcome = `Welcome to ${config.appName} API. For API docs - '/swagger' endpoint.`;
 
@@ -19,9 +20,8 @@ const app = new Elysia({
 		console.log(`\u2139\uFE0F  API Docs: ${server?.url}swagger`);
 	})
 	.onTransform(({ cookie, body, params, path, request: { method } }) => {
-		// TODO: log to file - "requests"
-		Bun.env.NODE_ENV !== "production" &&
-			console.log(`${method} ${path}`, { body, params, cookie });
+		// TODO: log to file - "requests" txt or database
+		log({ body, params, cookie }, { message: { text: `${method} ${path}` } });
 	})
 	.onError(({ error, code }) => handleErr(error, code))
 	.use(cors())
