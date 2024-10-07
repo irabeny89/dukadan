@@ -2,49 +2,50 @@ import { type Cookie, InternalServerError } from "elysia";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import type { User } from "../models/user";
 import type { UserRoleT } from "../types";
+import { envVar } from "../config";
 
 type CookieT = Record<string, Cookie<string | undefined>> & {
-	refresh: Cookie<string | undefined>;
+  refresh: Cookie<string | undefined>;
 };
 
 export type TokenT = Record<"access" | "refresh", string>;
 export type AccessDataT = {
-	userId: number;
-	username: string;
-	role: UserRoleT;
+  userId: number;
+  username: string;
+  role: UserRoleT;
 };
 
-const SECRET = Bun.env.SECRET || "SECRET";
-const REFRESH_EXP = +(Bun.env.REFRESH_EXP || 0);
-const ACCESS_EXP = +(Bun.env.ACCESS_EXP || 0);
+const SECRET = envVar.secret;
+const REFRESH_EXP = +envVar.refreshExp;
+const ACCESS_EXP = +envVar.accessExp;
 
 const setTokens = (cookie: CookieT, userId: number, username: string) => {
-	// set refresh token
-	const refresh = cookie.refresh.set({
-		maxAge: REFRESH_EXP,
-		secure: true,
-		sameSite: "lax",
-		httpOnly: true,
-		value: jwt.sign(userId.toString(), SECRET),
-	}).value as string;
+  // set refresh token
+  const refresh = cookie.refresh.set({
+    maxAge: REFRESH_EXP,
+    secure: true,
+    sameSite: "lax",
+    httpOnly: true,
+    value: jwt.sign(userId.toString(), SECRET),
+  }).value as string;
 
-	const data: AccessDataT = { userId, username, role: "customer" };
-	const access = jwt.sign(data, SECRET, {
-		expiresIn: ACCESS_EXP,
-	});
+  const data: AccessDataT = { userId, username, role: "customer" };
+  const access = jwt.sign(data, SECRET, {
+    expiresIn: ACCESS_EXP,
+  });
 
-	return { access, refresh };
+  return { access, refresh };
 };
 
 export const setAuthTokens = (cookie: CookieT, user: User) => {
-	if (user.id) {
-		return setTokens(cookie, user.id, user.username);
-	}
-	throw new InternalServerError();
+  if (user.id) {
+    return setTokens(cookie, user.id, user.username);
+  }
+  throw new InternalServerError();
 };
 
 export const verifyToken = <T>(token: string) => {
-	return jwt.verify(token, SECRET) as JwtPayload & T;
+  return jwt.verify(token, SECRET) as JwtPayload & T;
 };
 
 export const clearAuthTokens = (cookie: CookieT) => cookie.refresh.remove();
