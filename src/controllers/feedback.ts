@@ -20,7 +20,7 @@ const feedback = new Elysia({ name: "feedback" })
 		{
 			tags: ["Feedback"],
 			cookie: "cookie",
-			permit: ["owner", "customer"],
+			permit: ["owner"],
 		},
 	);
 
