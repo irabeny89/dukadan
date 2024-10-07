@@ -2,7 +2,9 @@
 @customerpath=/api/customer
 @logoutpath=/api/logout
 @refreshpath=/api/refresh
+@feedbackpath=/api/feedbacks
 @refreshtoken=eyJhbGciOiJIUzI1NiJ9.MQ.Y25nTfjhdc3QfI5mfAWvYstjxdRoD5wNfofxiVG_sD0
+@access=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoiZGV2Iiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzI4Mjg0OTE2LCJleHAiOjE3MjgzNzEzMTZ9._VAnfBjF4IeoJgMsRudkbO6J5afIDe9zi42M5gEvy-g
 
 GET {{host}}
 
@@ -44,3 +46,8 @@ Content-Type: application/json
 {
   "action": true
 }
+
+###
+# get feedback
+GET {{host}}{{feedbackpath}} HTTP/1.1
+Authorization: Bearer {{access}}

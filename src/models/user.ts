@@ -1,13 +1,15 @@
 import { t } from "elysia";
-import { db } from "../lib";
+import { db } from "../lib/db";
 
 export const logoutSchema = t.Object({
 	action: t.Boolean(),
-})
+});
 
-export const refreshSchema = t.Optional(t.Object({
-	refresh: t.String()
-}))
+export const refreshSchema = t.Optional(
+	t.Object({
+		refresh: t.String(),
+	}),
+);
 
 export const tokenSchema = t.Object({
 	userId: t.Number(),
@@ -38,9 +40,9 @@ export const loginSchema = t.Union([usernameLoginSchema, emailLoginSchema]);
 type SignupInputT = typeof signupSchema.static;
 
 export class User {
-	id?: number
-	createdAt?: Date | string
-	updatedAt?: Date | string
+	id?: number;
+	createdAt?: Date | string;
+	updatedAt?: Date | string;
 	username;
 	email;
 	password;
@@ -56,12 +58,12 @@ export class User {
 	/**
 	 * Returns the name for this model on the database.
 	 * This can be interpolated in sql queries.
-	 * 
+	 *
 	 * ? This reduces errors.
 	 * @returns table name for this model on the database
 	 */
 	static getTableName() {
-		return "users"
+		return "users";
 	}
 
 	// #region createTable
@@ -84,19 +86,19 @@ export class User {
 	 * Creates a trigger(if not exist) to update the `updatedAt` field whenever a record is edited on the table.
 	 */
 	static createUpdatedAtTrigger() {
-		// 		"CREATE TRIGGER [IF NOT EXISTS] trigger_name 
-		//    [BEFORE|AFTER|INSTEAD OF] [INSERT|UPDATE|DELETE] 
+		// 		"CREATE TRIGGER [IF NOT EXISTS] trigger_name
+		//    [BEFORE|AFTER|INSTEAD OF] [INSERT|UPDATE|DELETE]
 		//    ON table_name
 		//    [WHEN condition]
 		//    BEGIN
 		//     statements;
 		//    END;"
-		db.run(`CREATE TRIGGER IF NOT EXISTS updateAt_trigger	
+		db.run(`CREATE TRIGGER IF NOT EXISTS ${User.getTableName()}_updateAt_trigger	
 						AFTER UPDATE ON ${User.getTableName()}
 						BEGIN
 							UPDATE ${User.getTableName()} 
 							SET updatedAt = CURRENT_TIMESTAMP;
-						END;`)
+						END;`);
 	}
 
 	// #region findById
@@ -126,15 +128,11 @@ export class User {
 												WHERE email = ?;`;
 		const sqlForUsername = `SELECT * 
 														FROM ${User.getTableName()} 
-														WHERE username = ?;`
+														WHERE username = ?;`;
 
 		return opt === "email"
-			? db
-				.prepare<User, string>(sqlForEmail)
-				.get(value)
-			: db
-				.prepare<User, string>(sqlForUsername)
-				.get(value);
+			? db.prepare<User, string>(sqlForEmail).get(value)
+			: db.prepare<User, string>(sqlForUsername).get(value);
 	}
 
 	// #region updateById
@@ -149,7 +147,7 @@ export class User {
 			for (const [k, v] of entries) {
 				const sql = `UPDATE ${User.getTableName()} 
 										 SET ${k} = ?1
-										 WHERE id = ?2;`
+										 WHERE id = ?2;`;
 				db.run(sql, [v.toString(), id]);
 			}
 		});
@@ -168,7 +166,7 @@ export class User {
 	save() {
 		const sql = `INSERT INTO ${User.getTableName()} 
 								 (username, email, password) 
-								 VALUES (?, ?, ?);`
+								 VALUES (?, ?, ?);`;
 
 		return db.run(sql, [this.username, this.email, this.password]);
 	}

@@ -7,7 +7,7 @@ export const swaggerConfig = swagger({
 	documentation: {
 		tags: [
 			{ name: "Auth", description: "Authentication & Authorization Endpoints" },
-			{ name: "Feedback", description: "Customer Feedback Messages" }
+			{ name: "Feedback", description: "Customer Feedback Messages" },
 		],
 		info: {
 			title: "Dukadan API Documentations",

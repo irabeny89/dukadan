@@ -61,3 +61,5 @@ export type ErrorT = {
 	found: { [k: string]: string };
 	errors: ErrorItem[];
 };
+
+export type UserRoleT = "customer" | "owner" | "admin" | "driver";

@@ -48,12 +48,22 @@ export class Feedback {
 	 * Creates a trigger(if not exist) to update the `updatedAt` field whenever a record is edited on the table.
 	 */
 	static createUpdatedAtTrigger() {
-		db.run(`CREATE TRIGGER ${Feedback.getTableName()}_updateAt_trigger
+		db.run(`CREATE TRIGGER IF NOT EXISTS ${Feedback.getTableName()}_updateAt_trigger
 						AFTER UPDATE ON ${Feedback.getTableName()}
 						BEGIN
    						UPDATE ${Feedback.getTableName()}
-   						SET updatedAt = CURRENT_TIMESTAMP
+   						SET updatedAt = CURRENT_TIMESTAMP;
 						END;`);
+	}
+
+	// #region findAll
+	/**
+	 * Find all records of feedback on the database.
+	 * @returns list of feedbacks
+	 */
+	static findAll() {
+		const sql = `SELECT * FROM ${Feedback.getTableName()};`;
+		return db.prepare<Feedback, string>(sql).all("");
 	}
 
 	// #region findById

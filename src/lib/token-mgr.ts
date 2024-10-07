@@ -1,16 +1,22 @@
 import { type Cookie, InternalServerError } from "elysia";
-import jwt from "jsonwebtoken";
+import jwt, { type JwtPayload } from "jsonwebtoken";
 import type { User } from "../models/user";
+import type { UserRoleT } from "../types";
 
 type CookieT = Record<string, Cookie<string | undefined>> & {
 	refresh: Cookie<string | undefined>;
 };
 
-const SECRET = Bun.env.SECRET || "SECRET"
+export type TokenT = Record<"access" | "refresh", string>;
+export type AccessDataT = {
+	userId: number;
+	username: string;
+	role: UserRoleT;
+};
+
+const SECRET = Bun.env.SECRET || "SECRET";
 const REFRESH_EXP = +(Bun.env.REFRESH_EXP || 0);
 const ACCESS_EXP = +(Bun.env.ACCESS_EXP || 0);
-
-export type TokenT = Record<"access" | "refresh", string>;
 
 const setTokens = (cookie: CookieT, userId: number, username: string) => {
 	// set refresh token
@@ -22,8 +28,8 @@ const setTokens = (cookie: CookieT, userId: number, username: string) => {
 		value: jwt.sign(userId.toString(), SECRET),
 	}).value as string;
 
-	const access = jwt.sign({ userId, username }, SECRET, {
-		audience: "customer",
+	const data: AccessDataT = { userId, username, role: "customer" };
+	const access = jwt.sign(data, SECRET, {
 		expiresIn: ACCESS_EXP,
 	});
 
@@ -37,8 +43,8 @@ export const setAuthTokens = (cookie: CookieT, user: User) => {
 	throw new InternalServerError();
 };
 
-export const verifyToken = (token: string) => {
-	return jwt.verify(token, SECRET)
-}
+export const verifyToken = <T>(token: string) => {
+	return jwt.verify(token, SECRET) as JwtPayload & T;
+};
 
 export const clearAuthTokens = (cookie: CookieT) => cookie.refresh.remove();

@@ -1,22 +1,19 @@
-type MessageT = {
-	position?: "block" | "inline";
-	text: string;
-};
-
 type LogT = {
 	env?: "development" | "production";
-	message?: MessageT;
+	position?: "block" | "inline";
+	message: string;
 };
 
-const defaultArgs: LogT = {
+const defaultOpt: LogT = {
 	env: "development",
-	message: { position: "block", text: "" },
+	position: "block",
+	message: "",
 };
 
 /**
  * Logs values to the terminal based on Nodejs environment - default to only `development` environment.
  *
- * @param args log arguments
+ * @param option log arguments
  *
  * @example
  * * // default: only on `development` environment
@@ -28,19 +25,24 @@ const defaultArgs: LogT = {
  * * // default: only on `development` environment and block position
  * * // OUTPUT: say what?
  * * //         hi
- * log(value: "hi", {message: {text: "say what?"}})
+ * log(value: "hi", {message: "say what?"})
  * * // default: only on `development` environment
  * * // OUTPUT: say what? hi
- * log({value: "hi", message: {text: "say what?", position: "inline"}})
+ * log(value: "hi", {message: "say what?", position: "inline"})
  */
-export default function log(value: unknown, args: LogT = defaultArgs) {
-	if (Bun.env.NODE_ENV === args.env) {
-		if (args.message) {
-			if (args.message.position === "block") {
-				console.log(args.message.text);
+export default function log(
+	value: unknown,
+	message?: string,
+	position: "block" | "inline" = "block",
+	env: "development" | "production" = "development",
+) {
+	if (Bun.env.NODE_ENV === env) {
+		if (message) {
+			if (position === "block") {
+				console.log(message);
 				console.log(value);
 				// inline
-			} else console.log(args.message.text, value);
+			} else console.log(message, value);
 		} else console.log(value);
 	}
 }

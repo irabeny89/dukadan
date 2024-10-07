@@ -25,6 +25,7 @@ const auth = new Elysia({ name: "auth" })
 		User.createTable();
 		User.createUpdatedAtTrigger();
 	})
+	// #region refresh
 	.post(
 		"/refresh",
 		({ cookie, body, error }) => {
@@ -56,6 +57,7 @@ const auth = new Elysia({ name: "auth" })
 		},
 		{ cookie: "cookie", tags: ["Auth"], body: "refresh" },
 	)
+	// #region logout
 	.post(
 		"/logout",
 		({ cookie }) => {
@@ -75,6 +77,7 @@ const auth = new Elysia({ name: "auth" })
 	)
 	.group("/customer", (app) =>
 		app
+			// #region cust signup
 			.post(
 				"/signup",
 				async ({ cookie, body, error }) => {
@@ -103,6 +106,7 @@ const auth = new Elysia({ name: "auth" })
 					cookie: "cookie",
 				},
 			)
+			// #region cust login
 			.post(
 				"/login",
 				({ cookie, body, error }) => {

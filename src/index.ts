@@ -21,7 +21,7 @@ const app = new Elysia({
 	})
 	.onTransform(({ cookie, body, params, path, request: { method } }) => {
 		// TODO: log to file - "requests" txt or database
-		log({ body, params, cookie }, { message: { text: `${method} ${path}` } });
+		log({ body, params, cookie }, `${method} ${path}`);
 	})
 	.onError(({ error, code }) => handleErr(error, code))
 	.use(cors())
