@@ -1,15 +1,15 @@
 import { config, envVar } from "../config";
 
 type LogT = {
-  env?: "development" | "production";
-  position?: "block" | "inline";
-  message: string;
+	env?: "development" | "production";
+	position?: "block" | "inline";
+	message: string;
 };
 
 const defaultOpt: LogT = {
-  env: "development",
-  position: "block",
-  message: "",
+	env: "development",
+	position: "block",
+	message: "",
 };
 
 /**
@@ -33,18 +33,18 @@ const defaultOpt: LogT = {
  * log(value: "hi", {message: "say what?", position: "inline"})
  */
 export default function log(
-  value: unknown,
-  message?: string,
-  position: "block" | "inline" = "block",
-  env: "development" | "production" = "development",
+	value: unknown,
+	message?: string,
+	position: "block" | "inline" = "block",
+	env: "development" | "production" = "development",
 ) {
-  if (envVar.nodeEnv === env) {
-    if (message) {
-      if (position === "block") {
-        console.log(message);
-        console.log(value);
-        // inline
-      } else console.log(message, value);
-    } else console.log(value);
-  }
+	if (envVar.nodeEnv === env) {
+		if (message) {
+			if (position === "block") {
+				console.log(message);
+				console.log(value);
+				// inline
+			} else console.log(message, value);
+		} else console.log(value);
+	}
 }
