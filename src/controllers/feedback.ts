@@ -1,10 +1,12 @@
 import Elysia from "elysia";
-import { Feedback } from "../models/feedback";
-import { cookieSchema } from "../models/user";
+import { cookieSchema } from "../models/customer";
+import { Feedback, feedbackSchema } from "../models/feedback";
 import { permit } from "../services/permit";
+import type { ResponseT } from "../types";
 
 const feedback = new Elysia({ name: "feedback" })
 	.model("cookie", cookieSchema)
+	.model("feedback", feedbackSchema)
 	.onBeforeHandle(() => {
 		Feedback.createTable();
 		Feedback.createUpdatedAtTrigger();
@@ -12,15 +14,40 @@ const feedback = new Elysia({ name: "feedback" })
 	.use(permit) // auth & rbac service
 	.get(
 		"/feedbacks",
-		() => ({
-			success: true,
-			message: "List of feedbacks",
-			data: Feedback.findAll(),
-		}),
+		() => {
+			const response: ResponseT = {
+				success: true,
+				message: "List of feedbacks",
+				data: Feedback.findAll(),
+			};
+
+			return response;
+		},
 		{
 			tags: ["Feedback"],
 			cookie: "cookie",
 			permit: ["owner"],
+		},
+	)
+	.post(
+		"/feedbacks",
+		({ store, body }) => {
+			const feedback = new Feedback(store.user.userId, body.message);
+			feedback.save();
+
+			const response: ResponseT = {
+				success: true,
+				message: "Feedback created",
+				data: feedback,
+			};
+
+			return response;
+		},
+		{
+			tags: ["Feedback"],
+			cookie: "cookie",
+			body: "feedback",
+			permit: ["customer"],
 		},
 	);
 

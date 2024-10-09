@@ -1,5 +1,10 @@
+import { t } from "elysia";
 import { db } from "../lib/db";
-import { User } from "./user";
+import { Customer } from "./customer";
+
+export const feedbackSchema = t.Object({
+	message: t.String(),
+});
 
 export class Feedback {
 	id?: number;
@@ -37,7 +42,7 @@ export class Feedback {
        message TEXT NOT NULL,
        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
        updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-       FOREIGN KEY(userId) REFERENCES ${User.getTableName()}(id) 
+       FOREIGN KEY(userId) REFERENCES ${Customer.getTableName()}(id)
        ON DELETE CASCADE
 			 );`,
 		);
@@ -73,7 +78,7 @@ export class Feedback {
 	 * @returns record instance
 	 */
 	static findById(id: string) {
-		const sql = `SELECT * 
+		const sql = `SELECT *
                  FROM ${Feedback.getTableName()}
                  WHERE id = ?;`;
 		return db.prepare<Feedback, string>(sql).get(id);
@@ -89,8 +94,8 @@ export class Feedback {
 	static updateById(id: number, feedback: Feedback) {
 		const batchUpdate = db.transaction((entries) => {
 			for (const [k, v] of entries) {
-				const sql = `UPDATE ${Feedback.getTableName()} 
-                     SET ${k} = ?1 
+				const sql = `UPDATE ${Feedback.getTableName()}
+                     SET ${k} = ?1
                      WHERE id = ?2;`;
 				db.run(sql, [v.toString(), id]);
 			}
@@ -108,8 +113,8 @@ export class Feedback {
 	 * @returns void
 	 */
 	save() {
-		const sql = `INSERT INTO ${Feedback.getTableName()} 
-								 (userId, message) 
+		const sql = `INSERT INTO ${Feedback.getTableName()}
+								 (userId, message)
                  VALUES (?, ?);`;
 
 		return db.run(sql, [this.userId, this.message]);

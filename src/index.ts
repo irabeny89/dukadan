@@ -9,23 +9,20 @@ import { swaggerConfig } from "./services/swagger";
 
 const welcome = `Welcome to ${config.appName} API. For API docs - '/swagger' endpoint.`;
 
-const app = new Elysia({
-	cookie: {
-		secrets: [envVar.secret, envVar.secret2],
-		sign: ["refresh"],
-	},
-})
-	.onStart(({ server }) => {
-		console.log(`🚀 Server: ${server?.url}`);
-		console.log(`\u2139\uFE0F  API Docs: ${server?.url}swagger`);
-	})
-	.onTransform(({ cookie, body, params, path, request: { method } }) => {
-		// TODO: log to file - "requests" txt or database
-		log({ body, params, cookie }, `${method} ${path}`);
-	})
-	.onError(({ error, code }) => handleErr(error, code))
-	.use(cors())
-	.use(swaggerConfig)
-	.get("/", welcome)
-	.group("/api", (app) => app.use(auth).use(feedback))
-	.listen(+envVar.port);
+const app = new Elysia()
+  .onStart(({ server }) => {
+    console.log(`🚀 Server: ${server?.url}`);
+    console.log(`\u2139\uFE0F  API Docs: ${server?.url}swagger`);
+  })
+  .onTransform(({ cookie, body, params, path, request: { method } }) => {
+    // TODO: log to file - "requests" txt or database
+    log(`${method} ${path}`);
+    log({ body, params, cookie });
+    log(envVar);
+  })
+  .onError(({ error, code }) => handleErr(error, code))
+  .use(cors())
+  .use(swaggerConfig)
+  .get("/", welcome)
+  .group("/api", (app) => app.use(auth).use(feedback))
+  .listen(+envVar.port);

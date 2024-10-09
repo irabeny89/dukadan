@@ -39,7 +39,7 @@ export const loginSchema = t.Union([usernameLoginSchema, emailLoginSchema]);
 
 type SignupInputT = typeof signupSchema.static;
 
-export class User {
+export class Customer {
 	id?: number;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
@@ -59,11 +59,10 @@ export class User {
 	 * Returns the name for this model on the database.
 	 * This can be interpolated in sql queries.
 	 *
-	 * ? This reduces errors.
 	 * @returns table name for this model on the database
 	 */
 	static getTableName() {
-		return "users";
+		return "customers";
 	}
 
 	// #region createTable
@@ -71,7 +70,7 @@ export class User {
 	 * Create a table if not on the database.
 	 */
 	static createTable() {
-		db.run(`CREATE TABLE IF NOT EXISTS ${User.getTableName()} (
+		db.run(`CREATE TABLE IF NOT EXISTS ${Customer.getTableName()} (
 						id INTEGER PRIMARY KEY AUTOINCREMENT,
 						username TEXT NOT NULL UNIQUE,
 						email TEXT NOT NULL UNIQUE,
@@ -93,10 +92,10 @@ export class User {
 		//    BEGIN
 		//     statements;
 		//    END;"
-		db.run(`CREATE TRIGGER IF NOT EXISTS ${User.getTableName()}_updateAt_trigger	
-						AFTER UPDATE ON ${User.getTableName()}
+		db.run(`CREATE TRIGGER IF NOT EXISTS ${Customer.getTableName()}_updateAt_trigger
+						AFTER UPDATE ON ${Customer.getTableName()}
 						BEGIN
-							UPDATE ${User.getTableName()} 
+							UPDATE ${Customer.getTableName()}
 							SET updatedAt = CURRENT_TIMESTAMP;
 						END;`);
 	}
@@ -109,30 +108,32 @@ export class User {
 	 */
 	static findById(id: number) {
 		return db
-			.prepare<User, string>(`SELECT * 
-															FROM ${User.getTableName()} 
-															WHERE id = ?;`)
+			.prepare<Customer, string>(
+				`SELECT *
+        FROM ${Customer.getTableName()}
+				WHERE id = ?;`,
+			)
 			.get(id.toString());
 	}
 
 	// #region findBy
 	/**
-	 * Finds a user by email or username from the database.
+	 * Finds a customer by email or username from the database.
 	 * @param opt `email` or `username` option
 	 * @param value email or username value
 	 * @returns user instance
 	 */
 	static findBy(opt: "email" | "username", value: string) {
-		const sqlForEmail = `SELECT * 
-												FROM ${User.getTableName()} 
+		const sqlForEmail = `SELECT *
+												FROM ${Customer.getTableName()}
 												WHERE email = ?;`;
-		const sqlForUsername = `SELECT * 
-														FROM ${User.getTableName()} 
+		const sqlForUsername = `SELECT *
+														FROM ${Customer.getTableName()}
 														WHERE username = ?;`;
 
 		return opt === "email"
-			? db.prepare<User, string>(sqlForEmail).get(value)
-			: db.prepare<User, string>(sqlForUsername).get(value);
+			? db.prepare<Customer, string>(sqlForEmail).get(value)
+			: db.prepare<Customer, string>(sqlForUsername).get(value);
 	}
 
 	// #region updateById
@@ -142,10 +143,10 @@ export class User {
 	 * @param user fields to update
 	 * @returns fields updated
 	 */
-	static updateById(id: number, user: Partial<Omit<User, "id" | "save">>) {
+	static updateById(id: number, user: Partial<Omit<Customer, "id" | "save">>) {
 		const batchUpdate = db.transaction((entries) => {
 			for (const [k, v] of entries) {
-				const sql = `UPDATE ${User.getTableName()} 
+				const sql = `UPDATE ${Customer.getTableName()}
 										 SET ${k} = ?1
 										 WHERE id = ?2;`;
 				db.run(sql, [v.toString(), id]);
@@ -164,8 +165,8 @@ export class User {
 	 * @returns void
 	 */
 	save() {
-		const sql = `INSERT INTO ${User.getTableName()} 
-								 (username, email, password) 
+		const sql = `INSERT INTO ${Customer.getTableName()}
+								 (username, email, password)
 								 VALUES (?, ?, ?);`;
 
 		return db.run(sql, [this.username, this.email, this.password]);
