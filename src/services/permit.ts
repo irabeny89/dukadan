@@ -36,7 +36,6 @@ const handlePermission = ({
 
 export const permit = new Elysia({ name: "extract-access-token" })
 	.state({ user: {} as UserT })
-	.model("cookie", cookieSchema)
 	.macro(({ onBeforeHandle }) => ({
 		permit(roles: UserRoleT[]) {
 			if (roles.length) {

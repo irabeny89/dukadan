@@ -84,6 +84,19 @@ export class Feedback {
 		return db.prepare<Feedback, string>(sql).get(id);
 	}
 
+	// #region findByUserId
+	/**
+	 * Find a feedback by userId
+	 * @param userId user ID
+	 * @returns a feedback
+	 */
+	static findByUserId(userId: number) {
+		const sql = `SELECT *
+			           FROM ${Feedback.getTableName()}
+								 WHERE userId = ?;`;
+		return db.prepare(sql).get(userId);
+	}
+
 	// #region updateById
 	/**
 	 * Update a record on database.

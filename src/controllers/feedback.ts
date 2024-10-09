@@ -32,8 +32,8 @@ const feedback = new Elysia({ name: "feedback" })
 	.post(
 		"/feedbacks",
 		({ store, body }) => {
-			const feedback = new Feedback(store.user.userId, body.message);
-			feedback.save();
+			new Feedback(store.user.userId, body.message).save();
+			const feedback = Feedback.findByUserId(store.user.userId);
 
 			const response: ResponseT = {
 				success: true,
