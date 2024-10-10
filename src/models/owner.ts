@@ -1,41 +1,8 @@
 import { t } from "elysia";
 import { db } from "../lib/db";
+import type { SignupInputT } from "./customer";
 
-export const logoutSchema = t.Object({
-  action: t.Boolean(),
-});
-
-export const refreshSchema = t.Optional(
-  t.Object({
-    refresh: t.String(),
-  }),
-);
-
-export const tokenSchema = t.Object({
-  userId: t.Number(),
-  role: t.UnionEnum(["customer", "driver", "admin", "owner"]),
-});
-
-export const signupSchema = t.Object({
-  username: t.String({ minLength: 1, maxLength: 32 }),
-  email: t.String({ format: "email" }),
-  password: t.String({ minLength: 8 }),
-});
-
-const usernameLoginSchema = t.Object({
-  username: t.String(),
-  password: t.String(),
-});
-
-const emailLoginSchema = t.Object({
-  email: t.String(),
-  password: t.String(),
-});
-export const loginSchema = t.Union([usernameLoginSchema, emailLoginSchema]);
-
-export type SignupInputT = typeof signupSchema.static;
-
-export class Customer {
+export class Owner {
   id?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -58,7 +25,7 @@ export class Customer {
    * @returns table name for this model on the database
    */
   static getTableName() {
-    return "customers";
+    return "owners";
   }
 
   // #region createTable
@@ -66,7 +33,7 @@ export class Customer {
    * Create a table if not on the database.
    */
   static createTable() {
-    db.run(`CREATE TABLE IF NOT EXISTS ${Customer.getTableName()} (
+    db.run(`CREATE TABLE IF NOT EXISTS ${Owner.getTableName()} (
 						id INTEGER PRIMARY KEY AUTOINCREMENT,
 						username TEXT NOT NULL UNIQUE,
 						email TEXT NOT NULL UNIQUE,
@@ -88,10 +55,10 @@ export class Customer {
     //    BEGIN
     //     statements;
     //    END;"
-    db.run(`CREATE TRIGGER IF NOT EXISTS ${Customer.getTableName()}_updateAt_trigger
-						AFTER UPDATE ON ${Customer.getTableName()}
+    db.run(`CREATE TRIGGER IF NOT EXISTS ${Owner.getTableName()}_updateAt_trigger
+						AFTER UPDATE ON ${Owner.getTableName()}
 						BEGIN
-							UPDATE ${Customer.getTableName()}
+							UPDATE ${Owner.getTableName()}
 							SET updatedAt = CURRENT_TIMESTAMP;
 						END;`);
   }
@@ -102,8 +69,8 @@ export class Customer {
    * @returns all records
    */
   static findAll() {
-    const sql = `SELECT * FROM ${Customer.getTableName()}`;
-    return db.prepare(sql).as(Customer).all();
+    const sql = `SELECT * FROM ${Owner.getTableName()}`;
+    return db.prepare(sql).as(Owner).all();
   }
 
   // #region findById
@@ -114,9 +81,9 @@ export class Customer {
    */
   static findById(id: number) {
     return db
-      .prepare<Customer, string>(
+      .prepare<Owner, string>(
         `SELECT *
-        FROM ${Customer.getTableName()}
+        FROM ${Owner.getTableName()}
 				WHERE id = ?;`,
       )
       .get(id.toString());
@@ -124,22 +91,22 @@ export class Customer {
 
   // #region findBy
   /**
-   * Finds a customer by email or username from the database.
+   * Finds a owner by email or username from the database.
    * @param opt `email` or `username` option
    * @param value email or username value
    * @returns user instance
    */
   static findBy(opt: "email" | "username", value: string) {
     const sqlForEmail = `SELECT *
-												FROM ${Customer.getTableName()}
+												FROM ${Owner.getTableName()}
 												WHERE email = ?;`;
     const sqlForUsername = `SELECT *
-														FROM ${Customer.getTableName()}
+														FROM ${Owner.getTableName()}
 														WHERE username = ?;`;
 
     return opt === "email"
-      ? db.prepare<Customer, string>(sqlForEmail).get(value)
-      : db.prepare<Customer, string>(sqlForUsername).get(value);
+      ? db.prepare<Owner, string>(sqlForEmail).get(value)
+      : db.prepare<Owner, string>(sqlForUsername).get(value);
   }
 
   // #region updateById
@@ -149,10 +116,10 @@ export class Customer {
    * @param user fields to update
    * @returns fields updated
    */
-  static updateById(id: number, user: Partial<Omit<Customer, "id" | "save">>) {
+  static updateById(id: number, user: Partial<Omit<Owner, "id" | "save">>) {
     const batchUpdate = db.transaction((entries) => {
       for (const [k, v] of entries) {
-        const sql = `UPDATE ${Customer.getTableName()}
+        const sql = `UPDATE ${Owner.getTableName()}
 										 SET ${k} = ?1
 										 WHERE id = ?2;`;
         db.run(sql, [v.toString(), id]);
@@ -171,7 +138,7 @@ export class Customer {
    * @returns void
    */
   save() {
-    const sql = `INSERT INTO ${Customer.getTableName()}
+    const sql = `INSERT INTO ${Owner.getTableName()}
 								 (username, email, password)
 								 VALUES (?, ?, ?);`;
 

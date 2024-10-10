@@ -3,6 +3,7 @@ import jwt, { type JwtPayload } from "jsonwebtoken";
 import { envVar } from "../config";
 import type { Customer } from "../models/customer";
 import type { UserRoleT } from "../types";
+import type { Owner } from "../models/owner";
 
 export type TokenT = Record<"access" | "refresh", string>;
 export type AccessDataT = {
@@ -14,8 +15,9 @@ export type RefreshDataT = {
   userId: number;
 };
 
-const setTokens = (userId: number, username: string) => {
-  const data: AccessDataT = { userId, username, role: "customer" };
+// #region setTokens
+const setTokens = (userId: number, username: string, role: UserRoleT) => {
+  const data: AccessDataT = { userId, username, role };
   const access = jwt.sign(data, envVar.secret, {
     expiresIn: envVar.accessExp,
   });
@@ -28,13 +30,18 @@ const setTokens = (userId: number, username: string) => {
   return { access, refresh };
 };
 
-export const setAuthTokens = (user: Customer) => {
+// #region setAuthtokens
+export const setAuthTokens = (
+  user: Customer | Owner,
+  role: UserRoleT = "customer",
+) => {
   if (user.id) {
-    return setTokens(user.id, user.username);
+    return setTokens(user.id, user.username, role);
   }
   throw new InternalServerError();
 };
 
+// #region verifyToken
 export const verifyToken = <T>(
   token: string,
   tokenType: "access" | "refresh" = "access",

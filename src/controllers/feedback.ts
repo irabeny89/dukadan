@@ -1,11 +1,9 @@
 import Elysia from "elysia";
-import { cookieSchema } from "../models/customer";
 import { Feedback, feedbackSchema } from "../models/feedback";
 import { permit } from "../services/permit";
 import type { ResponseT } from "../types";
 
 const feedback = new Elysia({ name: "feedback" })
-  .model("cookie", cookieSchema)
   .model("feedback", feedbackSchema)
   .onBeforeHandle(() => {
     Feedback.createTable();
@@ -25,7 +23,6 @@ const feedback = new Elysia({ name: "feedback" })
     },
     {
       tags: ["Feedback"],
-      cookie: "cookie",
       permit: ["owner"],
     },
   )
@@ -45,7 +42,6 @@ const feedback = new Elysia({ name: "feedback" })
     },
     {
       tags: ["Feedback"],
-      cookie: "cookie",
       body: "feedback",
       permit: ["customer"],
     },
