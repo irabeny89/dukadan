@@ -3,7 +3,7 @@ import { db } from "../lib/db";
 import log from "../lib/logger";
 import type { SignupInputT } from "./customer.model";
 
-export class Owner {
+export class Driver {
   id?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -26,7 +26,7 @@ export class Owner {
    * @returns table name for this model on the database
    */
   static getTableName() {
-    return "owners";
+    return "drivers";
   }
 
   // #region createTable
@@ -34,7 +34,7 @@ export class Owner {
    * Create a table if not on the database.
    */
   static createTable() {
-    db.run(`CREATE TABLE IF NOT EXISTS ${Owner.getTableName()} (
+    db.run(`CREATE TABLE IF NOT EXISTS ${Driver.getTableName()} (
 						id INTEGER PRIMARY KEY AUTOINCREMENT,
 						username TEXT NOT NULL UNIQUE,
 						email TEXT NOT NULL UNIQUE,
@@ -44,7 +44,7 @@ export class Owner {
 	);`);
 
     log([
-      { value: `\u2705 ${Owner.getTableName()}`, option: { color: "green" } },
+      { value: `\u2705 ${Driver.getTableName()}`, option: { color: "green" } },
       { value: "table created or exists." },
     ]);
   }
@@ -61,15 +61,15 @@ export class Owner {
     //    BEGIN
     //     statements;
     //    END;"
-    db.run(`CREATE TRIGGER IF NOT EXISTS ${Owner.getTableName()}_updatedAt_trigger
-						AFTER UPDATE ON ${Owner.getTableName()}
+    db.run(`CREATE TRIGGER IF NOT EXISTS ${Driver.getTableName()}_updatedAt_trigger
+						AFTER UPDATE ON ${Driver.getTableName()}
 						BEGIN
-							UPDATE ${Owner.getTableName()}
+							UPDATE ${Driver.getTableName()}
 							SET updatedAt = CURRENT_TIMESTAMP;
 						END;`);
 
     log([
-      { value: `\u2705 ${Owner.getTableName()}`, option: { color: "green" } },
+      { value: `\u2705 ${Driver.getTableName()}`, option: { color: "green" } },
       { value: "updatedAt trigger created or exists." },
     ]);
   }
@@ -80,8 +80,8 @@ export class Owner {
    * @returns all records
    */
   static findAll() {
-    const sql = `SELECT * FROM ${Owner.getTableName()}`;
-    return db.prepare(sql).as(Owner).all();
+    const sql = `SELECT * FROM ${Driver.getTableName()}`;
+    return db.prepare(sql).as(Driver).all();
   }
 
   // #region findById
@@ -92,9 +92,9 @@ export class Owner {
    */
   static findById(id: number) {
     return db
-      .prepare<Owner, string>(
+      .prepare<Driver, string>(
         `SELECT *
-        FROM ${Owner.getTableName()}
+        FROM ${Driver.getTableName()}
 				WHERE id = ?;`,
       )
       .get(id.toString());
@@ -109,15 +109,15 @@ export class Owner {
    */
   static findBy(opt: "email" | "username", value: string) {
     const sqlForEmail = `SELECT *
-												FROM ${Owner.getTableName()}
+												FROM ${Driver.getTableName()}
 												WHERE email = ?;`;
     const sqlForUsername = `SELECT *
-														FROM ${Owner.getTableName()}
+														FROM ${Driver.getTableName()}
 														WHERE username = ?;`;
 
     return opt === "email"
-      ? db.prepare<Owner, string>(sqlForEmail).get(value)
-      : db.prepare<Owner, string>(sqlForUsername).get(value);
+      ? db.prepare<Driver, string>(sqlForEmail).get(value)
+      : db.prepare<Driver, string>(sqlForUsername).get(value);
   }
 
   // #region updateById
@@ -127,10 +127,10 @@ export class Owner {
    * @param user fields to update
    * @returns fields updated
    */
-  static updateById(id: number, user: Partial<Omit<Owner, "id" | "save">>) {
+  static updateById(id: number, user: Partial<Omit<Driver, "id" | "save">>) {
     const batchUpdate = db.transaction((entries) => {
       for (const [k, v] of entries) {
-        const sql = `UPDATE ${Owner.getTableName()}
+        const sql = `UPDATE ${Driver.getTableName()}
 										 SET ${k} = ?1
 										 WHERE id = ?2;`;
         db.run(sql, [v.toString(), id]);
@@ -149,7 +149,7 @@ export class Owner {
    * @returns void
    */
   save() {
-    const sql = `INSERT INTO ${Owner.getTableName()}
+    const sql = `INSERT INTO ${Driver.getTableName()}
 								 (username, email, password)
 								 VALUES (?, ?, ?);`;
 

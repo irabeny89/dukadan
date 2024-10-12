@@ -14,6 +14,7 @@ import { Setting } from "./models/setting.model";
 import { handleErr } from "./services/err-handler.service";
 import { swaggerConfig } from "./services/swagger.service";
 import { Admin } from "./models/admin.model";
+import { Driver } from "./models/driver.model";
 
 const welcome = `Welcome to ${config.appName} API. For API docs - '/swagger' endpoint.`;
 
@@ -29,6 +30,8 @@ const app = new Elysia()
     Owner.createUpdatedAtTrigger();
     Admin.createTable();
     Admin.createUpdatedAtTrigger();
+    Driver.createTable();
+    Driver.createUpdatedAtTrigger();
     Customer.createTable();
     Customer.createUpdatedAtTrigger();
     Feedback.createTable();
