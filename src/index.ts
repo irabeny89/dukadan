@@ -13,43 +13,46 @@ import { Owner } from "./models/owner.model";
 import { Setting } from "./models/setting.model";
 import { handleErr } from "./services/err-handler.service";
 import { swaggerConfig } from "./services/swagger.service";
+import { Admin } from "./models/admin.model";
 
 const welcome = `Welcome to ${config.appName} API. For API docs - '/swagger' endpoint.`;
 
 const app = new Elysia()
-	.onStart(({ server }) => {
-		log({ value: `🚀 Server: ${server?.url.origin}` });
-		log({ value: `\u{1F4F0} API Docs: ${server?.url.origin}/swagger` });
+  .onStart(({ server }) => {
+    log({ value: `🚀 Server: ${server?.url.origin}` });
+    log({ value: `\u{1F4F0} API Docs: ${server?.url.origin}/swagger` });
 
-		// create tables & triggers
-		Setting.createTable();
-		Setting.createUpdatedAtTrigger();
-		Owner.createTable();
-		Owner.createUpdatedAtTrigger();
-		Customer.createTable();
-		Customer.createUpdatedAtTrigger();
-		Feedback.createTable();
-		Feedback.createUpdatedAtTrigger();
-		Order.createTable();
-		Order.createUpdatedAtTrigger();
+    // create tables & triggers
+    Setting.createTable();
+    Setting.createUpdatedAtTrigger();
+    Owner.createTable();
+    Owner.createUpdatedAtTrigger();
+    Admin.createTable();
+    Admin.createUpdatedAtTrigger();
+    Customer.createTable();
+    Customer.createUpdatedAtTrigger();
+    Feedback.createTable();
+    Feedback.createUpdatedAtTrigger();
+    Order.createTable();
+    Order.createUpdatedAtTrigger();
 
-		log({
-			value: `\u{1F512} env-var: ${JSON.stringify(envVar, null, 2)}`,
-			option: { color: "yellow", env: "development" },
-		});
-		log({
-			value: `\u2699  settings: ${JSON.stringify(confSetting, null, 2)}`,
-			option: { color: "yellow", env: "development" },
-		});
-	})
-	.onTransform(({ cookie, body, params, path, request: { method } }) => {
-		// TODO: log to file - "requests" txt or database
-		log({ value: `${method} ${path}`, option: { env: "development" } });
-		log({ value: { body, params, cookie }, option: { env: "development" } });
-	})
-	.onError(({ error, code }) => handleErr(error, code))
-	.use(cors())
-	.use(swaggerConfig)
-	.get("/", welcome)
-	.group("/api", (app) => app.use(auth).use(setting).use(feedback).use(order))
-	.listen(+envVar.port);
+    log({
+      value: `\u{1F512} env-var: ${JSON.stringify(envVar, null, 2)}`,
+      option: { color: "yellow", env: "development" },
+    });
+    log({
+      value: `\u2699  settings: ${JSON.stringify(confSetting, null, 2)}`,
+      option: { color: "yellow", env: "development" },
+    });
+  })
+  .onTransform(({ cookie, body, params, path, request: { method } }) => {
+    // TODO: log to file - "requests" txt or database
+    log({ value: `${method} ${path}`, option: { env: "development" } });
+    log({ value: { body, params, cookie }, option: { env: "development" } });
+  })
+  .onError(({ error, code }) => handleErr(error, code))
+  .use(cors())
+  .use(swaggerConfig)
+  .get("/", welcome)
+  .group("/api", (app) => app.use(auth).use(setting).use(feedback).use(order))
+  .listen(+envVar.port);

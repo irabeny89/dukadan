@@ -7,44 +7,44 @@ import type { UserRoleT } from "../types";
 
 export type TokenT = Record<"access" | "refresh", string>;
 export type TokenDataT = {
-  userId: number;
-  username: string;
-  role: UserRoleT;
+	userId: number;
+	username: string;
+	role: UserRoleT;
 };
 export type RefreshDataT = {
-  userId: number;
+	userId: number;
 };
 
 // #region setTokens
 const setTokens = (userId: number, username: string, role: UserRoleT) => {
-  const data: TokenDataT = { userId, username, role };
-  const access = jwt.sign(data, envVar.secret, {
-    expiresIn: envVar.accessExp,
-  });
-  const refresh = jwt.sign(data, envVar.secret2, {
-    expiresIn: envVar.refreshExp,
-  });
+	const data: TokenDataT = { userId, username, role };
+	const access = jwt.sign(data, envVar.secret, {
+		expiresIn: envVar.accessExp,
+	});
+	const refresh = jwt.sign(data, envVar.secret2, {
+		expiresIn: envVar.refreshExp,
+	});
 
-  return { access, refresh };
+	return { access, refresh };
 };
 
 // #region setAuthtokens
 export const setAuthTokens = (
-  user: Customer | Owner,
-  role: UserRoleT = "customer",
+	user: Customer | Owner,
+	role: UserRoleT = "customer",
 ) => {
-  if (user.id) {
-    return setTokens(user.id, user.username, role);
-  }
-  throw new InternalServerError();
+	if (user.id) {
+		return setTokens(user.id, user.username, role);
+	}
+	throw new InternalServerError();
 };
 
 // #region verifyToken
 export const verifyToken = <T>(
-  token: string,
-  tokenType: "access" | "refresh" = "access",
+	token: string,
+	tokenType: "access" | "refresh" = "access",
 ) => {
-  return tokenType === "access"
-    ? (jwt.verify(token, envVar.secret) as JwtPayload & T)
-    : (jwt.verify(token, envVar.secret2) as JwtPayload & T);
+	return tokenType === "access"
+		? (jwt.verify(token, envVar.secret) as JwtPayload & T)
+		: (jwt.verify(token, envVar.secret2) as JwtPayload & T);
 };
