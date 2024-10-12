@@ -1,5 +1,5 @@
 import Elysia from "elysia";
-import { Owner } from "../models/owner";
+import { Owner } from "../models/owner.model";
 import type { ResponseT, UserRoleT } from "../types";
 
 /**

@@ -7,6 +7,7 @@ import type {
 	ValidationError,
 } from "elysia";
 import { envVar } from "../config";
+import log from "../lib/logger";
 import type { ResponseT } from "../types";
 
 type ErrorT =
@@ -55,13 +56,19 @@ const transformValidErr = (
 };
 
 const handleInvalidCookieSignature = (error: ErrorT) => (): ResponseT => {
-	NOT_PROD && console.log("<handleInvalidCookieSignature>::", error);
+	log({
+		value: `<handleInvalidCookieSignature>:: ${error}`,
+		option: { env: "development", color: "red" },
+	});
 
 	return error5xx;
 };
 
 const handleValidation = (error: ErrorT) => (): ResponseT => {
-	NOT_PROD && console.log("<handleValidation>::", error);
+	log({
+		value: `<handleValidation>:: ${error}`,
+		option: { env: "development", color: "red" },
+	});
 
 	const errors = (error as ValidationError).all.map(transformValidErr);
 
@@ -72,7 +79,10 @@ const handleValidation = (error: ErrorT) => (): ResponseT => {
 };
 
 const handleNotFound = (error: ErrorT) => (): ResponseT => {
-	NOT_PROD && console.log("<handleNotFound>::", error);
+	log({
+		value: `<handleNotFound>:: ${error}`,
+		option: { env: "development", color: "red" },
+	});
 
 	return {
 		success: false,
@@ -81,19 +91,28 @@ const handleNotFound = (error: ErrorT) => (): ResponseT => {
 };
 
 const handleInternalServer = (error: ErrorT) => (): ResponseT => {
-	NOT_PROD && console.log("<handleInternalServer>::", error);
+	log({
+		value: `<handleInternalServer>:: ${error}`,
+		option: { env: "development", color: "red" },
+	});
 
 	return error5xx;
 };
 
 const handleUnknown = (error: ErrorT) => (): ResponseT => {
-	NOT_PROD && console.log("<handleUnknown>::", error);
+	log({
+		value: `<handleUnknown>:: ${error}`,
+		option: { env: "development", color: "red" },
+	});
 
 	return error5xx;
 };
 
 const handleParse = (error: ErrorT) => (): ResponseT => {
-	NOT_PROD && console.log("<handleParse>::", error);
+	log({
+		value: `<handleParse>:: ${error}`,
+		option: { env: "development", color: "red" },
+	});
 
 	return error5xx;
 };

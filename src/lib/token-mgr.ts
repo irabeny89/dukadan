@@ -1,8 +1,8 @@
 import { InternalServerError } from "elysia";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import { envVar } from "../config";
-import type { Customer } from "../models/customer";
-import type { Owner } from "../models/owner";
+import type { Customer } from "../models/customer.model";
+import type { Owner } from "../models/owner.model";
 import type { UserRoleT } from "../types";
 
 export type TokenT = Record<"access" | "refresh", string>;

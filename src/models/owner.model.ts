@@ -1,6 +1,7 @@
 import { t } from "elysia";
 import { db } from "../lib/db";
-import type { SignupInputT } from "./customer";
+import log from "../lib/logger";
+import type { SignupInputT } from "./customer.model";
 
 export class Owner {
 	id?: number;
@@ -41,6 +42,12 @@ export class Owner {
 						createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 						updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	);`);
+
+		log([
+			{ value: "\u2705" },
+			{ value: Owner.getTableName(), option: { color: "green" } },
+			{ value: "table created or exists." },
+		]);
 	}
 
 	// #region createUpdatedAtTrigger
@@ -55,12 +62,18 @@ export class Owner {
 		//    BEGIN
 		//     statements;
 		//    END;"
-		db.run(`CREATE TRIGGER IF NOT EXISTS ${Owner.getTableName()}_updateAt_trigger
+		db.run(`CREATE TRIGGER IF NOT EXISTS ${Owner.getTableName()}_updatedAt_trigger
 						AFTER UPDATE ON ${Owner.getTableName()}
 						BEGIN
 							UPDATE ${Owner.getTableName()}
 							SET updatedAt = CURRENT_TIMESTAMP;
 						END;`);
+
+		log([
+			{ value: "\u2705" },
+			{ value: Owner.getTableName(), option: { color: "green" } },
+			{ value: "updatedAt trigger created or exists." },
+		]);
 	}
 
 	// #region findAll

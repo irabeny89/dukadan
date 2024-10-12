@@ -21,17 +21,26 @@ const handlePermission = ({
 }: HandlePermissionT) => {
 	const auth = headers.authorization;
 	if (!auth) {
-		log("no Authorization Bearer token");
+		log({
+			value: "no Authorization Bearer token",
+			option: { env: "development" },
+		});
 		return respondUnauthorized();
 	}
 	const token = auth.replace("Bearer ", "");
 	try {
 		const payload = verifyToken<AccessDataT>(token);
 
-		log(payload, "::tokenPayload::", "inline");
+		log({
+			value: `::tokenPayload:: ${JSON.stringify(payload, null, 2)}`,
+			option: { env: "development" },
+		});
 
 		if (!roles.includes(payload.role as UserRoleT)) {
-			log(roles, "allowed roles", "inline");
+			log({
+				value: `::allowed roles:: ${roles}`,
+				option: { env: "development" },
+			});
 			return respondForbidden();
 		}
 
@@ -39,7 +48,7 @@ const handlePermission = ({
 		store.user.username = payload.username;
 		store.user.role = payload.role;
 	} catch (error) {
-		log(error);
+		log({ value: error, option: { env: "development", color: "red" } });
 		return respondUnauthorized();
 	}
 };
@@ -55,8 +64,7 @@ export const permit = new Elysia({ name: "extract-access-token" })
 					const respondForbidden = () =>
 						error(403, {
 							success,
-							message:
-								"Forbidden. Your role doesn't have permission to access.",
+							message: "Forbidden. Your role doesn't permit.",
 						});
 					const respondUnauthorized = () =>
 						error(401, { success, message: "Unauthorized. Try Signup/login." });

@@ -1,3 +1,25 @@
+import { Setting, type SettingT } from "./models/setting.model";
+
+// default setting
+export const setting: SettingT = {
+	maxOwner: 1,
+	maxAdmin: 2,
+	maxDriver: 2,
+	deliveryFee: 1e5, // sub unit for 1000
+	pricePerKg: 1e5, // sub unit for 1000
+};
+
+const settings = Setting.findAll();
+if (settings.length) {
+	const { deliveryFee, maxAdmin, maxDriver, maxOwner, pricePerKg } =
+		settings[0];
+	setting.deliveryFee = deliveryFee;
+	setting.maxAdmin = maxAdmin;
+	setting.maxDriver = maxDriver;
+	setting.maxOwner = maxOwner;
+	setting.pricePerKg = pricePerKg;
+}
+
 export const config = {
 	appName: "Dukadan",
 	version: "v1",
@@ -12,7 +34,4 @@ export const envVar = {
 	secret2: Bun.env.SECRET2 ?? "secret",
 	refreshExp: Bun.env.REFRESH_EXP ?? "1d",
 	accessExp: Bun.env.ACCESS_EXP ?? "1d",
-	maxOwner: Bun.env.MAX_OWNER ?? 1,
-	maxAdmin: Bun.env.MAX_ADMIN ?? 1,
-	maxDriver: Bun.env.MAX_DRIVER ?? 1,
 };

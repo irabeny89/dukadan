@@ -1,14 +1,11 @@
 import Elysia from "elysia";
-import { Feedback, feedbackSchema } from "../models/feedback";
-import { permit } from "../services/permit";
+import { Feedback, feedbackSchema } from "../models/feedback.model";
+import { permit } from "../services/permit.service";
 import type { ResponseT } from "../types";
 
+const API_DOC_TAG = "Feedback";
 const feedback = new Elysia({ name: "feedback" })
 	.model("feedback", feedbackSchema)
-	.onBeforeHandle(() => {
-		Feedback.createTable();
-		Feedback.createUpdatedAtTrigger();
-	})
 	.use(permit) // auth & rbac service
 	.get(
 		"/feedbacks",
@@ -22,7 +19,7 @@ const feedback = new Elysia({ name: "feedback" })
 			return response;
 		},
 		{
-			tags: ["Feedback"],
+			tags: [API_DOC_TAG],
 			permit: ["owner"],
 		},
 	)
@@ -41,7 +38,7 @@ const feedback = new Elysia({ name: "feedback" })
 			return response;
 		},
 		{
-			tags: ["Feedback"],
+			tags: [API_DOC_TAG],
 			body: "feedback",
 			permit: ["customer"],
 		},

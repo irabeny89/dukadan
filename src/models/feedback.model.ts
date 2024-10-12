@@ -1,6 +1,7 @@
 import { t } from "elysia";
 import { db } from "../lib/db";
-import { Customer } from "./customer";
+import log from "../lib/logger";
+import { Customer } from "./customer.model";
 
 export const feedbackSchema = t.Object({
 	message: t.String(),
@@ -46,6 +47,12 @@ export class Feedback {
        ON DELETE CASCADE
 			 );`,
 		);
+
+		log([
+			{ value: "\u2705" },
+			{ value: Feedback.getTableName(), option: { color: "green" } },
+			{ value: "table created or exists." },
+		]);
 	}
 
 	// #region createUpdatedAtTrigger
@@ -53,12 +60,18 @@ export class Feedback {
 	 * Creates a trigger(if not exist) to update the `updatedAt` field whenever a record is edited on the table.
 	 */
 	static createUpdatedAtTrigger() {
-		db.run(`CREATE TRIGGER IF NOT EXISTS ${Feedback.getTableName()}_updateAt_trigger
+		db.run(`CREATE TRIGGER IF NOT EXISTS ${Feedback.getTableName()}_updatedAt_trigger
 						AFTER UPDATE ON ${Feedback.getTableName()}
 						BEGIN
    						UPDATE ${Feedback.getTableName()}
    						SET updatedAt = CURRENT_TIMESTAMP;
 						END;`);
+
+		log([
+			{ value: "\u2705" },
+			{ value: Feedback.getTableName(), option: { color: "green" } },
+			{ value: "updatedAt trigger created or exists." },
+		]);
 	}
 
 	// #region findAll
@@ -95,29 +108,6 @@ export class Feedback {
 			           FROM ${Feedback.getTableName()}
 								 WHERE userId = ?;`;
 		return db.prepare(sql).get(userId);
-	}
-
-	// #region updateById
-	/**
-	 * Update a record on database.
-	 * @param id record id
-	 * @param feedback fields to update
-	 * @returns fields updated
-	 */
-	static updateById(id: number, feedback: Feedback) {
-		const batchUpdate = db.transaction((entries) => {
-			for (const [k, v] of entries) {
-				const sql = `UPDATE ${Feedback.getTableName()}
-                     SET ${k} = ?1
-                     WHERE id = ?2;`;
-				db.run(sql, [v.toString(), id]);
-			}
-		});
-
-		const entries = Object.entries(feedback);
-		batchUpdate(entries);
-
-		return entries;
 	}
 
 	// #region save

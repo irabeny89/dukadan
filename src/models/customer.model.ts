@@ -1,5 +1,6 @@
 import { t } from "elysia";
 import { db } from "../lib/db";
+import log from "../lib/logger";
 
 export const logoutSchema = t.Object({
 	action: t.Boolean(),
@@ -74,6 +75,12 @@ export class Customer {
 						createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 						updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	);`);
+
+		log([
+			{ value: "\u2705" },
+			{ value: Customer.getTableName(), option: { color: "green" } },
+			{ value: "table created or exists." },
+		]);
 	}
 
 	// #region createUpdatedAtTrigger
@@ -88,12 +95,18 @@ export class Customer {
 		//    BEGIN
 		//     statements;
 		//    END;"
-		db.run(`CREATE TRIGGER IF NOT EXISTS ${Customer.getTableName()}_updateAt_trigger
+		db.run(`CREATE TRIGGER IF NOT EXISTS ${Customer.getTableName()}_updatedAt_trigger
 						AFTER UPDATE ON ${Customer.getTableName()}
 						BEGIN
 							UPDATE ${Customer.getTableName()}
 							SET updatedAt = CURRENT_TIMESTAMP;
 						END;`);
+
+		log([
+			{ value: "\u2705" },
+			{ value: Customer.getTableName(), option: { color: "green" } },
+			{ value: "updatedAt trigger created or exists." },
+		]);
 	}
 
 	// #region findAll

@@ -1,5 +1,5 @@
 import { Elysia, t } from "elysia";
-import { envVar } from "../config";
+import { envVar, setting } from "../config";
 import {
 	type RefreshDataT,
 	type TokenT,
@@ -12,12 +12,14 @@ import {
 	logoutSchema,
 	refreshSchema,
 	signupSchema,
-} from "../models/customer";
-import { Owner } from "../models/owner";
-import { maxUser } from "../services/max-user";
-import { permit } from "../services/permit";
+} from "../models/customer.model";
+import { Owner } from "../models/owner.model";
+import { Setting } from "../models/setting.model";
+import { maxUser } from "../services/max-user.service";
+import { permit } from "../services/permit.service";
 import type { ResponseT } from "../types";
 
+const API_DOC_TAG = "Auth";
 const auth = new Elysia({ name: "auth" })
 	.model("signup", signupSchema)
 	.model("login", loginSchema)
@@ -42,14 +44,10 @@ const auth = new Elysia({ name: "auth" })
 						message: "User not found.",
 					});
 		},
-		{ tags: ["Auth"], body: "refresh" },
+		{ tags: [API_DOC_TAG], body: "refresh" },
 	)
 	.group("/customers", (app) =>
 		app
-			.onBeforeHandle(() => {
-				Customer.createTable();
-				Customer.createUpdatedAtTrigger();
-			})
 			// #region cust signup
 			.post(
 				"/signup",
@@ -75,7 +73,7 @@ const auth = new Elysia({ name: "auth" })
 					return res;
 				},
 				{
-					tags: ["Auth"],
+					tags: [API_DOC_TAG],
 					body: "signup",
 					permit: ["customer"],
 				},
@@ -108,7 +106,7 @@ const auth = new Elysia({ name: "auth" })
 
 					return res;
 				},
-				{ tags: ["Auth"], body: "login" },
+				{ tags: [API_DOC_TAG], body: "login" },
 			),
 	)
 	.group("/owners", (app) =>
@@ -143,9 +141,9 @@ const auth = new Elysia({ name: "auth" })
 					return res;
 				},
 				{
-					tags: ["Auth"],
+					tags: [API_DOC_TAG],
 					body: "signup",
-					maxUser: [+envVar.maxOwner, "owner"],
+					maxUser: [setting.maxOwner, "owner"],
 				},
 			)
 			// #region owner login
@@ -176,7 +174,7 @@ const auth = new Elysia({ name: "auth" })
 
 					return res;
 				},
-				{ tags: ["Auth"], body: "login" },
+				{ tags: [API_DOC_TAG], body: "login" },
 			),
 	);
 

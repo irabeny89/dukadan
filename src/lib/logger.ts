@@ -1,50 +1,47 @@
 import { config, envVar } from "../config";
 
-type LogT = {
+type LogOptionT = {
+	color?: string;
 	env?: "development" | "production";
-	position?: "block" | "inline";
-	message: string;
 };
 
-const defaultOpt: LogT = {
-	env: "development",
-	position: "block",
-	message: "",
+type LogArg = {
+	value: unknown;
+	option?: LogOptionT;
 };
 
-/**
- * Logs values to the terminal based on Nodejs environment - default to only `development` environment.
- *
- * @param option log arguments
- *
- * @example
- * * // default: only on `development` environment
- * * // OUTPUT: hello world
- * log("hello world")
- * * // only on `production` environment
- * * // OUTPUT: hi
- * log("hi", {env: "production"})
- * * // default: only on `development` environment and block position
- * * // OUTPUT: say what?
- * * //         hi
- * log(value: "hi", {message: "say what?"})
- * * // default: only on `development` environment
- * * // OUTPUT: say what? hi
- * log(value: "hi", {message: "say what?", position: "inline"})
- */
-export default function log(
-	value: unknown,
-	message?: string,
-	position: "block" | "inline" = "block",
-	env: "development" | "production" = "development",
-) {
-	if (envVar.nodeEnv === env) {
-		if (message) {
-			if (position === "block") {
-				console.log(message);
-				console.log(value);
-				// inline
-			} else console.log(message, value);
-		} else console.log(value);
-	}
+const getColorMsg = (prev: string, value: unknown, color?: string) =>
+	color
+		? `${prev}${Bun.color(color, "ansi")}${value}\x1b[0m `
+		: `${prev}${value} `;
+
+const createMsg = (prev: string, arg: LogArg) => {
+	// no option? return log message
+	if (!arg.option) return `${prev}${arg.value} `;
+	// Node environment match, consider log message color
+	if (arg.option.env === (Bun.env.NODE_ENV ?? "development"))
+		return getColorMsg(prev, arg.value, arg.option.color);
+	// for any Node enviroment, consider log message color
+	return getColorMsg(prev, arg.value, arg.option.color);
+};
+
+const handleColor = (value: unknown, color?: string) =>
+	color
+		? console.log(`${Bun.color(color, "ansi")}${value}\x1b[0m`)
+		: console.log(value);
+
+const logSingleData = (args: LogArg) => {
+	// no option? return log message
+	if (!args.option) console.log(args.value);
+	// Node environment match, consider log message color
+	else if (args.option.env === envVar.nodeEnv)
+		handleColor(args.value, args.option.color);
+	// for any Node enviroment, consider log message color
+	else handleColor(args.value, args.option.color);
+};
+
+export default function log(args: LogArg | LogArg[]) {
+	// inline log messages if list of log data was provided
+	if (Array.isArray(args)) console.log(args.reduce(createMsg, ""));
+	else logSingleData(args);
 }
