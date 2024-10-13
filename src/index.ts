@@ -1,5 +1,7 @@
-import cors from "@elysiajs/cors";
 import { Elysia } from "elysia";
+import cors from "@elysiajs/cors";
+import { staticPlugin } from "@elysiajs/static";
+import { html } from "@elysiajs/html";
 import { setting as confSetting, config, envVar } from "./config";
 import auth from "./controllers/auth.controller";
 import feedback from "./controllers/feedback.controller";
@@ -15,6 +17,7 @@ import { handleErr } from "./services/err-handler.service";
 import { swaggerConfig } from "./services/swagger.service";
 import { Admin } from "./models/admin.model";
 import { Driver } from "./models/driver.model";
+import Home from "./pages";
 
 const welcome = `Welcome to ${config.appName} API. For API docs - '/swagger' endpoint.`;
 
@@ -56,6 +59,8 @@ const app = new Elysia()
   .onError(({ error, code }) => handleErr(error, code))
   .use(cors())
   .use(swaggerConfig)
-  .get("/", welcome)
+  .use(staticPlugin())
+  .use(html())
+  .get("/", Home)
   .group("/api", (app) => app.use(auth).use(setting).use(feedback).use(order))
   .listen(+envVar.port);
