@@ -1,23 +1,23 @@
-import { Elysia } from "elysia";
 import cors from "@elysiajs/cors";
-import { staticPlugin } from "@elysiajs/static";
 import { html } from "@elysiajs/html";
+import { staticPlugin } from "@elysiajs/static";
+import { Elysia } from "elysia";
 import { setting as confSetting, config, envVar } from "./config";
 import auth from "./controllers/auth.controller";
 import feedback from "./controllers/feedback.controller";
 import { order } from "./controllers/order.controller";
 import { setting } from "./controllers/setting.controller";
 import log from "./lib/logger";
+import { Admin } from "./models/admin.model";
 import { Customer } from "./models/customer.model";
+import { Driver } from "./models/driver.model";
 import { Feedback } from "./models/feedback.model";
 import { Order } from "./models/order.model";
 import { Owner } from "./models/owner.model";
 import { Setting } from "./models/setting.model";
+import Home from "./pages/home";
 import { handleErr } from "./services/err-handler.service";
 import { swaggerConfig } from "./services/swagger.service";
-import { Admin } from "./models/admin.model";
-import { Driver } from "./models/driver.model";
-import Home from "./pages";
 
 const welcome = `Welcome to ${config.appName} API. For API docs - '/swagger' endpoint.`;
 

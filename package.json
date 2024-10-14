@@ -1,29 +1,30 @@
 {
-	"name": "dukadan",
-	"version": "1.0.50",
-	"scripts": {
-		"test": "bun test",
-		"dev": "bun run --watch src/index.ts",
-		"build": "bun build --compile --minify-whitespace --minify-syntax --target bun --outfile server --outdir ./dist ./src/index.ts",
-		"lint": "bunx biome check --write ./src",
-		"unsafe-lint": "bunx biome check --fix --unsafe",
-		"db:migrate": "migralite --database ./db/dukadan.sqlite",
-		"migration:gen": "migralite -g"
-	},
-	"dependencies": {
-		"@elysiajs/cors": "^1.1.1",
-		"@elysiajs/html": "^1.1.1",
-		"@elysiajs/static": "^1.1.1",
-		"@elysiajs/swagger": "^1.1.1",
-		"@kitajs/ts-html-plugin": "^4.1.0",
-		"@types/jsonwebtoken": "^9.0.7",
-		"elysia": "latest",
-		"jsonwebtoken": "^9.0.2"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "1.9.2",
-		"bun-types": "latest",
-		"migralite": "^1.0.1"
-	},
-	"module": "src/index.js"
+  "name": "dukadan",
+  "version": "1.0.50",
+  "scripts": {
+    "test": "bun test",
+    "html-scan": "xss-scan",
+    "dev": "bun run --watch src/index.ts",
+    "build": "bun build --compile --minify-whitespace --minify-syntax --target bun --outfile server --outdir ./dist ./src/index.ts",
+    "lint": "bunx biome check --write ./src",
+    "unsafe-lint": "bunx biome check --fix --unsafe",
+    "db:migrate": "migralite --database ./db/dukadan.sqlite",
+    "migration:gen": "migralite -g"
+  },
+  "dependencies": {
+    "@elysiajs/cors": "^1.1.1",
+    "@elysiajs/html": "^1.1.1",
+    "@elysiajs/static": "^1.1.1",
+    "@elysiajs/swagger": "^1.1.1",
+    "@kitajs/ts-html-plugin": "^4.1.0",
+    "@types/jsonwebtoken": "^9.0.7",
+    "elysia": "latest",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.2",
+    "bun-types": "latest",
+    "migralite": "^1.0.1"
+  },
+  "module": "src/index.js"
 }
