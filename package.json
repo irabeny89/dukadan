@@ -6,6 +6,7 @@
     "html-scan": "xss-scan",
     "dev": "bun run --watch src/index.ts",
     "build": "bun bun-build.js",
+    "start": "dist/index.js",
     "lint": "bunx biome check --write ./src",
     "unsafe-lint": "bunx biome check --fix --unsafe",
     "db:migrate": "migralite --database ./db/dukadan.sqlite",
