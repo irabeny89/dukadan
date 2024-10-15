@@ -5,7 +5,7 @@
     "test": "bun test",
     "html-scan": "xss-scan",
     "dev": "bun run --watch src/index.ts",
-    "build": "bun build --compile --minify-whitespace --minify-syntax --target bun --outfile server --outdir ./dist ./src/index.ts",
+    "build": "bun bun-build.js",
     "lint": "bunx biome check --write ./src",
     "unsafe-lint": "bunx biome check --fix --unsafe",
     "db:migrate": "migralite --database ./db/dukadan.sqlite",
