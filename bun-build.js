@@ -5,5 +5,4 @@ await Bun.build({
     syntax: true,
   },
   outdir: "dist",
-  bytecode: true,
 });
