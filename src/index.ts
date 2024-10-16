@@ -19,8 +19,6 @@ import Home from "./pages/home";
 import { handleErr } from "./services/err-handler.service";
 import { swaggerConfig } from "./services/swagger.service";
 
-const welcome = `Welcome to ${config.appName} API. For API docs - '/swagger' endpoint.`;
-
 const app = new Elysia()
   .onStart(({ server }) => {
     log({ value: `🚀 Server: ${server?.url.origin}` });
@@ -44,11 +42,11 @@ const app = new Elysia()
 
     log({
       value: `\u{1F512} env-var: ${JSON.stringify(envVar, null, 2)}`,
-      option: { color: "yellow", env: "development" },
+      option: { env: "development" },
     });
     log({
       value: `\u2699  settings: ${JSON.stringify(confSetting, null, 2)}`,
-      option: { color: "yellow", env: "development" },
+      option: { env: "development" },
     });
   })
   .onTransform(({ cookie, body, params, path, request: { method } }) => {

@@ -10,11 +10,6 @@ type LogArg = {
   option?: LogOptionT;
 };
 
-// const getColorMsg = (prev: string, value: unknown, color?: string) =>
-// 	color
-// 		? `${prev}${Bun.color(color, "ansi")}${value}\x1b[0m `
-// 		: `${prev}${value} `;
-
 const createMsg = (prev: string, arg: LogArg) => {
   // no option? return log message
   if (!arg.option) return `${prev}${arg.value} `;
@@ -25,18 +20,11 @@ const createMsg = (prev: string, arg: LogArg) => {
   return `${prev}${arg.value} `;
 };
 
-// const handleColor = (value: unknown, color?: string) =>
-// 	color
-// 		? console.log(`${Bun.color(color, "ansi")}${value}\x1b[0m`)
-// 		: console.log(value);
-
 const logSingleData = (args: LogArg) => {
   // no option? return log message
   if (!args.option) console.log(args.value);
   // Node environment match, consider log message color
   else if (args.option.env === envVar.nodeEnv) console.log(args.value);
-  // for any Node enviroment, consider log message color
-  else console.log(args.value);
 };
 
 export default function log(args: LogArg | LogArg[]) {
