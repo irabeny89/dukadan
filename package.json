@@ -5,7 +5,7 @@
     "test": "bun test",
     "html-scan": "xss-scan",
     "dev": "bun run --watch src/index.ts",
-    "build": "bun build src/index.ts --target bun --outdir dist --minify-whitespace --minify-syntax",
+    "build": "bun build src/index.ts --target bun --outdir dist --bytecode --minify-whitespace --minify-syntax",
     "start": "bun dist/index.js",
     "lint": "bunx biome check --write ./src",
     "unsafe-lint": "bunx biome check --fix --unsafe",

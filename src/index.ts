@@ -1,5 +1,5 @@
 import cors from "@elysiajs/cors";
-import { html } from "@elysiajs/html";
+import { html, Html } from "@elysiajs/html";
 import { staticPlugin } from "@elysiajs/static";
 import { Elysia } from "elysia";
 import { setting as confSetting, config, envVar } from "./config";

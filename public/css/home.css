@@ -1,4 +1,25 @@
+ul {
+    list-style: none;
+}
+
+li {
+    margin: 1rem;
+}
+
+.what-we-offer li::before,
+.what-we-offer li::after {
+    content: "\0020\1F31F\0020";
+}
+
 .background-image > img {
     height: 40vh;
     width: 100%;
+}
+
+#get-started-btn {
+    margin: 4rem 0;
+}
+
+section {
+    margin-bottom: 3rem;
 }
