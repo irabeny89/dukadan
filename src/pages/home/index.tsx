@@ -27,7 +27,7 @@ export default function Home() {
           <div class="fixed">
             <h1 class="large">Welcome to Dukadan Oil & Gas Nig Ltd</h1>
             <p>Your Trusted Partner for Cooking Gas Solutions</p>
-            <a href="/auth">
+            <a href="/customer">
               <button id="get-started-btn" class="glow-anim" type="button">
                 Get Cooking Gas Today!
               </button>
@@ -115,9 +115,11 @@ export default function Home() {
           <div class="fixed white">
             <h2>Get Cooking Gas Today!</h2>
             <p>Contact us: 080 XXXX XXXX | info@dukadan.com</p>
-            <button id="get-started-btn" class="heartbeat" type="button">
-              Get Started
-            </button>
+            <a href="/customer">
+              <button id="get-started-btn" class="heartbeat" type="button">
+                Get Started
+              </button>
+            </a>
           </div>
           <footer>Dukadan &copy; 2025. All Rights Reserved.</footer>
         </section>
