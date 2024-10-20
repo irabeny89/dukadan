@@ -15,10 +15,10 @@ import { Feedback } from "./models/feedback.model";
 import { Order } from "./models/order.model";
 import { Owner } from "./models/owner.model";
 import { Setting } from "./models/setting.model";
-import Home from "./pages/home";
 import { handleErr } from "./services/err-handler.service";
 import { swaggerConfig } from "./services/swagger.service";
-import Auth from "./pages/home/auth";
+import CustomerPage from "./pages/home/customer";
+import HomePage from "./pages/home";
 
 const app = new Elysia()
   .onStart(({ server }) => {
@@ -60,7 +60,7 @@ const app = new Elysia()
   .use(swaggerConfig)
   .use(staticPlugin())
   .use(html())
-  .get("/", Home)
-  .get("/customer", Auth)
+  .get("/", HomePage)
+  .get("/customer", CustomerPage)
   .group("/api", (app) => app.use(auth).use(setting).use(feedback).use(order))
   .listen(+envVar.port);

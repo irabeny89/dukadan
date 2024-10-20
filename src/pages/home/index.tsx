@@ -1,4 +1,7 @@
-export default function Home() {
+import Footer from "../share/footer";
+import Header from "../share/header";
+
+export default function HomePage() {
   return (
     <html lang="en">
       <head>
@@ -15,15 +18,12 @@ export default function Home() {
           href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap"
           rel="stylesheet"
         />
-        <link rel="stylesheet" href="public/css/styles.css" />
+        <link rel="stylesheet" href="public/css/global.css" />
         <link rel="stylesheet" href="public/css/home.css" />
       </head>
       <body>
         <section class="section">
-          <header>
-            <h1>Dukadan</h1>
-          </header>
-          <div class="oop"> </div>
+          <Header />
           <div class="fixed">
             <h1 class="large">Welcome to Dukadan Oil & Gas Nig Ltd</h1>
             <p>Your Trusted Partner for Cooking Gas Solutions</p>
@@ -121,7 +121,7 @@ export default function Home() {
               </button>
             </a>
           </div>
-          <footer>Dukadan &copy; 2025. All Rights Reserved.</footer>
+          <Footer />
         </section>
       </body>
     </html>
