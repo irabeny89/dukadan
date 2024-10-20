@@ -1,7 +1,3 @@
-import { Html } from "@elysiajs/html";
-import Badge from "../share/badge";
-import Layout from "../share/layout";
-
 export default function Home() {
   return (
     <html lang="en">
@@ -20,16 +16,26 @@ export default function Home() {
           rel="stylesheet"
         />
         <link rel="stylesheet" href="public/css/styles.css" />
+        <link rel="stylesheet" href="public/css/home.css" />
       </head>
       <body>
         <section class="section">
+          <header>
+            <h1>Dukadan</h1>
+          </header>
           <div class="oop"> </div>
           <div class="fixed">
             <h1 class="large">Welcome to Dukadan Oil & Gas Nig Ltd</h1>
             <p>Your Trusted Partner for Cooking Gas Solutions</p>
-            <button id="get-started-btn" class="glow-anim" type="button">
-              Get Cooking Gas Today!
-            </button>
+            <a href="/auth">
+              <button id="get-started-btn" class="glow-anim" type="button">
+                Get Cooking Gas Today!
+              </button>
+            </a>
+          </div>
+          <div id="scroll-tip" class="pulsate-bck">
+            scroll down <br />
+            &#8595;
           </div>
         </section>
 
@@ -113,6 +119,7 @@ export default function Home() {
               Get Started
             </button>
           </div>
+          <footer>Dukadan &copy; 2025. All Rights Reserved.</footer>
         </section>
       </body>
     </html>

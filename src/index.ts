@@ -1,5 +1,5 @@
 import cors from "@elysiajs/cors";
-import { html, Html } from "@elysiajs/html";
+import { html } from "@elysiajs/html";
 import { staticPlugin } from "@elysiajs/static";
 import { Elysia } from "elysia";
 import { setting as confSetting, config, envVar } from "./config";
@@ -18,6 +18,7 @@ import { Setting } from "./models/setting.model";
 import Home from "./pages/home";
 import { handleErr } from "./services/err-handler.service";
 import { swaggerConfig } from "./services/swagger.service";
+import Auth from "./pages/home/auth";
 
 const app = new Elysia()
   .onStart(({ server }) => {
@@ -60,5 +61,6 @@ const app = new Elysia()
   .use(staticPlugin())
   .use(html())
   .get("/", Home)
+  .get("/customer", Auth)
   .group("/api", (app) => app.use(auth).use(setting).use(feedback).use(order))
   .listen(+envVar.port);
