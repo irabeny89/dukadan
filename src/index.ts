@@ -1,5 +1,5 @@
 import cors from "@elysiajs/cors";
-import { html } from "@elysiajs/html";
+import { html, Html } from "@elysiajs/html";
 import { staticPlugin } from "@elysiajs/static";
 import { Elysia } from "elysia";
 import { setting as confSetting, config, envVar } from "./config";
@@ -15,10 +15,10 @@ import { Feedback } from "./models/feedback.model";
 import { Order } from "./models/order.model";
 import { Owner } from "./models/owner.model";
 import { Setting } from "./models/setting.model";
+import HomePage from "./pages";
+import CustomerPage from "./pages/customer";
 import { handleErr } from "./services/err-handler.service";
 import { swaggerConfig } from "./services/swagger.service";
-import CustomerPage from "./pages/home/customer";
-import HomePage from "./pages/home";
 
 const app = new Elysia()
   .onStart(({ server }) => {

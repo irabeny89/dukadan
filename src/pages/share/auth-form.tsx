@@ -1,3 +1,21 @@
+import { Html } from "@elysiajs/html";
+
+const handleLogin = async (e: Event) => {
+  e.preventDefault();
+  const submit = document.getElementById("login-btn") as HTMLButtonElement;
+  submit.disabled = true;
+  const data = Object.fromEntries(new FormData(e.target as HTMLFormElement));
+  const res = await fetch("/api/customers/login", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (res.ok) {
+    const json = await res.json();
+    window.location.href = "/customer/dashboard";
+  } else alert(res.statusText);
+};
+
 export default function AuthForm() {
   return (
     <div class="container">
@@ -5,7 +23,7 @@ export default function AuthForm() {
         <input type="checkbox" id="chk" aria-hidden="true" />
 
         <div class="signup">
-          <form>
+          <form id="signup-form">
             <label for="chk" aria-hidden="true">
               Sign up
             </label>
@@ -27,18 +45,20 @@ export default function AuthForm() {
         </div>
 
         <div class="login">
-          <form>
+          <form id="login-form" onsubmit={handleLogin.toString()}>
             <label for="chk" aria-hidden="true">
               Login
             </label>
             <input type="email" name="email" placeholder="Email" required />
             <input
               type="password"
-              name="pswd"
+              name="password"
               placeholder="Password"
               required
             />
-            <button type="submit">Login</button>
+            <button id="login-btn" type="submit">
+              Login
+            </button>
           </form>
         </div>
       </div>

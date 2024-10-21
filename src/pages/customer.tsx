@@ -1,6 +1,7 @@
-import AuthForm from "../share/auth-form";
-import Footer from "../share/footer";
-import Header from "../share/header";
+import AuthForm from "./share/auth-form";
+import Footer from "./share/footer";
+import Header from "./share/header";
+import { Html } from "@elysiajs/html";
 
 export default function CustomerPage() {
   return (

@@ -1,5 +1,6 @@
-import Footer from "../share/footer";
-import Header from "../share/header";
+import Footer from "./share/footer";
+import Header from "./share/header";
+import { Html } from "@elysiajs/html";
 
 export default function HomePage() {
   return (
