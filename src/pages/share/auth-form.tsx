@@ -21,7 +21,7 @@ export default function AuthForm() {
     <div class="container">
       <script type="module" src="/public/js/auth-form.js" />
       <div class="main">
-        <input type="checkbox" id="chk" aria-hidden="true" />
+        <input type="checkbox" id="chk" />
 
         <div class="signup">
           <form id="signup-form">
@@ -39,6 +39,7 @@ export default function AuthForm() {
               type="password"
               name="password"
               placeholder="Password"
+              minlength="8"
               required
             />
             <button type="submit">Sign up</button>
@@ -55,6 +56,7 @@ export default function AuthForm() {
               type="password"
               name="password"
               placeholder="Password"
+              minlength="8"
               required
             />
             <button id="login-btn" type="submit">
