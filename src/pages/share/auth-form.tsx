@@ -19,6 +19,7 @@ const handleLogin = async (e: Event) => {
 export default function AuthForm() {
   return (
     <div class="container">
+      <script type="module" src="/public/js/auth-form.js" />
       <div class="main">
         <input type="checkbox" id="chk" aria-hidden="true" />
 
@@ -45,7 +46,7 @@ export default function AuthForm() {
         </div>
 
         <div class="login">
-          <form id="login-form" onsubmit={handleLogin.toString()}>
+          <form id="login-form">
             <label for="chk" aria-hidden="true">
               Login
             </label>

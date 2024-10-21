@@ -25,8 +25,8 @@ export default function HomePage() {
       <body>
         <section class="section">
           <Header />
-          <div class="fixed">
-            <h1 class="large">Welcome to Dukadan Oil & Gas Nig Ltd</h1>
+          <div class="fixed wide">
+            <h1 class="large">Welcome to Dukadan Online</h1>
             <p>Your Trusted Partner for Cooking Gas Solutions</p>
             <a href="/customer">
               <button id="get-started-btn" class="glow-anim" type="button">
@@ -41,7 +41,7 @@ export default function HomePage() {
         </section>
 
         <section class="section">
-          <div class="fixed">
+          <div id="what-we-offer" class="fixed wide">
             <h2>What We Offer</h2>
             <div>
               <div>High-quality LPG cylinders</div>
@@ -54,7 +54,7 @@ export default function HomePage() {
         </section>
 
         <section class="section">
-          <div class="fixed">
+          <div class="fixed wide">
             <h2>Our Products & Services</h2>
             <div class="product-card">
               <h3>Gas Refilling</h3>
@@ -83,19 +83,19 @@ export default function HomePage() {
         </section>
 
         <section class="section">
-          <div class="fixed">
+          <div id="safety-tips" class="fixed wide">
             <h2>Safety Tips</h2>
-            <ul>
-              <li>Always check cylinders for leaks before use.</li>
-              <li>Store cylinders upright and secure.</li>
-              <li>Keep cylinders away from heat sources.</li>
-              <li>Use approved regulators and hoses.</li>
-            </ul>
+            <div>
+              <div>Always check cylinders for leaks before use.</div>
+              <div>Store cylinders upright and secure.</div>
+              <div>Keep cylinders away from heat sources.</div>
+              <div>Use approved regulators and hoses.</div>
+            </div>
           </div>
         </section>
 
         <section class="section">
-          <div class="fixed">
+          <div id="what-our-customers-say" class="fixed wide">
             <h2>What Our Customers Say</h2>
             <div class="testimonial-card">
               <p>
@@ -113,7 +113,7 @@ export default function HomePage() {
         </section>
 
         <section class="section">
-          <div class="fixed white">
+          <div class="fixed white wide">
             <h2>Get Cooking Gas Today!</h2>
             <p>Contact us: 080 XXXX XXXX | info@dukadan.com</p>
             <a href="/customer">

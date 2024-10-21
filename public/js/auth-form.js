@@ -1,3 +1,5 @@
+const LOGIN_FORM_ID = "login-form";
+
 async function handleLogin(e, form) {
   e.preventDefault();
   const submit = document.getElementById("login-btn");
@@ -10,10 +12,12 @@ async function handleLogin(e, form) {
   });
   if (res.ok) {
     const json = await res.json();
+    window.localStorage.setItem("token", json.data.access);
+    window.sessionStorage.setItem("refresh", json.data.refresh);
     window.location.href = "/customer/dashboard";
   } else alert(res.statusText);
 }
 
-const form = document.querySelector("#login-form");
+const form = document.getElementById(LOGIN_FORM_ID);
 if (form) form.addEventListener("submit", (e) => handleLogin(e, form));
-else console.log("form with id 'login-form' not found");
+else console.log("form with id '%s' not found", LOGIN_FORM_ID);

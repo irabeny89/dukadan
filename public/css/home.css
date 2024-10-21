@@ -22,3 +22,8 @@ footer {
     right: 1%;
     font-size: 0.7rem;
 }
+
+.wide {
+    width: 90%;
+    max-width: 65ch;
+}
