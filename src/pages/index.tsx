@@ -8,8 +8,13 @@ export default function HomePage() {
 		<html lang="en">
 			<Head
 				heads={[
-					<title key="1">Dukadan | Home</title>,
-					<link key="2" rel="stylesheet" href="public/css/home.css" />,
+					<meta
+						key="1"
+						name="description"
+						content="Dukadan Oil and Gas Nigeria Limited for everything cooking gas LPG online and offline order."
+					/>,
+					<title key="2">Dukadan | Home</title>,
+					<link key="3" rel="stylesheet" href="public/css/home.css" />,
 				]}
 			/>
 			<body>

@@ -20,6 +20,8 @@
 		"@kitajs/ts-html-plugin": "^4.1.0",
 		"@types/jsonwebtoken": "^9.0.7",
 		"elysia": "latest",
+		"elysia-compression": "^0.0.7",
+		"elysia-helmet": "^2.0.0",
 		"jsonwebtoken": "^9.0.2"
 	},
 	"devDependencies": {
