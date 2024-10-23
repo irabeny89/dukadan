@@ -1,3 +1,5 @@
+import { storeTokens } from "./utils.js";
+
 const LOGIN_FORM_ID = "login-form";
 
 async function handleLogin(e, form) {
@@ -16,8 +18,7 @@ async function handleLogin(e, form) {
   if (res.ok) {
     // parse response data to js object
     const json = await res.json();
-    window.localStorage.setItem("token", json.data.access);
-    window.sessionStorage.setItem("refresh", json.data.refresh);
+    storeTokens(json.data);
     // redirect to dashboard page
     window.location.href = "/dashboard";
   } else {
