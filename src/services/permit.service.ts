@@ -48,7 +48,7 @@ const handlePermission = ({
 		store.user.username = payload.username;
 		store.user.role = payload.role;
 	} catch (error) {
-		log({ value: error, option: { env: "development", color: "red" } });
+		log({ value: error, option: { env: "development" } });
 		return respondUnauthorized();
 	}
 };

@@ -1,5 +1,5 @@
 import { t } from "elysia";
-import { setting } from "../config";
+import { getSettings } from "../config";
 import { db } from "../lib/db";
 import log from "../lib/logger";
 import { Customer } from "./customer.model";
@@ -19,6 +19,8 @@ type OrderT = {
 	phone: string;
 	userId: number;
 };
+
+const setting = getSettings();
 
 const cylinderSizeSchema = t.UnionEnum([3, 5, 6, 10, 12, 12.5, 15, 50, 100]);
 export const orderStatusSchema = t.UnionEnum([

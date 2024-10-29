@@ -1,6 +1,10 @@
 :root {
     --pry-clr: #0b0a78;
     --sec-clr: #8f0b04;
+    --primary-color: #185ee0;
+    --secondary-color: #e6eef9;
+    --shadow: 0 0 1px 0 rgba(24, 94, 224, 0.15),
+        0 6px 12px 0 rgba(24, 94, 224, 0.15);
 }
 
 * {
@@ -212,7 +216,7 @@ button {
     justify-content: center;
     display: block;
     color: #fff;
-    background: #573b8a;
+    background: var(--primary-color);
     font-size: 1em;
     font-weight: bold;
     margin-top: 30px;
@@ -223,5 +227,5 @@ button {
     cursor: pointer;
 }
 button:hover {
-    background: #6d44b8;
+    background: var(--pry-clr);
 }

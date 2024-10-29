@@ -12,7 +12,7 @@ const API_DOC_TAG = "Order";
 export const order = new Elysia({ name: "order" })
 	.model("order", orderSchema)
 	.model("patch", patchSchema)
-	.model("params", t.Object({ id: t.Number() }))
+	.model("params", t.Object({ id: t.Number({ minimum: 0 }) }))
 	.use(permit)
 	// #region get all orders
 	.get(

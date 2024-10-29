@@ -1,3 +1,4 @@
+import { t } from "elysia";
 import { db } from "../lib/db";
 import log from "../lib/logger";
 
@@ -8,6 +9,14 @@ export type SettingT = {
 	maxAdmin: number;
 	maxDriver: number;
 };
+
+export const settingSchema = t.Object({
+	pricePerKg: t.Optional(t.Number({ minimum: 1 })),
+	deliveryFee: t.Optional(t.Number({ minimum: 1 })),
+	maxOwner: t.Optional(t.Number({ minimum: 1 })),
+	maxAdmin: t.Optional(t.Number({ minimum: 1 })),
+	maxDriver: t.Optional(t.Number({ minimum: 1 })),
+});
 
 export class Setting {
 	readonly id?: number;
@@ -46,7 +55,7 @@ export class Setting {
          	);`);
 
 		log([
-			{ value: `\u2705 ${Setting.getTableName()}`, option: { color: "green" } },
+			{ value: `\u2705 ${Setting.getTableName()}` },
 			{ value: "table created or exists." },
 		]);
 
@@ -75,7 +84,7 @@ export class Setting {
 						END;`);
 
 		log([
-			{ value: `\u2705 ${Setting.getTableName()}`, option: { color: "green" } },
+			{ value: `\u2705 ${Setting.getTableName()}` },
 			{ value: "updatedAt trigger created or exists." },
 		]);
 	}

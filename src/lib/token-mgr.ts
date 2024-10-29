@@ -1,6 +1,6 @@
 import { InternalServerError } from "elysia";
 import jwt, { type JwtPayload } from "jsonwebtoken";
-import { envVar } from "../config";
+import { getEnv } from "../config";
 import type { Customer } from "../models/customer.model";
 import type { Owner } from "../models/owner.model";
 import type { UserRoleT } from "../types";
@@ -15,6 +15,7 @@ export type RefreshDataT = {
 	userId: number;
 };
 
+const envVar = getEnv();
 // #region setTokens
 const setTokens = (userId: number, username: string, role: UserRoleT) => {
 	const data: TokenDataT = { userId, username, role };
@@ -29,10 +30,7 @@ const setTokens = (userId: number, username: string, role: UserRoleT) => {
 };
 
 // #region setAuthtokens
-export const setAuthTokens = (
-	user: Customer | Owner,
-	role: UserRoleT = "customer",
-) => {
+export const setAuthTokens = (user: Customer | Owner, role: UserRoleT) => {
 	if (user.id) {
 		return setTokens(user.id, user.username, role);
 	}

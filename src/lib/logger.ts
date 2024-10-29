@@ -1,5 +1,3 @@
-import { config, envVar } from "../config";
-
 type LogOptionT = {
 	// color?: string;
 	env?: "development" | "production";
@@ -24,7 +22,7 @@ const logSingleData = (args: LogArg) => {
 	// no option? return log message
 	if (!args.option) console.log(args.value);
 	// Node environment match, consider log message color
-	else if (args.option.env === envVar.nodeEnv) console.log(args.value);
+	else if (args.option.env === Bun.env.NODE_ENV) console.log(args.value);
 };
 
 export default function log(args: LogArg | LogArg[]) {

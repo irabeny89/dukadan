@@ -2,7 +2,7 @@ import { Database } from "bun:sqlite";
 import log from "./logger";
 
 const setupDb = () => {
-	const file = "db/dukadan.sqlite";
+	const file = Bun.env.SQLITE_STORE;
 	const db = new Database(file, { create: true, strict: true });
 
 	log({ value: `\u{1F4DA} Database file: ${file}` });

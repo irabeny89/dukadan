@@ -6,7 +6,7 @@ import type {
 	TSchema,
 	ValidationError,
 } from "elysia";
-import { envVar } from "../config";
+import { getEnv } from "../config";
 import log from "../lib/logger";
 import type { ResponseT } from "../types";
 
@@ -24,6 +24,8 @@ type CodeT =
 	| "PARSE"
 	| "INTERNAL_SERVER_ERROR"
 	| "INVALID_COOKIE_SIGNATURE";
+
+const envVar = getEnv();
 
 const NOT_PROD = envVar.nodeEnv !== "production";
 

@@ -1,5 +1,5 @@
 import { Elysia, t } from "elysia";
-import { envVar, setting } from "../config";
+import { getEnv, getSettings } from "../config";
 import {
 	type TokenDataT,
 	type TokenT,
@@ -20,6 +20,7 @@ import { maxUser } from "../services/max-user.service";
 import { permit } from "../services/permit.service";
 import type { ResponseT } from "../types";
 
+const setting = getSettings();
 const API_DOC_TAG = "Auth";
 const auth = new Elysia({ name: "auth" })
 	.model("signup", signupSchema)
@@ -47,7 +48,7 @@ const auth = new Elysia({ name: "auth" })
 				? {
 						message: "Token refresh successful.",
 						success: true,
-						data: setAuthTokens(user),
+						data: setAuthTokens(user, data.role),
 					}
 				: error<404, ResponseT>(404, {
 						success: false,
@@ -116,7 +117,7 @@ const auth = new Elysia({ name: "auth" })
 					const res: ResponseT<TokenT> = {
 						success: true,
 						message: "Login successful",
-						data: setAuthTokens(user),
+						data: setAuthTokens(user, "owner"),
 					};
 
 					return res;
@@ -184,7 +185,7 @@ const auth = new Elysia({ name: "auth" })
 					const res: ResponseT<TokenT> = {
 						success: true,
 						message: "Login successful",
-						data: setAuthTokens(user),
+						data: setAuthTokens(user, "admin"),
 					};
 
 					return res;
@@ -252,7 +253,7 @@ const auth = new Elysia({ name: "auth" })
 					const res: ResponseT<TokenT> = {
 						success: true,
 						message: "Login successful",
-						data: setAuthTokens(user),
+						data: setAuthTokens(user, "driver"),
 					};
 
 					return res;
@@ -281,7 +282,7 @@ const auth = new Elysia({ name: "auth" })
 					const res: ResponseT<TokenT> = {
 						success: true,
 						message: "User created successfully.",
-						data: setAuthTokens(user),
+						data: setAuthTokens(user, "customer"),
 					};
 
 					return res;
@@ -315,7 +316,7 @@ const auth = new Elysia({ name: "auth" })
 					const res: ResponseT<TokenT> = {
 						success: true,
 						message: "Login successful",
-						data: setAuthTokens(user),
+						data: setAuthTokens(user, "customer"),
 					};
 
 					return res;

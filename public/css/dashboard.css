@@ -1,8 +1,3 @@
-:root {
-    --primary-color: #185ee0;
-    --secondary-color: #e6eef9;
-}
-
 *,
 *:after,
 *:before {
@@ -12,17 +7,6 @@
 body {
     font-family: "DM Serif Text", serif;
     background-color: rgba(230, 238, 249, 0.5);
-}
-
-.container {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 17rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .tabs {
@@ -99,9 +83,71 @@ input[id="radio-3"]:checked ~ .glider {
     transition: 0.25s ease-out;
 }
 
+#username {
+    color: var(--sec-clr);
+}
+#username::after {
+    content: "\1F44F\1F60E";
+}
+#feedback-dialog {
+    z-index: 3;
+    width: 50ch;
+    border: none;
+    box-shadow: var(--shadow);
+}
+
+#feedback-dialog textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid lightgray;
+    border-radius: 2%;
+}
+#feedback-dialog h4 {
+    display: flex;
+    justify-content: space-between;
+}
+#feedback-dialog span:nth-child(2) {
+    color: red;
+    cursor: pointer;
+}
+
+#feedback-dialog::backdrop {
+    background-color: red;
+}
+
+#quick-info {
+    margin-top: 2rem;
+    font-size: 0.6rem;
+}
+
+#options {
+    display: flex;
+    gap: 0.5rem;
+    width: 25ch;
+    margin: auto;
+}
+#options button {
+    background-color: white;
+    color: var(--primary-color);
+    box-shadow: var(--shadow);
+    width: 50%;
+}
+#options button:hover {
+    background-color: var(--secondary-color);
+}
+
+#gas-price,
+#delivery-fee {
+    font-size: 1rem;
+    box-shadow: var(--shadow);
+    width: 10ch;
+    margin: auto;
+    border-radius: 15%;
+}
+
 @media (max-width: 700px) {
     body {
-        font-size: 0.7rem;
+        font-size: 0.8rem;
     }
     .tabs {
         transform: scale(0.5);
