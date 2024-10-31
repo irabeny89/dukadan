@@ -1,6 +1,4 @@
 import { Html } from "@elysiajs/html";
-import FeedbackBtn from "./share/feedbackBtn";
-import Footer from "./share/footer";
 import Head from "./share/head";
 import Header from "./share/header";
 
@@ -26,9 +24,16 @@ export default function DashboardPage() {
               <span id="feedback-dialog-close">Close</span>
             </h4>
             <form method="dialog">
-              <textarea placeholder="Enter message here..." />
+              <textarea
+                required
+                name="feedback-msg"
+                placeholder="Enter message here..."
+              />
               <button type="submit">send</button>
             </form>
+            <div id="feedback-response">
+              <p />
+            </div>
           </dialog>
           <div class="container">
             <div id="quick-info">

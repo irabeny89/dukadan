@@ -1,4 +1,5 @@
-const BASE_URL = "http://127.0.0.1:3000";
+const SETTING_API_PATH = "/api/settings";
+const FEEDBACK_API_PATH = "/api/feedbacks";
 const ACCESS_TOKEN_KEY = "access";
 
 const createHeaders = () => {
@@ -9,16 +10,24 @@ const createHeaders = () => {
   });
 };
 const findById = async (path, id) => {
-  const res = await fetch(`${BASE_URL}${path}/${id}`, {
+  const res = await fetch(`${path}/${id}`, {
     method: "GET",
     headers: createHeaders(),
   });
   return await res.json();
 };
 const findAll = async (path) => {
-  const res = await fetch(`${BASE_URL}${path}`, {
+  const res = await fetch(`${path}`, {
     method: "GET",
     headers: createHeaders(),
+  });
+  return await res.json();
+};
+const create = async (path, body) => {
+  const res = await fetch(`${path}`, {
+    method: "POST",
+    headers: createHeaders(),
+    body: JSON.stringify(body),
   });
   return await res.json();
 };
@@ -47,12 +56,17 @@ export const storeTokens = (data) => {
   } else console.error("window or tokens data not found.");
 };
 
-const settings = {
-  getAll: () => findAll("/api/settings"),
+const setting = {
+  getAll: () => findAll(SETTING_API_PATH),
+};
+const feedback = {
+  getAll: () => findAll(FEEDBACK_API_PATH),
+  create: (body) => create(FEEDBACK_API_PATH, body),
 };
 
 export const apiClient = {
-  settings,
+  setting,
+  feedback,
 };
 
 export const convertToNaira = (amount) =>

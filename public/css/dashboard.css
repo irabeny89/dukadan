@@ -145,6 +145,10 @@ input[id="radio-3"]:checked ~ .glider {
     border-radius: 15%;
 }
 
+#feedback-response {
+    display: none;
+}
+
 @media (max-width: 700px) {
     body {
         font-size: 0.8rem;
