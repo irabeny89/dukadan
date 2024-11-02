@@ -30,6 +30,27 @@ try {
   console.error(error.message);
 }
 
+// handle tabs selection
+const orderTable = document.getElementById("order");
+const ordersTabMarker = document.getElementById("radio-1");
+// add other tabs
+// const profileTabMarker = document.getElementById("radio-2");
+
+// display default tab
+orderTable.style.display = "block";
+ordersTabMarker.onclick = (e) => {
+  // disable other tabs
+  // profileTabMarker.checked = false;
+  e.target.checked = true;
+  orderTable.style.display = "block";
+};
+// profileTabMarker.onclick = (e) => {
+//   // disable other tabs
+//   // ordersTabMarker.checked = false;
+//   e.target.checked = true;
+//   orderTable.style.display = "none";
+// };
+
 feedbackCloseBtn.onclick = () => feedbackDialog.close();
 
 // enable feedback button toggling

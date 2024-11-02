@@ -7,17 +7,21 @@
 body {
     font-family: "DM Serif Text", serif;
     background-color: rgba(230, 238, 249, 0.5);
+    font-size: 0.85rem;
+}
+
+.container {
+    padding: 1rem;
 }
 
 .tabs {
     display: flex;
     position: relative;
     background-color: #fff;
-    box-shadow:
-        0 0 1px 0 rgba(24, 94, 224, 0.15),
-        0 6px 12px 0 rgba(24, 94, 224, 0.15);
+    box-shadow: var(--shadow);
     padding: 0.75rem;
     border-radius: 99px;
+    transform: scale(0.5);
 }
 .tabs * {
     z-index: 2;
@@ -33,7 +37,6 @@ input[type="radio"] {
     justify-content: center;
     height: 54px;
     width: 200px;
-    /* font-size: 0.7rem; */
     font-weight: 500;
     border-radius: 99px;
     cursor: pointer;
@@ -83,16 +86,22 @@ input[id="radio-3"]:checked ~ .glider {
     transition: 0.25s ease-out;
 }
 
+#order {
+    display: none;
+}
+
 #username {
     color: var(--sec-clr);
+    font-size: 1.5rem;
 }
 #username::after {
     content: "\1F44F\1F60E";
 }
 #feedback-dialog {
     z-index: 3;
-    width: 50ch;
+    width: 40ch;
     border: none;
+    border-radius: 0.5rem;
     box-shadow: var(--shadow);
 }
 
@@ -115,33 +124,22 @@ input[id="radio-3"]:checked ~ .glider {
     background-color: red;
 }
 
-#quick-info {
-    margin-top: 2rem;
-    font-size: 0.6rem;
-}
-
 #options {
     display: flex;
     gap: 0.5rem;
-    width: 25ch;
-    margin: auto;
+    padding: 1rem;
 }
-#options button {
-    background-color: white;
+#options small {
     color: var(--primary-color);
-    box-shadow: var(--shadow);
-    width: 50%;
-}
-#options button:hover {
-    background-color: var(--secondary-color);
+    text-decoration: underline;
 }
 
 #gas-price,
 #delivery-fee {
     font-size: 1rem;
+    font-weight: 700;
     box-shadow: var(--shadow);
     width: 10ch;
-    margin: auto;
     border-radius: 15%;
 }
 
@@ -149,11 +147,31 @@ input[id="radio-3"]:checked ~ .glider {
     display: none;
 }
 
-@media (max-width: 700px) {
+#quick-info {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    gap: 1rem;
+}
+#quick-info > div {
+    margin: 2rem 0;
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#greeting {
+    text-align: center;
+}
+
+@media (min-width: 700px) {
     body {
-        font-size: 0.8rem;
+        font-size: 1rem;
     }
     .tabs {
-        transform: scale(0.5);
+        transform: scale(1);
     }
 }
