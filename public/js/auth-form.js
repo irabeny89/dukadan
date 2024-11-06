@@ -1,5 +1,3 @@
-import { storeTokens } from "./utils.js";
-
 const LOGIN_FORM_ID = "login-form";
 const CUSTOMER_LOGIN_API = "/api/customers/login";
 const DASHBOARD_LINK = "/dashboard?tab=orders";
@@ -17,13 +15,9 @@ async function handleLogin(e, form) {
     body: JSON.stringify(data),
   });
   // on success
-  if (res.ok) {
-    // parse response data to js object
-    const json = await res.json();
-    storeTokens(json.data);
-    // redirect to dashboard page
-    window.location.href = DASHBOARD_LINK;
-  } else {
+  // redirect to dashboard page
+  if (res.ok) window.location.href = DASHBOARD_LINK;
+  else {
     // on failure
     submit.disabled = false;
     alert(res.statusText);

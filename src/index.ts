@@ -75,9 +75,9 @@ const app = new Elysia()
   .use(swaggerConfig)
   .use(html())
   .use(jwtConfig)
-  .use(permit)
   .get("/", HomePage)
   .get("/auth", AuthPage)
+  .use(permit)
   .get(
     "/dashboard",
     ({ query, store }) => {
