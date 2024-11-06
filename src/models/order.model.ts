@@ -2,6 +2,7 @@ import { t } from "elysia";
 import { getSettings } from "../config";
 import { db } from "../lib/db";
 import log from "../lib/logger";
+import { Paging } from "../types";
 import { Customer } from "./customer.model";
 
 type CylinderSizeT = 3 | 5 | 6 | 10 | 12 | 12.5 | 15 | 50 | 100;

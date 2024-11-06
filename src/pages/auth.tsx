@@ -4,7 +4,7 @@ import Footer from "./share/footer";
 import Head from "./share/head";
 import Header from "./share/header";
 
-export default function CustomerPage() {
+export default function AuthPage() {
 	return (
 		<html lang="en">
 			<Head
@@ -14,8 +14,7 @@ export default function CustomerPage() {
 						name="description"
 						content="Register, login or retrieve your lost account password. "
 					/>,
-					<title key="2">Dukadan | Customer</title>,
-					<link key="3" rel="stylesheet" href="public/css/customer.css" />,
+					<title key="2">Dukadan | Auth</title>,
 				]}
 			/>
 

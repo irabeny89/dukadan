@@ -12,8 +12,8 @@ export const getEnv = () => ({
 	port: Bun.env.PORT ?? 3000,
 	secret: Bun.env.SECRET ?? "secret",
 	secret2: Bun.env.SECRET2 ?? "secret2",
-	refreshExp: Bun.env.REFRESH_EXP ?? "1d",
-	accessExp: Bun.env.ACCESS_EXP ?? "1d",
+	refreshExp: +(Bun.env.REFRESH_EXP ?? 24 * 60 * 60),
+	accessExp: +(Bun.env.ACCESS_EXP ?? 24 * 60 * 60),
 	sqliteStore: Bun.env.SQLITE_STORE ?? "./db/dukadan.sqlite",
 });
 

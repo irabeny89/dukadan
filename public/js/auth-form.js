@@ -1,6 +1,8 @@
 import { storeTokens } from "./utils.js";
 
 const LOGIN_FORM_ID = "login-form";
+const CUSTOMER_LOGIN_API = "/api/customers/login";
+const DASHBOARD_LINK = "/dashboard?tab=orders";
 
 async function handleLogin(e, form) {
   e.preventDefault();
@@ -9,7 +11,7 @@ async function handleLogin(e, form) {
   submit.disabled = true;
   // extract input data from form
   const data = Object.fromEntries(new FormData(form));
-  const res = await fetch("/api/customers/login", {
+  const res = await fetch(CUSTOMER_LOGIN_API, {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify(data),
@@ -20,7 +22,7 @@ async function handleLogin(e, form) {
     const json = await res.json();
     storeTokens(json.data);
     // redirect to dashboard page
-    window.location.href = "/dashboard";
+    window.location.href = DASHBOARD_LINK;
   } else {
     // on failure
     submit.disabled = false;

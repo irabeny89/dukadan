@@ -1,3 +1,5 @@
+import type { JWTPayloadSpec } from "@elysiajs/jwt";
+
 export type IdAndTimestamp = {
 	id: string;
 	createdAt: string;
@@ -6,22 +8,20 @@ export type IdAndTimestamp = {
 
 /** paging request */
 export type Paging = {
-	/** cursor start point */
-	cursor?: string;
+	page?: number;
 	/** paging max size */
-	size?: number;
+	pageSize?: number;
 	order?: "asc" | "desc";
 	sortBy?: string;
 };
 
 /** pagination response metadata */
-export type Metadata = {
-	startCursor: string;
-	endCursor: string;
-	hasNext: boolean;
-	hasPrevious: boolean;
-	/** paging max size */
-	size: number;
+export type MetadataT = {
+	page: number;
+	pageSize: number;
+	pageCount: number;
+	hasNextPage: boolean;
+	hasPrevPage: boolean;
 	/** total records */
 	totalItems: number;
 };
@@ -31,7 +31,7 @@ export type ResponseT<D = unknown> = {
 	message: string;
 	data?: D;
 	/** pagination metadata */
-	metadata?: Metadata;
+	metadata?: MetadataT;
 };
 
 type ErrorExpected = {
@@ -63,3 +63,18 @@ export type ErrorT = {
 };
 
 export type UserRoleT = "customer" | "owner" | "admin" | "driver";
+
+export type TokenDataT = {
+	userId: number;
+	username: string;
+	role: UserRoleT;
+};
+
+export type Jwt = {
+	readonly sign: (
+		morePayload: Record<string, string | number> & JWTPayloadSpec,
+	) => Promise<string>;
+	readonly verify: (
+		jwt?: string,
+	) => Promise<false | (Record<string, string | number> & JWTPayloadSpec)>;
+};

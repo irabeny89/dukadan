@@ -4,6 +4,7 @@ import Head from "./share/head";
 import Header from "./share/header";
 
 export default function HomePage() {
+	const AUTH_PAGE_LINK = "/auth";
 	return (
 		<html lang="en">
 			<Head
@@ -23,7 +24,7 @@ export default function HomePage() {
 					<div class="fixed wide">
 						<h1 class="large">Welcome to Dukadan Online</h1>
 						<p>Your Trusted Partner for Cooking Gas Solutions</p>
-						<a href="/customer">
+						<a href={AUTH_PAGE_LINK}>
 							<button id="get-started-btn" class="glow-anim" type="button">
 								Get Cooking Gas Today!
 							</button>
@@ -111,7 +112,7 @@ export default function HomePage() {
 					<div class="fixed white wide">
 						<h2>Get Cooking Gas Today!</h2>
 						<p>Contact us: 080 XXXX XXXX | info@dukadan.com</p>
-						<a href="/customer">
+						<a href={AUTH_PAGE_LINK}>
 							<button id="get-started-btn" class="heartbeat" type="button">
 								Get Started
 							</button>

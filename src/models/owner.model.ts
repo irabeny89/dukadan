@@ -44,7 +44,7 @@ export class Owner {
 	);`);
 
 		log([
-			{ value: `\u2705 ${Owner.getTableName()}`, option: { color: "green" } },
+			{ value: `\u2705 ${Owner.getTableName()}` },
 			{ value: "table created or exists." },
 		]);
 	}
@@ -69,7 +69,7 @@ export class Owner {
 						END;`);
 
 		log([
-			{ value: `\u2705 ${Owner.getTableName()}`, option: { color: "green" } },
+			{ value: `\u2705 ${Owner.getTableName()}` },
 			{ value: "updatedAt trigger created or exists." },
 		]);
 	}

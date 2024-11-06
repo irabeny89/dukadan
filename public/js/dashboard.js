@@ -1,5 +1,6 @@
 import { decodeJwt, apiClient, convertToNaira } from "./utils.js";
 
+const searchParams = new URLSearchParams(window.location.search);
 const feedbackDialog = document.querySelector("#feedback-dialog");
 const feedbackBtn = document.getElementById("feedback-btn");
 const feedbackForm = document.querySelector("#feedback-dialog form");
@@ -36,11 +37,16 @@ const ordersTabMarker = document.getElementById("radio-1");
 // add other tabs
 // const profileTabMarker = document.getElementById("radio-2");
 
-// display default tab
-orderTable.style.display = "block";
+// order tab
+if (searchParams.get("tab") === "orders") {
+  orderTable.style.display = "block";
+  ordersTabMarker.checked = true;
+}
+
 ordersTabMarker.onclick = (e) => {
   // disable other tabs
   // profileTabMarker.checked = false;
+
   e.target.checked = true;
   orderTable.style.display = "block";
 };

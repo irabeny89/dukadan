@@ -132,6 +132,7 @@ input[id="radio-3"]:checked ~ .glider {
 #options small {
     color: var(--primary-color);
     text-decoration: underline;
+    cursor: pointer;
 }
 
 #gas-price,
