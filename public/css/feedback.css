@@ -1,0 +1,30 @@
+#feedback-dialog {
+    z-index: 3;
+    width: 40ch;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+}
+
+#feedback-dialog textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid lightgray;
+    border-radius: 2%;
+}
+#feedback-dialog h4 {
+    display: flex;
+    justify-content: space-between;
+}
+#feedback-dialog span:nth-child(2) {
+    color: red;
+    cursor: pointer;
+}
+
+#feedback-dialog::backdrop {
+    background-color: red;
+}
+
+#feedback-response {
+    display: none;
+}

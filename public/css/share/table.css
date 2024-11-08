@@ -11,6 +11,10 @@ body {
     /* overflow: hidden; */
 }
 
+#order {
+    display: none;
+}
+
 .card {
     background-color: #ffffff;
     width: 100%;
@@ -197,4 +201,17 @@ body {
     vertical-align: middle;
     padding: 0;
     margin: 0;
+}
+
+#previous-button,
+#next-button {
+    all: unset;
+    padding: 0 0.5rem;
+    color: white;
+    cursor: pointer;
+}
+
+#previous-button:hover,
+#next-button:hover {
+    background-color: darkgray;
 }

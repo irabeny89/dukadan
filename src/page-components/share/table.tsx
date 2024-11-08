@@ -22,6 +22,7 @@ export default function Table(props: PropsT) {
   return (
     <div id={props.cssId} class="card">
       <link rel="stylesheet" href="public/css/share/table.css" />
+      <script type="module" src="public/js/table.js" />
       <div class="table-title">
         <h2 safe>{props.title}</h2>
       </div>
@@ -73,17 +74,13 @@ export default function Table(props: PropsT) {
           </tbody>
         </table>
         <div class="pagination">
-          <label
+          <button
+            type="button"
             id="previous-button"
-            class="disabled"
-            for={
-              props.hasPrevPage
-                ? `table_radio_${props.page - 1}`
-                : "table_radio_-1"
-            }
+            disabled={!props.hasPrevPage}
           >
             &laquo; Previous
-          </label>
+          </button>
           {Array.from({ length: props.pageCount }).map((_, index) => (
             <label
               key={index.toString()}
@@ -94,13 +91,9 @@ export default function Table(props: PropsT) {
               {1 + index}
             </label>
           ))}
-          <label
-            id="next-button"
-            class={props.hasNextPage ? "undefined" : "disabled"}
-            for={`table_radio_${props.page + 1}`}
-          >
+          <button type="button" id="next-button" disabled={!props.hasNextPage}>
             Next &raquo;
-          </label>
+          </button>
         </div>
       </div>
     </div>

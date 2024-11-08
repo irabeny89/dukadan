@@ -1,3 +1,5 @@
+// constants
+export const DASHBOARD_PATH = "/dashboard";
 const SETTING_API_PATH = "/api/settings";
 const FEEDBACK_API_PATH = "/api/feedbacks";
 const ACCESS_TOKEN_KEY = "access";

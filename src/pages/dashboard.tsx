@@ -36,6 +36,7 @@ export default function DashboardPage({ query, store }: PropsT) {
         heads={[
           <title key="1">Dukadan | Dashboard</title>,
           <link key="2" rel="stylesheet" href="public/css/dashboard.css" />,
+          <script key="3" type="module" src="public/js/dashboard.js" />,
         ]}
       />
       <body>

@@ -86,51 +86,9 @@ input[id="radio-3"]:checked ~ .glider {
     transition: 0.25s ease-out;
 }
 
-#order {
-    display: none;
-}
-
 #username {
     color: var(--sec-clr);
     font-size: 1rem;
-}
-
-#feedback-dialog {
-    z-index: 3;
-    width: 40ch;
-    border: none;
-    border-radius: 0.5rem;
-    box-shadow: var(--shadow);
-}
-
-#feedback-dialog textarea {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid lightgray;
-    border-radius: 2%;
-}
-#feedback-dialog h4 {
-    display: flex;
-    justify-content: space-between;
-}
-#feedback-dialog span:nth-child(2) {
-    color: red;
-    cursor: pointer;
-}
-
-#feedback-dialog::backdrop {
-    background-color: red;
-}
-
-#options {
-    display: flex;
-    gap: 0.5rem;
-    padding: 1rem;
-}
-#options small {
-    color: var(--primary-color);
-    text-decoration: underline;
-    cursor: pointer;
 }
 
 #gas-price,
@@ -140,10 +98,6 @@ input[id="radio-3"]:checked ~ .glider {
     box-shadow: var(--shadow);
     width: 10ch;
     border-radius: 15%;
-}
-
-#feedback-response {
-    display: none;
 }
 
 #quick-info {
@@ -164,6 +118,17 @@ input[id="radio-3"]:checked ~ .glider {
 
 #greeting {
     text-align: center;
+}
+
+#options {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem;
+}
+#options small {
+    color: var(--primary-color);
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 @media (min-width: 700px) {

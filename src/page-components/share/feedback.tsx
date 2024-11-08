@@ -4,6 +4,7 @@ export function Feedback() {
   return (
     <div>
       <script type="module" src="public/js/feedback.js" />
+      <link rel="stylesheet" href="public/css/feedback.css" />
       <dialog id="feedback-dialog">
         <h4>
           <span>Feedback</span>
