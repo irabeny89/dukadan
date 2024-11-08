@@ -74,6 +74,7 @@ export default function Table(props: PropsT) {
         </table>
         <div class="pagination">
           <label
+            id="previous-button"
             class="disabled"
             for={
               props.hasPrevPage
@@ -94,6 +95,7 @@ export default function Table(props: PropsT) {
             </label>
           ))}
           <label
+            id="next-button"
             class={props.hasNextPage ? "undefined" : "disabled"}
             for={`table_radio_${props.page + 1}`}
           >
