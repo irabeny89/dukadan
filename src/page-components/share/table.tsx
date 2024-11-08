@@ -17,6 +17,8 @@ type PropsT = {
   allowAdd: boolean;
 };
 export default function Table(props: PropsT) {
+  const computedPageSize =
+    props.pageSize < props.totalItems ? props.pageSize : props.totalItems;
   return (
     <div id={props.cssId} class="card">
       <link rel="stylesheet" href="public/css/share/table.css" />
@@ -44,7 +46,7 @@ export default function Table(props: PropsT) {
           checked
         />
         <div class="table-display">
-          Showing {props.page} to {props.pageSize} of {props.totalItems} items
+          Showing {props.page} to {computedPageSize} of {props.totalItems} items
         </div>
         <table>
           <thead>
