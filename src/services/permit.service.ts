@@ -45,7 +45,7 @@ const handlePermission = async ({
         value: `::allowed roles:: ${roles}`,
         option: { env: "development" },
       });
-      return respondForbidden();
+      return path.startsWith("/api/") ? respondForbidden() : redirect("/404");
     }
 
     store.user.userId = payload.userId;
