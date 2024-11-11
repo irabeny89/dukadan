@@ -2,6 +2,7 @@
 export const DASHBOARD_PATH = "/dashboard";
 const SETTING_API_PATH = "/api/settings";
 const FEEDBACK_API_PATH = "/api/feedbacks";
+const ORDER_API_PATH = "/api/orders";
 const ACCESS_TOKEN_KEY = "access";
 
 const createHeaders = () => {
@@ -65,10 +66,13 @@ const feedback = {
   getAll: () => findAll(FEEDBACK_API_PATH),
   create: (body) => create(FEEDBACK_API_PATH, body),
 };
-
+const order = {
+  create: (body) => create(ORDER_API_PATH, body),
+};
 export const apiClient = {
   setting,
   feedback,
+  order,
 };
 
 export const convertToNaira = (amount) =>
