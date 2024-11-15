@@ -1,6 +1,7 @@
+import { DASHBOARD_ORDER_TAB_LINK, apiClient } from "./utils.js";
+
 const LOGIN_FORM_ID = "login-form";
 const CUSTOMER_LOGIN_API = "/api/customers/login";
-const DASHBOARD_LINK = "/dashboard?tab=orders";
 
 async function handleLogin(e, form) {
   e.preventDefault();
@@ -9,14 +10,10 @@ async function handleLogin(e, form) {
   submit.disabled = true;
   // extract input data from form
   const data = Object.fromEntries(new FormData(form));
-  const res = await fetch(CUSTOMER_LOGIN_API, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(data),
-  });
+  const res = await apiClient.auth.loginCustomer(data);
   // on success
   // redirect to dashboard page
-  if (res.ok) window.location.href = DASHBOARD_LINK;
+  if (res.ok) window.location.href = DASHBOARD_ORDER_TAB_LINK;
   else {
     // on failure
     submit.disabled = false;

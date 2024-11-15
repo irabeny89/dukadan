@@ -77,12 +77,12 @@ const auth = {
     const res = await fetch(LOGOUT_API_PATH);
     return await res.json();
   },
-  loginCustomer: async (body) => {
-    const res = await fetch(LOGIN_CUSTOMER_API_PATH, {
+  loginCustomer: (body) => {
+    return fetch(LOGIN_CUSTOMER_API_PATH, {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-    return await res.json();
   },
 };
 export const apiClient = {

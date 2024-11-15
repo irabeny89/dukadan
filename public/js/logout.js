@@ -14,7 +14,7 @@ logoutYesBtn.onclick = () => {
   // logout
   apiClient.auth.logout();
   // redirect to homepage
-  window.location.href = "/";
+  window.location.replace("/");
 };
 
 logoutNoBtn.onclick = () => {

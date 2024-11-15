@@ -25,3 +25,6 @@ input {
 #login-form input::placeholder {
     color: white;
 }
+#login-form input:valid {
+    color: black;
+}
