@@ -4,6 +4,8 @@ export const DASHBOARD_PATH = "/dashboard";
 const SETTING_API_PATH = "/api/settings";
 const FEEDBACK_API_PATH = "/api/feedbacks";
 const ORDER_API_PATH = "/api/orders";
+const LOGOUT_API_PATH = "/api/logout";
+const LOGIN_CUSTOMER_API_PATH = "/api/customers/login";
 const ACCESS_TOKEN_KEY = "access";
 
 const createHeaders = () => {
@@ -70,10 +72,24 @@ const feedback = {
 const order = {
   create: (body) => create(ORDER_API_PATH, body),
 };
+const auth = {
+  logout: async () => {
+    const res = await fetch(LOGOUT_API_PATH);
+    return await res.json();
+  },
+  loginCustomer: async (body) => {
+    const res = await fetch(LOGIN_CUSTOMER_API_PATH, {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+    return await res.json();
+  },
+};
 export const apiClient = {
   setting,
   feedback,
   order,
+  auth,
 };
 
 export const convertToNaira = (amount) =>

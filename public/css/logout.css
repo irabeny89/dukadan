@@ -1,0 +1,9 @@
+#are-you-sure > p:first-child {
+    text-align: center;
+}
+#logout-yes-btn {
+    background-color: var(--sec-clr2);
+}
+#logout-yes-btn:hover {
+    background-color: var(--sec-clr);
+}

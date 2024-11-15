@@ -1,6 +1,7 @@
 import { Html } from "@elysiajs/html";
 import type { StoreT } from "../../pages/dashboard";
 import { Feedback } from "../share/feedback";
+import Logout from "../share/logout";
 
 type PropsT = {
   store: StoreT;
@@ -10,9 +11,7 @@ export function Options({ store }: PropsT) {
   return (
     <div id="options">
       <Feedback />
-      <div>
-        <small id="logout-btn">logout</small>
-      </div>
+      <Logout />
       <small id="setting-btn">{isOwnerOrAdmin ? "Settings" : ""}</small>
     </div>
   );

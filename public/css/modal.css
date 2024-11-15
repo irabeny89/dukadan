@@ -16,5 +16,5 @@
 }
 
 .custom-dialog::backdrop {
-    background-color: red;
+    background-color: rgba(22, 11, 11, 0.9);
 }
