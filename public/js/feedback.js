@@ -20,20 +20,20 @@ feedbackBtn.onclick = () => {
 
 // send feedback
 feedbackForm.onsubmit = async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const formdata = new FormData(form);
+  const message = formdata.get("feedback-msg");
   try {
-    e.preventDefault();
-    const form = e.target;
-    const formdata = new FormData(form);
-    const message = formdata.get("feedback-msg");
     const res = await apiClient.feedback.create({ message });
-    form.reset();
-    // hide feedback form
-    feedbackForm.style.display = "none";
-    // show feedback response
-    feedbackResponse.style.display = "block";
     feedbackResponse.textContent = res.message;
   } catch (error) {
     console.error(error.message);
     feedbackResponse.textContent = "Something went wrong.";
   }
+  form.reset();
+  // hide feedback form
+  feedbackForm.style.display = "none";
+  // show feedback response
+  feedbackResponse.style.display = "block";
 };

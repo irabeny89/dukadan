@@ -14,45 +14,8 @@ body {
     padding: 1rem;
 }
 
-.tabs {
-    display: flex;
-    position: relative;
-    background-color: #fff;
-    box-shadow: var(--shadow);
-    padding: 0.75rem;
-    border-radius: 99px;
-    transform: scale(0.5);
-}
-.tabs * {
-    z-index: 2;
-}
-
 input[type="radio"] {
     display: none;
-}
-
-.tab {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 54px;
-    width: 200px;
-    font-weight: 500;
-    border-radius: 99px;
-    cursor: pointer;
-    transition: color 0.15s ease-in;
-}
-
-.notification {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    margin-left: 0.75rem;
-    border-radius: 50%;
-    background-color: var(--secondary-color);
-    transition: 0.15s ease-in;
 }
 
 input[type="radio"]:checked + label {
@@ -75,15 +38,11 @@ input[id="radio-3"]:checked ~ .glider {
     transform: translateX(200%);
 }
 
-.glider {
-    position: absolute;
-    display: flex;
-    height: 54px;
-    width: 200px;
-    background-color: var(--secondary-color);
-    z-index: 1;
-    border-radius: 99px;
-    transition: 0.25s ease-out;
+footer {
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    margin-top: 4rem;
 }
 
 #username {

@@ -1,22 +1,15 @@
 import { Html } from "@elysiajs/html";
+import type { QueryT } from "../../pages/dashboard";
 
-export const TabHeader = () => {
-	return (
-		<div class="tabs">
-			<input type="radio" id="radio-1" name="tabs" checked />
-			<label class="tab" for="radio-1">
-				Orders
-				{/* <span class="notification">2</span> */}
-			</label>
-			{/* <input type="radio" id="radio-2" name="tabs" />
-<label class="tab" for="radio-2">
-  Profile
-</label> */}
-			{/* <input type="radio" id="radio-3" name="tabs" />
-							<label class="tab" for="radio-3">
-								Completed
-							</label> */}
-			<span class="glider" />
-		</div>
-	);
+type Props = Pick<QueryT, "tab">;
+export const TabHeader = ({ tab }: Props) => {
+  return (
+    <div id="tabs">
+      <link rel="stylesheet" href="public/css/tab-header.css" />
+
+      <h5 id="orders-tab" class={tab === "orders" ? "active" : undefined}>
+        Orders
+      </h5>
+    </div>
+  );
 };

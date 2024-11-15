@@ -1,57 +1,59 @@
-const DASHBOARD_ORDER_TAB_LINK = "/dashboard?tab=orders";
+import { apiClient, DASHBOARD_ORDER_TAB_LINK } from "./utils.js";
 
-const searchParams = new URLSearchParams(window.location.search);
-
+const ordersTab = document.getElementById("orders-tab");
 const addOrderBtn = document.getElementById("order-add");
-const refillDialog = document.getElementById("refill-dialog");
-const refillCloseBtn = document.getElementById("refill-dialog-close");
-const refillForm = document.querySelector("#refill-dialog form");
-const refillResponse = document.getElementById("refill-response");
+const refillOrderDialog = document.getElementById("refill-dialog");
+const refillOrderCloseBtn = document.getElementById("refill-dialog-close");
+const refillOrderForm = document.querySelector("#refill-dialog form");
+const refillOrderResponse = document.getElementById("refill-response");
 
-refillCloseBtn.onclick = refillDialog.close();
+refillOrderCloseBtn.onclick = () => {
+  // reload with close button if dataset reload is true
+  if (refillOrderResponse.dataset.reload === "true") {
+    refillOrderResponse.dataset.reload === "false";
+    window.location.reload();
+  } else refillOrderDialog.close();
+};
 
 addOrderBtn.onclick = () => {
-  if (refillDialog.checkVisibility()) refillDialog.close();
+  if (refillOrderDialog.checkVisibility()) refillOrderDialog.close();
   else {
-    refillDialog.show();
+    refillOrderDialog.show();
     // show refill form
-    refillForm.style.display = "block";
+    refillOrderForm.style.display = "block";
     // hide refill response
-    refillResponse.style.display = "none";
+    refillOrderResponse.style.display = "none";
   }
-
-  // try {
-  //   const res = await apiClient.order.create({
-  //     cylinderSize: 5,
-  //     fullAddress: "Elepe, along Ijede rd",
-  //     phone: "09020951797",
-  //   });
-  //   alert(res.message);
-  // } catch (error) {
-  //   alert(error.message);
-  //   console.error(error);
-  // }
 };
 
-// handle tabs selection
-const orderTable = document.getElementById("order");
-const ordersTabMarker = document.getElementById("radio-1");
-// add other tabs
-// const profileTabMarker = document.getElementById("radio-2"); //e.g
+refillOrderForm.onsubmit = async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const formdata = new FormData(form);
+  const data = Object.fromEntries(formdata);
+  try {
+    const res = await apiClient.order.create({
+      ...data,
+      // remember to parse numbers as input values are strings by default
+      quantity: Number(data.quantity),
+    });
+    refillOrderResponse.style.textAlign = "center";
+    refillOrderResponse.textContent = res.message;
+    refillOrderResponse.dataset.reload = "true";
+  } catch (error) {
+    console.error(error.message);
+    refillOrderResponse.style.color = "red";
+    refillOrderResponse.style.textAlign = "center";
+    refillOrderResponse.textContent =
+      "Order not sent. Try again or contact support.";
+  }
+  form.reset();
+  // hide feedback form
+  refillOrderForm.style.display = "none";
+  // show feedback response
+  refillOrderResponse.style.display = "block";
+};
 
-// order tab
-if (searchParams.get("tab") === "orders") {
-  ordersTabMarker.checked = true;
-  orderTable.style.display = "block";
-}
-
-// clicking order tab event
-ordersTabMarker.onclick = (e) => {
+ordersTab.onclick = (e) => {
   window.location.href = DASHBOARD_ORDER_TAB_LINK;
 };
-// profileTabMarker.onclick = (e) => {
-//   // disable other tabs
-//   // ordersTabMarker.checked = false;
-//   e.target.checked = true;
-//   orderTable.style.display = "none";
-// };

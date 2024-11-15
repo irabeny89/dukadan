@@ -1,0 +1,20 @@
+.custom-dialog {
+    z-index: 3;
+    width: 40ch;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+}
+
+.custom-dialog h4 {
+    display: flex;
+    justify-content: space-between;
+}
+.custom-dialog > h4 > span:nth-child(2) {
+    color: red;
+    cursor: pointer;
+}
+
+.custom-dialog::backdrop {
+    background-color: red;
+}

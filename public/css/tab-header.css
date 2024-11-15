@@ -1,0 +1,23 @@
+#tabs {
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--shadow);
+    margin: 2rem 0;
+}
+#tabs h5 {
+    box-shadow: var(--shadow);
+    border: 0.3rem solid var(--primary-color);
+    border-left: none;
+    border-right: none;
+    border-bottom-color: var(--sec-clr2);
+    border-radius: 1rem;
+    padding: 0.7rem;
+    cursor: pointer;
+}
+#tabs h5:hover,
+.active {
+    background-color: var(--secondary-color);
+    transform: scale(1.2);
+}
