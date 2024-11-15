@@ -1,3 +1,5 @@
+import { apiClient } from "./utils.js";
+
 const feedbackDialog = document.querySelector("#feedback-dialog");
 const feedbackBtn = document.getElementById("feedback-btn");
 const feedbackForm = document.querySelector("#feedback-dialog form");
