@@ -97,7 +97,15 @@ export class Setting {
    */
   static findAll() {
     const sql = `SELECT * FROM ${Setting.getTableName()};`;
-    return db.prepare<Setting, string>(sql).all("");
+    return db
+      .prepare<Setting, string>(sql)
+      .all("")
+      .map((item) => {
+        // convert back to main currency (naira)
+        item.deliveryFee = item.deliveryFee / 100;
+        item.pricePerKg = item.pricePerKg / 100;
+        return item;
+      });
   }
 
   // #region updateById
@@ -111,6 +119,9 @@ export class Setting {
     id: number,
     settings: Partial<Omit<SettingT, keyof IdAndTimestamp>>,
   ) {
+    // convert price and fee values to sub unit
+    if (settings.pricePerKg) settings.pricePerKg = settings.pricePerKg * 100;
+    if (settings.deliveryFee) settings.deliveryFee = settings.deliveryFee * 100;
     const batchUpdate = db.transaction((entries) => {
       for (const [k, v] of entries) {
         const sql = `UPDATE ${Setting.getTableName()}

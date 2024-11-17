@@ -4,7 +4,6 @@ import Head from "../page-components/share/head";
 import Header from "../page-components/share/header";
 import LoginForm from "../page-components/share/login-form";
 import SignupForm from "../page-components/share/signup-form";
-import type { UserRoleT } from "../types";
 
 export default function AuthPage() {
   return (

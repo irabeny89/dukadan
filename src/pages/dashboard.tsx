@@ -1,5 +1,4 @@
 import { Html } from "@elysiajs/html";
-import { t } from "elysia";
 import { Info } from "../page-components/dashboard/dash-info";
 import { Greeting } from "../page-components/dashboard/greeting";
 import { Options } from "../page-components/dashboard/options";
@@ -9,6 +8,7 @@ import Footer from "../page-components/share/footer";
 import Head from "../page-components/share/head";
 import Header from "../page-components/share/header";
 import type { UserT } from "../services/permit.service";
+import { t } from "elysia";
 
 export type QueryT = {
   tab: "orders";

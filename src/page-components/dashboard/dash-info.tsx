@@ -3,8 +3,7 @@ import { getSettings } from "../../config";
 import { convertToNaira } from "../../utils";
 import type { UserRoleT } from "../../types";
 import Modal from "../share/modal";
-
-const settings = getSettings();
+import { Setting } from "../../models/setting.model";
 
 const GasPriceForm = () => (
   <form id="gas-price-form" method="dialog">
@@ -19,6 +18,7 @@ const GasPriceForm = () => (
   </form>
 );
 export function Info({ role }: Record<"role", UserRoleT>) {
+  const settings = getSettings();
   const isOwnerOrAdmin = ["owner", "admin"].includes(role);
   return (
     <div id="quick-info">
