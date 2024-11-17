@@ -61,6 +61,7 @@ footer {
 
 #options {
     display: flex;
+    justify-content: right;
     gap: 0.5rem;
     padding: 1rem;
 }
