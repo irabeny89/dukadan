@@ -46,7 +46,7 @@ export default function DashboardPage({ query, store }: PropsT) {
         <Options store={store} />
         <div class="container">
           <Greeting store={store} />
-          <Info />
+          <Info role={store.user.role} />
           <TabHeader tab={query.tab} />
           <TabBody query={query} store={store} />
         </div>
