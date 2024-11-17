@@ -10,7 +10,7 @@ const LOGIN_OWNER_API_PATH = "/api/owners/login";
 const LOGIN_ADMIN_API_PATH = "/api/admins/login";
 const LOGIN_DRIVER_API_PATH = "/api/drivers/login";
 const ACCESS_TOKEN_KEY = "access";
-
+const APP_MAIN_SETTING_ID = 1;
 const createHeaders = () => {
   const accessToken = window.localStorage.getItem(ACCESS_TOKEN_KEY);
   return new Headers({
@@ -40,6 +40,12 @@ const create = async (path, body) => {
   });
   return await res.json();
 };
+const updateById = async (path, id, body) =>
+  await fetch(`${path}/${id}`, {
+    method: "PATCH",
+    headers: createHeaders(),
+    body: JSON.stringify(body),
+  });
 
 /**
  * Decode and returns the encoded payload in a token.
@@ -67,6 +73,7 @@ export const storeTokens = (data) => {
 
 const setting = {
   getAll: () => findAll(SETTING_API_PATH),
+  update: (body) => updateById(SETTING_API_PATH, APP_MAIN_SETTING_ID, body),
 };
 const feedback = {
   getAll: () => findAll(FEEDBACK_API_PATH),

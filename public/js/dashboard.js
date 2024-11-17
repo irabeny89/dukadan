@@ -18,7 +18,7 @@ refillOrderCloseBtn.onclick = () => {
 addOrderBtn.onclick = () => {
   if (refillOrderDialog.checkVisibility()) refillOrderDialog.close();
   else {
-    refillOrderDialog.show();
+    refillOrderDialog.showModal();
     // show refill form
     refillOrderForm.style.display = "block";
     // hide refill response
