@@ -80,19 +80,10 @@ const app = new Elysia()
   .get("/auth", AuthPage, { tags: ["Customer Auth Page"] })
   .get("/404", NotFoundPage, { tags: ["Not Found Page"] })
   .use(permit)
-  .get(
-    "/dashboard",
-    ({ query, store }) => {
-      return DashboardPage({
-        query: { ...query, pageSize: query.pagesize },
-        store,
-      });
-    },
-    {
-      tags: ["Dashboard Page"],
-      query: dashboardPropsSchema,
-      permit: ["admin", "customer", "driver", "owner"],
-    },
-  )
+  .get("/dashboard", DashboardPage, {
+    tags: ["Dashboard Page"],
+    query: dashboardPropsSchema,
+    permit: ["admin", "customer", "driver", "owner"],
+  })
   .group("/api", (app) => app.use(auth).use(setting).use(feedback).use(order))
   .listen(+envVar.port);

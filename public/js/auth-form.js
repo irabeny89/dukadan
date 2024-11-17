@@ -1,7 +1,8 @@
 import { DASHBOARD_ORDER_TAB_LINK, apiClient } from "./utils.js";
 
 const LOGIN_FORM_ID = "login-form";
-const CUSTOMER_LOGIN_API = "/api/customers/login";
+
+const searchParams = new URLSearchParams(window.location.search);
 
 async function handleLogin(e, form) {
   e.preventDefault();
@@ -10,7 +11,16 @@ async function handleLogin(e, form) {
   submit.disabled = true;
   // extract input data from form
   const data = Object.fromEntries(new FormData(form));
-  const res = await apiClient.auth.loginCustomer(data);
+  const apiMap = {
+    customer: apiClient.auth.loginCustomer,
+    owner: apiClient.auth.loginOwner,
+    admin: apiClient.auth.loginAdmin,
+    driver: apiClient.auth.loginDriver,
+  };
+  const role = searchParams.get("role");
+  const reqPromise =
+    role in apiMap ? apiMap[role](data) : apiMap.customer(data);
+  const res = await reqPromise;
   // on success
   // redirect to dashboard page
   if (res.ok) window.location.href = DASHBOARD_ORDER_TAB_LINK;

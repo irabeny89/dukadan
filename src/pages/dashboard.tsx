@@ -11,47 +11,47 @@ import Header from "../page-components/share/header";
 import type { UserT } from "../services/permit.service";
 
 export type QueryT = {
-	tab: "orders";
-	page?: string;
-	pageSize?: string;
+  tab: "orders";
+  page?: string;
+  pagesize?: string; // queries are lowercased
 };
 export type StoreT = {
-	user: UserT;
+  user: UserT;
 };
 export type PropsT = {
-	query: QueryT;
-	store: StoreT;
+  query: QueryT;
+  store: StoreT;
 };
 
 export const dashboardPropsSchema = t.Object({
-	tab: t.UnionEnum(["orders"]),
-	page: t.Optional(t.String()),
-	/**N.B: url queries are usually in lower case */
-	pagesize: t.Optional(t.String()),
+  tab: t.UnionEnum(["orders"]),
+  page: t.Optional(t.String()),
+  /**N.B: url queries are usually in lower case */
+  pagesize: t.Optional(t.String()),
 });
 
 export default function DashboardPage({ query, store }: PropsT) {
-	return (
-		<html lang="en">
-			<Head
-				heads={[
-					<title key="1">Dukadan | Dashboard</title>,
-					<link key="2" rel="stylesheet" href="public/css/global.css" />,
-					<link key="3" rel="stylesheet" href="public/css/dashboard.css" />,
-					<script key="4" type="module" src="public/js/dashboard.js" />,
-				]}
-			/>
-			<body>
-				<Header />
-				<Options store={store} />
-				<div class="container">
-					<Greeting store={store} />
-					<Info />
-					<TabHeader tab={query.tab} />
-					<TabBody query={query} store={store} />
-				</div>
-				<Footer />
-			</body>
-		</html>
-	);
+  return (
+    <html lang="en">
+      <Head
+        heads={[
+          <title key="1">Dukadan | Dashboard</title>,
+          <link key="2" rel="stylesheet" href="public/css/global.css" />,
+          <link key="3" rel="stylesheet" href="public/css/dashboard.css" />,
+          <script key="4" type="module" src="public/js/dashboard.js" />,
+        ]}
+      />
+      <body>
+        <Header />
+        <Options store={store} />
+        <div class="container">
+          <Greeting store={store} />
+          <Info />
+          <TabHeader tab={query.tab} />
+          <TabBody query={query} store={store} />
+        </div>
+        <Footer />
+      </body>
+    </html>
+  );
 }

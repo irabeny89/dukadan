@@ -4,15 +4,15 @@ import { Feedback } from "../share/feedback";
 import Logout from "../share/logout";
 
 type PropsT = {
-  store: StoreT;
+	store: StoreT;
 };
 export function Options({ store }: PropsT) {
-  const isOwnerOrAdmin = ["owner", "admin"].includes(store.user.role);
-  return (
-    <div id="options">
-      <Feedback />
-      <Logout />
-      <small id="setting-btn">{isOwnerOrAdmin ? "Settings" : ""}</small>
-    </div>
-  );
+	const isOwnerOrAdmin = ["owner", "admin"].includes(store.user.role);
+	return (
+		<div id="options">
+			<Feedback />
+			<Logout />
+			<small id="setting-btn">{isOwnerOrAdmin ? "Settings" : ""}</small>
+		</div>
+	);
 }

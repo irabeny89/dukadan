@@ -1,11 +1,6 @@
 import { Elysia, t } from "elysia";
-import { getEnv, getSettings } from "../config";
-import {
-  type TokenT,
-  cookieSchema,
-  createCookie,
-  verifyCookie,
-} from "../lib/token-mgr";
+import { getSettings } from "../config";
+import { type TokenT, cookieSchema, createCookie } from "../lib/token-mgr";
 import { Admin } from "../models/admin.model";
 import { Customer, loginSchema, signupSchema } from "../models/customer.model";
 import { Driver } from "../models/driver.model";
@@ -13,9 +8,8 @@ import { Owner } from "../models/owner.model";
 import { jwtConfig } from "../services/jwt.service";
 import { maxUser } from "../services/max-user.service";
 import type { UserT } from "../services/permit.service";
-import type { ResponseT, TokenDataT, UserRoleT } from "../types";
+import type { ResponseT, UserRoleT } from "../types";
 
-const envVar = getEnv();
 const setting = getSettings();
 const API_DOC_TAG = "Auth";
 const auth = new Elysia({

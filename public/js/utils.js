@@ -6,6 +6,9 @@ const FEEDBACK_API_PATH = "/api/feedbacks";
 const ORDER_API_PATH = "/api/orders";
 const LOGOUT_API_PATH = "/api/logout";
 const LOGIN_CUSTOMER_API_PATH = "/api/customers/login";
+const LOGIN_OWNER_API_PATH = "/api/owners/login";
+const LOGIN_ADMIN_API_PATH = "/api/admins/login";
+const LOGIN_DRIVER_API_PATH = "/api/drivers/login";
 const ACCESS_TOKEN_KEY = "access";
 
 const createHeaders = () => {
@@ -72,18 +75,32 @@ const feedback = {
 const order = {
   create: (body) => create(ORDER_API_PATH, body),
 };
+
+const createAuthRequest = (role) => {
+  const pathMap = {
+    admin: LOGIN_ADMIN_API_PATH,
+    customer: LOGIN_CUSTOMER_API_PATH,
+    driver: LOGIN_DRIVER_API_PATH,
+    owner: LOGIN_OWNER_API_PATH,
+  };
+  if (role in pathMap)
+    return (body) =>
+      fetch(pathMap[role], {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+  throw new Error("role not implemented", role);
+};
 const auth = {
   logout: async () => {
     const res = await fetch(LOGOUT_API_PATH);
     return await res.json();
   },
-  loginCustomer: (body) => {
-    return fetch(LOGIN_CUSTOMER_API_PATH, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-  },
+  loginOwner: createAuthRequest("owner"),
+  loginAdmin: createAuthRequest("admin"),
+  loginDriver: createAuthRequest("driver"),
+  loginCustomer: createAuthRequest("customer"),
 };
 export const apiClient = {
   setting,
