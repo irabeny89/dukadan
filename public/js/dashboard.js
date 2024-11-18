@@ -1,6 +1,11 @@
-import { apiClient, DASHBOARD_ORDER_TAB_LINK } from "./utils.js";
+import {
+  apiClient,
+  DASHBOARD_ORDER_TAB_LINK,
+  DASHBOARD_FEEDBACKS_TAB_LINK,
+} from "./utils.js";
 
 const ordersTab = document.getElementById("orders-tab");
+const feedbacksTab = document.getElementById("feedbacks-tab");
 const addOrderBtn = document.getElementById("order-add");
 const refillOrderDialog = document.getElementById("refill-dialog");
 const refillOrderCloseBtn = document.getElementById("refill-dialog-close");
@@ -56,4 +61,7 @@ refillOrderForm.onsubmit = async (e) => {
 
 ordersTab.onclick = (e) => {
   window.location.href = DASHBOARD_ORDER_TAB_LINK;
+};
+feedbacksTab.onclick = (e) => {
+  window.location.href = DASHBOARD_FEEDBACKS_TAB_LINK;
 };

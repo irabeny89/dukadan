@@ -1,5 +1,6 @@
 // constants
 export const DASHBOARD_ORDER_TAB_LINK = "/dashboard?tab=orders";
+export const DASHBOARD_FEEDBACKS_TAB_LINK = "/dashboard?tab=feedbacks";
 export const DASHBOARD_PATH = "/dashboard";
 const SETTING_API_PATH = "/api/settings";
 const FEEDBACK_API_PATH = "/api/feedbacks";
