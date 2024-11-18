@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap");
+
 :root {
     --pry-clr: #0b0a78;
     --sec-clr: #8f0b04;
@@ -11,6 +13,7 @@
 * {
     box-sizing: border-box;
     outline: none;
+    font-family: "DM Serif Text", serif;
 }
 
 .pulsate-bck {
@@ -33,7 +36,6 @@ body {
     background: #222;
     padding: 0;
     margin: 0;
-    font-family: "DM Serif Text", serif;
     font-weight: 300;
     font-size: 13px;
     text-transform: uppercase;
