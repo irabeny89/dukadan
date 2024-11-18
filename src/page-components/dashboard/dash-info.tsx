@@ -37,20 +37,24 @@ export function Info({ role }: Record<"role", UserRoleT>) {
       <script type="module" src="public/js/info.js" />
       <link rel="stylesheet" href="public/css/info.css" />
 
-      <Modal
-        title="Update Gas Price"
-        id="gas-price-dialog"
-        closeBtnId="gas-price-dialog-close-btn"
-      >
-        <GasPriceForm />
-      </Modal>
-      <Modal
-        title="Update Delivery Fee"
-        id="delivery-fee-dialog"
-        closeBtnId="delivery-fee-dialog-close-btn"
-      >
-        <DeliveryFeeForm />
-      </Modal>
+      {isOwnerOrAdmin && (
+        <>
+          <Modal
+            title="Update Gas Price"
+            id="gas-price-dialog"
+            closeBtnId="gas-price-dialog-close-btn"
+          >
+            <GasPriceForm />
+          </Modal>
+          <Modal
+            title="Update Delivery Fee"
+            id="delivery-fee-dialog"
+            closeBtnId="delivery-fee-dialog-close-btn"
+          >
+            <DeliveryFeeForm />
+          </Modal>
+        </>
+      )}
       <div id="gas-price-btn" title="Click or tap to edit amount">
         {isOwnerOrAdmin ? <small>edit</small> : null}
         <div>Gas Price Per Kg</div>
