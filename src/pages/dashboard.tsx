@@ -24,7 +24,7 @@ export type PropsT = {
 };
 
 export const dashboardPropsSchema = t.Object({
-  tab: t.UnionEnum(["orders"]),
+  tab: t.UnionEnum(["orders", "feedbacks"]),
   page: t.Optional(t.String()),
   /**N.B: url queries are usually in lower case */
   pagesize: t.Optional(t.String()),
