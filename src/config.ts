@@ -15,16 +15,22 @@ export const getEnv = () => ({
   refreshExp: +(Bun.env.REFRESH_EXP ?? 24 * 60 * 60),
   accessExp: +(Bun.env.ACCESS_EXP ?? 24 * 60 * 60),
   sqliteStore: Bun.env.SQLITE_STORE ?? "./db/dukadan.sqlite",
+  maxOwner: +(Bun.env.MAX_OWNER ?? 1),
+  maxAdmin: +(Bun.env.MAX_ADMIN ?? 2),
+  maxDriver: +(Bun.env.MAX_DRIVER ?? 2),
+  deliveryFee: +(Bun.env.DELIVERY_FEE ?? 1000),
+  pricePerKg: +(Bun.env.PRICE_PER_KG ?? 1500),
 });
 
 export const getSettings = () => {
+  const envVar = getEnv();
   // default setting
   const setting: SettingT = {
-    maxOwner: 1,
-    maxAdmin: 2,
-    maxDriver: 2,
-    deliveryFee: 1e5, // sub unit for 1000
-    pricePerKg: 1e5, // sub unit for 1000
+    maxOwner: envVar.maxOwner,
+    maxAdmin: envVar.maxAdmin,
+    maxDriver: envVar.maxDriver,
+    deliveryFee: envVar.deliveryFee,
+    pricePerKg: envVar.pricePerKg,
   };
 
   const _setting = Setting.findAll();

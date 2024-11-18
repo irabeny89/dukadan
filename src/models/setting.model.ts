@@ -1,7 +1,7 @@
 import { t } from "elysia";
 import { db } from "../lib/db";
 import log from "../lib/logger";
-import { IdAndTimestamp } from "../types";
+import type { IdAndTimestamp } from "../types";
 
 export type SettingT = {
   pricePerKg: number;
@@ -23,11 +23,11 @@ export class Setting {
   readonly id?: number;
   readonly createdAt?: Date | string;
   readonly updatedAt?: Date | string;
-  pricePerKg = 1_000_00; // kobo
-  deliveryFee = 1_000_00; // kobo
-  maxOwner = 1;
-  maxAdmin = 2;
-  maxDriver = 2;
+  pricePerKg = +(Bun.env.PRICE_PER_KG ?? 1500);
+  deliveryFee = +(Bun.env.DELIVERY_FEE ?? 1000);
+  maxOwner = +(Bun.env.MAX_OWNER ?? 1);
+  maxAdmin = +(Bun.env.MAX_ADMIN ?? 2);
+  maxDriver = +(Bun.env.MAX_DRIVER ?? 2);
 
   /**
    * Returns the name for this model on the database.
