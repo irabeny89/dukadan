@@ -25,15 +25,20 @@ const renderHeaders = (title: JSX.Element, i: number) => (
 const renderRowData = (data: unknown, idx2: number) => (
 	<td key={idx2.toString()}>{data}</td>
 );
-const renderRows = (row: unknown[], idx: number) => (
-	<tr key={idx.toString()}>
-		<td>
-			<input type="checkbox" />
-		</td>
-		<td>{idx + 1}</td>
-		{row.map(renderRowData)}
-	</tr>
-);
+const renderRows =
+	(page: number, pageSize: number) => (row: unknown[], idx: number) => {
+		const lastNumOfPrevPage = pageSize * (page - 1);
+		const rowNum = 1 + idx + lastNumOfPrevPage;
+		return (
+			<tr key={idx.toString()}>
+				<td>
+					<input type="checkbox" />
+				</td>
+				<td>{rowNum}</td>
+				{row.map(renderRowData)}
+			</tr>
+		);
+	};
 const renderPagingNumbers = (page: number) => (_: unknown, index: number) => (
 	<label
 		key={index.toString()}
@@ -84,9 +89,7 @@ export default function Table(props: PropsT) {
 					id="table_radio_0"
 					checked
 				/>
-				<div class="table-display">
-					Showing {props.page} to {computedPageSize} of {props.totalItems} items
-				</div>
+				<div class="table-display">Total: {props.totalItems}</div>
 				<table>
 					<thead>
 						<tr>
@@ -95,7 +98,9 @@ export default function Table(props: PropsT) {
 							{props.headerTitles.map(renderHeaders)}
 						</tr>
 					</thead>
-					<tbody>{props.bodyRows.map(renderRows)}</tbody>
+					<tbody>
+						{props.bodyRows.map(renderRows(props.page, props.pageSize))}
+					</tbody>
 				</table>
 				<div class="pagination">
 					<button
