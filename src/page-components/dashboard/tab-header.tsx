@@ -7,12 +7,19 @@ export const TabHeader = ({ tab }: Props) => {
     <div id="tabs">
       <link rel="stylesheet" href="public/css/tab-header.css" />
 
-      <h5 id="orders-tab" class={tab === "orders" ? "active" : undefined}>
-        Orders
-      </h5>
-      <h5 id="feedbacks-tab" class={tab === "feedbacks" ? "active" : undefined}>
-        Feedbacks
-      </h5>
+      <a href="/dashboard?tab=orders">
+        <h5 id="orders-tab" class={tab === "orders" ? "active" : undefined}>
+          Orders
+        </h5>
+      </a>
+      <a href="/dashboard?tab=feedbacks">
+        <h5
+          id="feedbacks-tab"
+          class={tab === "feedbacks" ? "active" : undefined}
+        >
+          Feedbacks
+        </h5>
+      </a>
     </div>
   );
 };

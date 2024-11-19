@@ -58,10 +58,3 @@ refillOrderForm.onsubmit = async (e) => {
   // show feedback response
   refillOrderResponse.style.display = "block";
 };
-
-ordersTab.onclick = (e) => {
-  window.location.href = DASHBOARD_ORDER_TAB_LINK;
-};
-feedbacksTab.onclick = (e) => {
-  window.location.href = DASHBOARD_FEEDBACKS_TAB_LINK;
-};

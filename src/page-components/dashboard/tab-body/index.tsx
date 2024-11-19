@@ -3,12 +3,12 @@ import type { PropsT } from "../../../pages/dashboard";
 import { Orders } from "./orders";
 
 export const TabBody = ({ query, store }: PropsT) => {
-  if (query.tab === "orders") return <Orders query={query} store={store} />;
-  if (query.tab === "feedbacks")
-    return (
-      <div>
-        No feedback implementation yet
-        {/* <Table
+	if (query.tab === "orders") return <Orders query={query} store={store} />;
+	if (query.tab === "feedbacks")
+		return (
+			<div>
+				No feedback implementation yet
+				{/* <Table
           cssId="feedback-table"
           headerTitles={headerTitles}
           bodyRows={bodyRows}
@@ -22,7 +22,7 @@ export const TabBody = ({ query, store }: PropsT) => {
           allowAdd={true}
           allowDelete={false}
         /> */}
-      </div>
-    );
-  return null;
+			</div>
+		);
+	return null;
 };
