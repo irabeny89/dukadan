@@ -215,3 +215,7 @@ body {
 #next-button:hover {
     background-color: darkgray;
 }
+
+tr {
+    cursor: pointer;
+}

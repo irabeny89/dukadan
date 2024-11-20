@@ -6,6 +6,10 @@ const feedbackForm = document.querySelector("#feedback-dialog form");
 const feedbackCloseBtn = document.getElementById("feedback-dialog-close");
 const feedbackResponse = document.getElementById("feedback-response");
 
+document.onclick = (e) => {
+  if (e.target === feedbackDialog) feedbackDialog.close();
+};
+
 // handle feedback dialog modal
 feedbackCloseBtn.onclick = () => feedbackDialog.close();
 // enable feedback button toggling

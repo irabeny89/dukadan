@@ -6,6 +6,13 @@ const logoutDialogCloseBtn = document.getElementById("logout-dialog-close-btn");
 const logoutYesBtn = document.getElementById("logout-yes-btn");
 const logoutNoBtn = document.getElementById("logout-no-btn");
 
+document.onclick = (e) => {
+  if (e.target === logoutDialog) {
+    console.log(e);
+    logoutDialog.close();
+  }
+};
+
 logoutBtn.onclick = () => {
   logoutDialog.showModal();
 };
