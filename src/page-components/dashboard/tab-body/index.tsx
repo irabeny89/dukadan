@@ -6,10 +6,11 @@ import { Feedbacks } from "./feedbacks";
 export const TabBody = ({
   query,
   store: {
-    user: { userId },
+    user: { userId, role },
   },
 }: PropsT) => {
   if (query.tab === "orders") return <Orders query={query} userId={userId} />;
-  if (query.tab === "feedbacks") return <Feedbacks query={query} />;
+  if (query.tab === "feedbacks" && role === "owner")
+    return <Feedbacks query={query} />;
   return null;
 };
