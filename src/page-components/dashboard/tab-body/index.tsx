@@ -3,14 +3,9 @@ import type { PropsT } from "../../../pages/dashboard";
 import { Feedbacks } from "./feedbacks";
 import { Orders } from "./orders";
 
-export const TabBody = ({
-	query,
-	store: {
-		user: { userId, role },
-	},
-}: PropsT) => {
-	if (query.tab === "orders") return <Orders query={query} userId={userId} />;
-	if (query.tab === "feedbacks" && role === "owner")
+export const TabBody = ({ query, store }: PropsT) => {
+	if (query.tab === "orders") return <Orders query={query} store={store} />;
+	if (query.tab === "feedbacks" && store.user.role === "owner")
 		return <Feedbacks query={query} />;
 	return null;
 };

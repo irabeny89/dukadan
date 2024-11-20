@@ -56,7 +56,7 @@ export class Order {
 		this.quantity = data.quantity;
 		this.address = data.address;
 		this.phone = data.phone;
-		this.price = pricePerKg * data.quantity;
+		this.price = pricePerKg * data.quantity * 100;
 		this.deliveryFee = deliveryFee * 100;
 		this.userId = data.userId;
 	}

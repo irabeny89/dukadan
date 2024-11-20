@@ -2,7 +2,7 @@ import { Html } from "@elysiajs/html";
 import paginator from "../../../lib/paginator";
 import { Customer } from "../../../models/customer.model";
 import { Order } from "../../../models/order.model";
-import type { QueryT } from "../../../pages/dashboard";
+import type { QueryT, StoreT } from "../../../pages/dashboard";
 import { convertToNaira, createTitleFromObjectKeys } from "../../../utils";
 import AddIcon from "../../share/add-icon";
 import Modal from "../../share/modal";
@@ -11,7 +11,7 @@ import Table from "../../share/table";
 
 type OrderPropsT = {
 	query: QueryT;
-	userId: number;
+	store: StoreT;
 };
 const renderNoOrderYet = () => {
 	return (
@@ -28,7 +28,12 @@ const renderNoOrderYet = () => {
 	);
 };
 
-export function Orders({ query, userId }: OrderPropsT) {
+export function Orders({
+	query,
+	store: {
+		user: { userId, role },
+	},
+}: OrderPropsT) {
 	const orders = Order.findAllByUserId(userId);
 	if (!orders.length) return renderNoOrderYet();
 
@@ -72,7 +77,7 @@ export function Orders({ query, userId }: OrderPropsT) {
 				pageCount={metadata.pageCount}
 				pageSize={metadata.pageSize}
 				totalItems={metadata.totalItems}
-				allowAdd={true}
+				allowAdd={role === "customer"}
 				allowDelete={false}
 			/>
 		</div>
