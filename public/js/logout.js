@@ -6,9 +6,18 @@ const logoutDialogCloseBtn = document.getElementById("logout-dialog-close-btn");
 const logoutYesBtn = document.getElementById("logout-yes-btn");
 const logoutNoBtn = document.getElementById("logout-no-btn");
 
-document.onclick = (e) => {
-  if (e.target === logoutDialog) {
-    console.log(e);
+// document.onclick = (e) => {
+//   if (e.target === logoutDialog) logoutDialog.close();
+// };
+logoutDialog.onclick = (e) => {
+  const rect = logoutDialog.getBoundingClientRect();
+  const isInDialog =
+    rect.top <= e.clientY &&
+    e.clientY <= rect.top + rect.height &&
+    rect.left <= e.clientX &&
+    e.clientX <= rect.left + rect.width;
+
+  if (!isInDialog) {
     logoutDialog.close();
   }
 };

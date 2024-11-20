@@ -6,17 +6,25 @@ const feedbackForm = document.querySelector("#feedback-dialog form");
 const feedbackCloseBtn = document.getElementById("feedback-dialog-close");
 const feedbackResponse = document.getElementById("feedback-response");
 
-document.onclick = (e) => {
-  if (e.target === feedbackDialog) feedbackDialog.close();
-};
+feedbackDialog.onclick = (e) => {
+  const rect = feedbackDialog.getBoundingClientRect();
+  const isInDialog =
+    rect.top <= e.clientY &&
+    e.clientY <= rect.top + rect.height &&
+    rect.left <= e.clientX &&
+    e.clientX <= rect.left + rect.width;
 
+  if (!isInDialog) {
+    feedbackDialog.close();
+  }
+};
 // handle feedback dialog modal
 feedbackCloseBtn.onclick = () => feedbackDialog.close();
 // enable feedback button toggling
 feedbackBtn.onclick = () => {
   if (feedbackDialog.checkVisibility()) feedbackDialog.close();
   else {
-    feedbackDialog.show();
+    feedbackDialog.showModal();
     // show feedback form again
     feedbackForm.style.display = "block";
     // hide feedback response

@@ -6,6 +6,19 @@ const refillOrderCloseBtn = document.getElementById("refill-dialog-close");
 const refillOrderForm = document.querySelector("#refill-dialog form");
 const refillOrderResponse = document.getElementById("refill-response");
 
+refillOrderDialog.onclick = (e) => {
+  const rect = refillOrderDialog.getBoundingClientRect();
+  const isInDialog =
+    rect.top <= e.clientY &&
+    e.clientY <= rect.top + rect.height &&
+    rect.left <= e.clientX &&
+    e.clientX <= rect.left + rect.width;
+
+  if (!isInDialog) {
+    refillOrderDialog.close();
+  }
+};
+
 if (refillOrderCloseBtn)
   refillOrderCloseBtn.onclick = () => {
     // reload with close button if dataset reload is true

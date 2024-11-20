@@ -13,8 +13,17 @@ const deliveryFeeDialogCloseBtn = document.getElementById(
   "delivery-fee-dialog-close-btn",
 );
 
-document.onclick = (e) => {
-  if (e.target === gasPriceDialog) gasPriceDialog.close();
+gasPriceDialog.onclick = (e) => {
+  const rect = gasPriceDialog.getBoundingClientRect();
+  const isInDialog =
+    rect.top <= e.clientY &&
+    e.clientY <= rect.top + rect.height &&
+    rect.left <= e.clientX &&
+    e.clientX <= rect.left + rect.width;
+
+  if (!isInDialog) {
+    gasPriceDialog.close();
+  }
 };
 
 document.onclick = (e) => {

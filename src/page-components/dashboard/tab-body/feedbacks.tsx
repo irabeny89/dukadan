@@ -1,12 +1,11 @@
 import { Html } from "@elysiajs/html";
 import paginator from "../../../lib/paginator";
 import { Customer } from "../../../models/customer.model";
-import { Order } from "../../../models/order.model";
+import { Feedback } from "../../../models/feedback.model";
 import type { QueryT } from "../../../pages/dashboard";
 import { convertToNaira, createTitleFromObjectKeys } from "../../../utils";
 import Modal from "../../share/modal";
 import Table from "../../share/table";
-import { Feedback } from "../../../models/feedback.model";
 
 type FeedbackPropsT = {
   query: QueryT;

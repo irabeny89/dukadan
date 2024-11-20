@@ -20,11 +20,6 @@
     color: red;
     cursor: pointer;
 }
-
-#feedback-dialog::backdrop {
-    background-color: red;
-}
-
 #feedback-response {
     display: none;
 }

@@ -33,7 +33,6 @@ msgDialogCloseBtn.onclick = () => {
 
 document.onclick = (e) => {
   if (e.target === msgDialog) {
-    console.log(e.target);
     msgDialog.close();
   }
 };
