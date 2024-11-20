@@ -2,7 +2,7 @@ import { Html } from "@elysiajs/html";
 import AddIcon from "./add-icon";
 import TrashIcon from "./trash-icon";
 
-type PropsT = {
+export type TablePropsT = {
 	cssId: string;
 	cssAddId?: string;
 	cssDeleteId?: string;
@@ -49,7 +49,7 @@ const renderPagingNumbers = (page: number) => (_: unknown, index: number) => (
 		{1 + index}
 	</label>
 );
-export default function Table(props: PropsT) {
+export default function Table(props: TablePropsT) {
 	const computedPageSize =
 		props.pageSize < props.totalItems ? props.pageSize : props.totalItems;
 	return (

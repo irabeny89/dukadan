@@ -2,13 +2,17 @@ import { Html } from "@elysiajs/html";
 import paginator from "../../../lib/paginator";
 import { Customer } from "../../../models/customer.model";
 import { Order } from "../../../models/order.model";
-import type { PropsT } from "../../../pages/dashboard";
+import type { QueryT } from "../../../pages/dashboard";
 import { convertToNaira, createTitleFromObjectKeys } from "../../../utils";
 import AddIcon from "../../share/add-icon";
 import Modal from "../../share/modal";
 import { OrderCreateForm } from "../../share/order-create";
 import Table from "../../share/table";
 
+type OrderPropsT = {
+	query: QueryT;
+	userId: number;
+};
 const renderNoOrderYet = () => {
 	return (
 		<div style="text-align:center">
@@ -23,51 +27,29 @@ const renderNoOrderYet = () => {
 		</div>
 	);
 };
-const renderOrderTable = ({ query, store }: PropsT) => {
-	const page = +(query.page ?? 1);
-	const pageSize = +(query.pagesize ?? 10);
-	const orders = Order.findAllByUserId(store.user.userId);
+
+export function Orders({ query, userId }: OrderPropsT) {
+	const orders = Order.findAllByUserId(userId);
 	if (!orders.length) return renderNoOrderYet();
+
 	const { data, metadata } = paginator(orders, {
-		page,
-		pageSize,
+		page: +(query.page ?? 1),
+		pageSize: +(query.pagesize ?? 10),
 	});
 	const tableOrders = data.map(
-		({ id, updatedAt, userId, createdAt, ...rest }) => {
+		({ id, updatedAt, userId, createdAt, deliveryFee, price, ...rest }) => {
 			return {
 				username: Customer.findById(userId)?.username,
 				createdAt: new Date(createdAt ?? "").toLocaleString(),
+				deliveryFee: convertToNaira(deliveryFee),
+				price: convertToNaira(price),
 				...rest,
 			};
 		},
 	);
 	const headerTitles: string[] = createTitleFromObjectKeys(tableOrders[0]);
-	const bodyRows = tableOrders.map((item) => {
-		item.deliveryFee = convertToNaira(item.deliveryFee);
-		item.price = convertToNaira(item.price);
-		item.createdAt = item.createdAt?.toLocaleString();
-		return Object.values(item);
-	});
-	return (
-		<Table
-			cssId="order-table"
-			cssAddId="order-add"
-			headerTitles={headerTitles}
-			bodyRows={bodyRows}
-			hasNextPage={metadata.hasNextPage}
-			hasPrevPage={metadata.hasPrevPage}
-			page={metadata.page}
-			pageCount={metadata.pageCount}
-			pageSize={metadata.pageSize}
-			title="Orders"
-			totalItems={metadata.totalItems}
-			allowAdd={true}
-			allowDelete={false}
-		/>
-	);
-};
+	const bodyRows = tableOrders.map(Object.values);
 
-export function Orders({ query, store }: PropsT) {
 	return (
 		<div>
 			<Modal
@@ -78,7 +60,21 @@ export function Orders({ query, store }: PropsT) {
 				<OrderCreateForm />
 			</Modal>
 
-			{renderOrderTable({ query, store })}
+			<Table
+				title="Orders"
+				cssId="order-table"
+				cssAddId="order-add"
+				headerTitles={headerTitles}
+				bodyRows={bodyRows}
+				hasNextPage={metadata.hasNextPage}
+				hasPrevPage={metadata.hasPrevPage}
+				page={metadata.page}
+				pageCount={metadata.pageCount}
+				pageSize={metadata.pageSize}
+				totalItems={metadata.totalItems}
+				allowAdd={true}
+				allowDelete={false}
+			/>
 		</div>
 	);
 }

@@ -1,11 +1,5 @@
-import {
-  apiClient,
-  DASHBOARD_ORDER_TAB_LINK,
-  DASHBOARD_FEEDBACKS_TAB_LINK,
-} from "./utils.js";
+import { apiClient } from "./utils.js";
 
-const ordersTab = document.getElementById("orders-tab");
-const feedbacksTab = document.getElementById("feedbacks-tab");
 const addOrderBtn = document.getElementById("order-add");
 const refillOrderDialog = document.getElementById("refill-dialog");
 const refillOrderCloseBtn = document.getElementById("refill-dialog-close");
