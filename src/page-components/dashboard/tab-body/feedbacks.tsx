@@ -33,6 +33,7 @@ export function Feedbacks({ query }: FeedbackPropsT) {
   const data = feedbacks.map(
     ({ id, updatedAt, userId, createdAt, ...rest }) => {
       return {
+        id,
         username: Customer.findById(userId)?.username,
         createdAt: new Date(createdAt ?? "").toLocaleString(),
         ...rest,

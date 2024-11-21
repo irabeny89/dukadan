@@ -12,11 +12,25 @@ const refillStatusDialog = document.getElementById("refill-status-dialog");
 const refillStatusClose = document.getElementById("refill-status-close");
 const allTr = document.querySelectorAll("tbody tr");
 
-const handleStatusChange = (status) => () => {};
+let selectedRowDataId;
+const handleStatusChange = async (id, status) => {
+  const res = await apiClient.order.update(id, { status });
+  if (res.ok) {
+    alert(`Status changed to '${status.toUpperCase()}' successfully.`);
+    window.location.reload();
+  } else alert("Something went wrong. Contact support.");
+};
+pendingStatusBtn.onclick = () =>
+  handleStatusChange(selectedRowDataId, "pending");
+processingStatusBtn.onclick = () =>
+  handleStatusChange(selectedRowDataId, "processing");
+doneStatusBtn.onclick = () => handleStatusChange(selectedRowDataId, "done");
 
 allTr.forEach((tr) => {
   tr.onclick = () => {
     refillStatusDialog.showModal();
+    // set data id from the table role data to refill dialog
+    selectedRowDataId = tr.dataset.id;
 
     const status = tr.querySelector("[key='8']").textContent;
     const address = tr.querySelector("[key='6']").textContent;

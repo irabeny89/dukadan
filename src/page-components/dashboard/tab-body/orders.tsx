@@ -67,6 +67,7 @@ export function Orders({
   const data = orders.map(
     ({ id, updatedAt, userId, createdAt, deliveryFee, price, ...rest }) => {
       return {
+        id,
         username: Customer.findById(userId)?.username,
         createdAt: new Date(createdAt ?? "").toLocaleString(),
         deliveryFee: convertToNaira(deliveryFee),

@@ -2,8 +2,7 @@ import { Html } from "@elysiajs/html";
 import AddIcon from "./add-icon";
 import TrashIcon from "./trash-icon";
 import paginator from "../../lib/paginator";
-import { Customer } from "../../models/customer.model";
-import { convertToNaira, createTitleFromObjectKeys } from "../../utils";
+import { createTitleFromObjectKeys } from "../../utils";
 
 export type TablePropsT = {
   data: object[];
@@ -31,13 +30,14 @@ const renderRows =
   (page: number, pageSize: number) => (row: string[], idx: number) => {
     const lastNumOfPrevPage = pageSize * (page - 1);
     const rowNum = 1 + idx + lastNumOfPrevPage;
+    const [id, ...rest] = row;
     return (
-      <tr key={idx.toString()}>
+      <tr key={idx.toString()} data-id={id}>
         <td>
           <input type="checkbox" />
         </td>
         <td>{rowNum}</td>
-        {row.map(renderRowData)}
+        {rest.map(renderRowData)}
       </tr>
     );
   };
@@ -57,7 +57,8 @@ export default function Table(props: TablePropsT) {
     page: +(props.page ?? 1),
     pageSize: +(props.pageSize ?? 10),
   });
-  const headerTitles = createTitleFromObjectKeys(data[0]);
+  // slice off `id`
+  const headerTitles = createTitleFromObjectKeys(data[0]).slice(1);
   const bodyRows = data.map(Object.values);
 
   return (

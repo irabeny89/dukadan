@@ -82,6 +82,7 @@ const feedback = {
 };
 const order = {
   create: (body) => create(ORDER_API_PATH, body),
+  update: (id, body) => updateById(ORDER_API_PATH, id, body),
 };
 
 const createAuthRequest = (role) => {
