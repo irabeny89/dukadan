@@ -4,14 +4,14 @@ import { FeedbackOption } from "../share/feedback-option";
 import Logout from "../share/logout";
 
 type PropsT = {
-  store: StoreT;
+	store: StoreT;
 };
 export function Options({ store }: PropsT) {
-  const isCustomer = "customer" === store.user.role;
-  return (
-    <div id="options">
-      {isCustomer && <FeedbackOption />}
-      <Logout />
-    </div>
-  );
+	const isCustomer = "customer" === store.user.role;
+	return (
+		<div id="options">
+			{isCustomer && <FeedbackOption />}
+			<Logout />
+		</div>
+	);
 }

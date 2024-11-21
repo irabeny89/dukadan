@@ -33,11 +33,11 @@ allTr.forEach((tr) => {
     // set data id from the table role data to refill dialog
     selectedRowDataId = tr.dataset.id;
 
-    const status = tr.querySelector("[key='8']").textContent;
-    const address = tr.querySelector("[key='6']").textContent;
+    const status = tr.querySelector("[key='1']").textContent;
+    const address = tr.querySelector("[key='7']").textContent;
     const cylinderSize =
-      tr.querySelector("[key='4']").textContent +
-      tr.querySelector("[key='5']").textContent;
+      tr.querySelector("[key='3']").textContent +
+      tr.querySelector("[key='2']").textContent;
 
     document.getElementById("customer-address").textContent = address;
     document.getElementById("cylinder-size").textContent = cylinderSize;
