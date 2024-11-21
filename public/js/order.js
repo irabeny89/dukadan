@@ -7,7 +7,6 @@ const addOrderBtn = document.getElementById("order-add");
 const refillOrderDialog = document.getElementById("refill-dialog");
 const refillOrderCloseBtn = document.getElementById("refill-dialog-close");
 const refillOrderForm = document.querySelector("#refill-dialog form");
-const refillOrderResponse = document.getElementById("refill-response");
 const refillStatusDialog = document.getElementById("refill-status-dialog");
 const refillStatusClose = document.getElementById("refill-status-close");
 const allTr = document.querySelectorAll("tbody tr");
@@ -20,11 +19,13 @@ const handleStatusChange = async (id, status) => {
     window.location.reload();
   } else alert("Something went wrong. Contact support.");
 };
-pendingStatusBtn.onclick = () =>
-  handleStatusChange(selectedRowDataId, "pending");
-processingStatusBtn.onclick = () =>
-  handleStatusChange(selectedRowDataId, "processing");
-doneStatusBtn.onclick = () => handleStatusChange(selectedRowDataId, "done");
+if (pendingStatusBtn || processingStatusBtn || doneStatusBtn) {
+  pendingStatusBtn.onclick = () =>
+    handleStatusChange(selectedRowDataId, "pending");
+  processingStatusBtn.onclick = () =>
+    handleStatusChange(selectedRowDataId, "processing");
+  doneStatusBtn.onclick = () => handleStatusChange(selectedRowDataId, "done");
+}
 
 allTr.forEach((tr) => {
   tr.onclick = () => {
@@ -44,16 +45,17 @@ allTr.forEach((tr) => {
   };
 });
 
-refillStatusDialog.onclick = (e) => {
-  const rect = refillStatusDialog.getBoundingClientRect();
-  const isInDialog =
-    rect.top <= e.clientY &&
-    e.clientY <= rect.top + rect.height &&
-    rect.left <= e.clientX &&
-    e.clientX <= rect.left + rect.width;
+if (refillStatusDialog)
+  refillStatusDialog.onclick = (e) => {
+    const rect = refillStatusDialog.getBoundingClientRect();
+    const isInDialog =
+      rect.top <= e.clientY &&
+      e.clientY <= rect.top + rect.height &&
+      rect.left <= e.clientX &&
+      e.clientX <= rect.left + rect.width;
 
-  if (!isInDialog) refillStatusDialog.close();
-};
+    if (!isInDialog) refillStatusDialog.close();
+  };
 
 if (refillStatusClose)
   refillStatusClose.onclick = () => refillStatusDialog.close();
@@ -72,11 +74,7 @@ if (refillOrderDialog)
 
 if (refillOrderCloseBtn)
   refillOrderCloseBtn.onclick = () => {
-    // reload with close button if dataset reload is true
-    if (refillOrderResponse.dataset.reload === "true") {
-      refillOrderResponse.dataset.reload === "false";
-      window.location.reload();
-    } else refillOrderDialog.close();
+    refillOrderDialog.close();
   };
 
 if (addOrderBtn)
@@ -84,10 +82,6 @@ if (addOrderBtn)
     if (refillOrderDialog.checkVisibility()) refillOrderDialog.close();
     else {
       refillOrderDialog.showModal();
-      // show refill form
-      refillOrderForm.style.display = "block";
-      // hide refill response
-      refillOrderResponse.style.display = "none";
     }
   };
 
@@ -97,25 +91,15 @@ if (refillOrderForm)
     const form = e.target;
     const formdata = new FormData(form);
     const data = Object.fromEntries(formdata);
-    try {
-      const res = await apiClient.order.create({
-        ...data,
-        // remember to parse numbers as input values are strings by default
-        quantity: Number(data.quantity),
-      });
-      refillOrderResponse.style.textAlign = "center";
-      refillOrderResponse.textContent = res.message;
-      refillOrderResponse.dataset.reload = "true";
-    } catch (error) {
-      console.error(error.message);
-      refillOrderResponse.style.color = "red";
-      refillOrderResponse.style.textAlign = "center";
-      refillOrderResponse.textContent =
-        "Order not sent. Try again or contact support.";
-    }
-    form.reset();
-    // hide feedback form
-    refillOrderForm.style.display = "none";
-    // show feedback response
-    refillOrderResponse.style.display = "block";
+    const res = await apiClient.order.create({
+      ...data,
+      // remember to parse numbers as input values are strings by default
+      quantity: Number(data.quantity),
+    });
+    if (res.ok) {
+      form.reset();
+      const data = await res.json();
+      alert(data.message);
+      window.location.reload();
+    } else alert("Something went wrong.Contact support.");
   };

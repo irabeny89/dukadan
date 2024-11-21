@@ -4,7 +4,6 @@ const feedbackDialog = document.querySelector("#feedback-dialog");
 const feedbackBtn = document.getElementById("feedback-btn");
 const feedbackForm = document.querySelector("#feedback-dialog form");
 const feedbackCloseBtn = document.getElementById("feedback-dialog-close");
-const feedbackResponse = document.getElementById("feedback-response");
 
 feedbackDialog.onclick = (e) => {
   const rect = feedbackDialog.getBoundingClientRect();
@@ -22,14 +21,7 @@ feedbackDialog.onclick = (e) => {
 feedbackCloseBtn.onclick = () => feedbackDialog.close();
 // enable feedback button toggling
 feedbackBtn.onclick = () => {
-  if (feedbackDialog.checkVisibility()) feedbackDialog.close();
-  else {
-    feedbackDialog.showModal();
-    // show feedback form again
-    feedbackForm.style.display = "block";
-    // hide feedback response
-    feedbackResponse.style.display = "none";
-  }
+  feedbackDialog.showModal();
 };
 
 // send feedback
@@ -38,16 +30,11 @@ feedbackForm.onsubmit = async (e) => {
   const form = e.target;
   const formdata = new FormData(form);
   const message = formdata.get("feedback-msg");
-  try {
-    const res = await apiClient.feedback.create({ message });
-    feedbackResponse.textContent = res.message;
-  } catch (error) {
-    console.error(error.message);
-    feedbackResponse.textContent = "Something went wrong.";
-  }
-  form.reset();
-  // hide feedback form
-  feedbackForm.style.display = "none";
-  // show feedback response
-  feedbackResponse.style.display = "block";
+  const res = await apiClient.feedback.create({ message });
+  if (res.ok) {
+    form.reset();
+    const data = await res.json();
+    alert(data.message);
+    feedbackDialog.close();
+  } else alert("Something went wrong. Contact support.");
 };

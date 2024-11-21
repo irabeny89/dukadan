@@ -19,30 +19,21 @@ const createHeaders = () => {
     "Content-Type": "application/json",
   });
 };
-const findById = async (path, id) => {
-  const res = await fetch(`${path}/${id}`, {
+const findAll = (path) =>
+  fetch(`${path}`, {
     method: "GET",
     headers: createHeaders(),
   });
-  return await res.json();
-};
-const findAll = async (path) => {
-  const res = await fetch(`${path}`, {
-    method: "GET",
-    headers: createHeaders(),
-  });
-  return await res.json();
-};
-const create = async (path, body) => {
-  const res = await fetch(`${path}`, {
+
+const create = (path, body) =>
+  fetch(`${path}`, {
     method: "POST",
     headers: createHeaders(),
     body: JSON.stringify(body),
   });
-  return await res.json();
-};
-const updateById = async (path, id, body) =>
-  await fetch(`${path}/${id}`, {
+
+const updateById = (path, id, body) =>
+  fetch(`${path}/${id}`, {
     method: "PATCH",
     headers: createHeaders(),
     body: JSON.stringify(body),

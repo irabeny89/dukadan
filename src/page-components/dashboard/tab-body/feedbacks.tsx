@@ -30,16 +30,16 @@ export function Feedbacks({ query }: FeedbackPropsT) {
   const feedbacks = Feedback.findAll();
   if (!feedbacks.length) return renderNoFeedbackYet();
 
-  const data = feedbacks.map(
-    ({ id, updatedAt, userId, createdAt, ...rest }) => {
+  const data = feedbacks
+    .reverse()
+    .map(({ id, updatedAt, userId, createdAt, ...rest }) => {
       return {
         id,
         username: Customer.findById(userId)?.username,
         createdAt: new Date(createdAt ?? "").toLocaleString(),
         ...rest,
       };
-    },
-  );
+    });
 
   return (
     <div>

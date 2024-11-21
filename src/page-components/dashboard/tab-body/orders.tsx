@@ -64,18 +64,20 @@ export function Orders({
   const orders = Order.findAllByUserId(userId);
   if (!orders.length) return renderNoOrderYet();
 
-  const data = orders.map(
-    ({ id, updatedAt, userId, createdAt, deliveryFee, price, ...rest }) => {
-      return {
-        id,
-        username: Customer.findById(userId)?.username,
-        createdAt: new Date(createdAt ?? "").toLocaleString(),
-        deliveryFee: convertToNaira(deliveryFee),
-        price: convertToNaira(price),
-        ...rest,
-      };
-    },
-  );
+  const data = orders
+    .reverse()
+    .map(
+      ({ id, updatedAt, userId, createdAt, deliveryFee, price, ...rest }) => {
+        return {
+          id,
+          username: Customer.findById(userId)?.username,
+          createdAt: new Date(createdAt ?? "").toLocaleString(),
+          deliveryFee: convertToNaira(deliveryFee),
+          price: convertToNaira(price),
+          ...rest,
+        };
+      },
+    );
 
   const isCustomer = role === "customer";
   const isOwnerOrAdmin = ["owner", "admin"].includes(role);

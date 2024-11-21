@@ -8,12 +8,10 @@ const FeedbackForm = () => (
         required
         name="feedback-msg"
         placeholder="Enter message here..."
+        rows="5"
       />
       <button type="submit">send</button>
     </form>
-    <div id="feedback-response">
-      <p />
-    </div>
   </>
 );
 export function FeedbackOption() {
