@@ -4,12 +4,7 @@ import { db } from "../lib/db";
 import log from "../lib/logger";
 import { Customer } from "./customer.model";
 
-type OrderStatusT =
-	| "pending"
-	| "processing"
-	| "retrieving"
-	| "delivering"
-	| "completed";
+type OrderStatusT = "pending" | "processing" | "done";
 
 type OrderT = {
 	quantity: number;
@@ -20,13 +15,7 @@ type OrderT = {
 
 const setting = getSettings();
 
-export const orderStatusSchema = t.UnionEnum([
-	"pending",
-	"processing",
-	"retrieving",
-	"delivering",
-	"completed",
-]);
+export const orderStatusSchema = t.UnionEnum(["pending", "processing", "done"]);
 export const patchSchema = t.Object({
 	status: orderStatusSchema,
 });

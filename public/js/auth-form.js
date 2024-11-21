@@ -48,3 +48,11 @@ async function handleAuth(e) {
 
 loginForm.addEventListener("submit", handleAuth);
 signupForm.addEventListener("submit", handleAuth);
+
+document.getElementById("login-label").onclick = () => {
+  window.scroll({
+    top: 500,
+    left: 0,
+    behavior: "smooth",
+  });
+};
