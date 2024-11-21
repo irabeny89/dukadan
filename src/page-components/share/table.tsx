@@ -1,32 +1,34 @@
 import { Html } from "@elysiajs/html";
 import AddIcon from "./add-icon";
 import TrashIcon from "./trash-icon";
+import paginator from "../../lib/paginator";
+import { Customer } from "../../models/customer.model";
+import { convertToNaira, createTitleFromObjectKeys } from "../../utils";
 
 export type TablePropsT = {
+  data: object[];
   cssId: string;
   cssAddId?: string;
   cssDeleteId?: string;
   title: string;
-  page: number;
-  pageSize: number;
-  pageCount: number;
-  totalItems: number;
-  hasNextPage: boolean;
-  hasPrevPage: boolean;
-  headerTitles: JSX.Element[];
-  bodyRows: unknown[][];
+  page?: string;
+  pageSize?: string;
   allowDelete: boolean;
   allowAdd: boolean;
 };
 
-const renderHeaders = (title: JSX.Element, i: number) => (
-  <th key={title.toString()}>{title}</th>
+const renderHeaders = (title: string, i: number) => (
+  <th key={title.toString()} safe>
+    {title}
+  </th>
 );
-const renderRowData = (data: unknown, idx2: number) => (
-  <td key={idx2.toString()}>{data}</td>
+const renderRowData = (data: string, idx2: number) => (
+  <td key={idx2.toString()} safe>
+    {data}
+  </td>
 );
 const renderRows =
-  (page: number, pageSize: number) => (row: unknown[], idx: number) => {
+  (page: number, pageSize: number) => (row: string[], idx: number) => {
     const lastNumOfPrevPage = pageSize * (page - 1);
     const rowNum = 1 + idx + lastNumOfPrevPage;
     return (
@@ -49,7 +51,15 @@ const renderPagingNumbers = (page: number) => (_: unknown, index: number) => (
     {1 + index}
   </label>
 );
+
 export default function Table(props: TablePropsT) {
+  const { data, metadata } = paginator(props.data, {
+    page: +(props.page ?? 1),
+    pageSize: +(props.pageSize ?? 10),
+  });
+  const headerTitles = createTitleFromObjectKeys(data[0]);
+  const bodyRows = data.map(Object.values);
+
   return (
     <div id={props.cssId} class="card">
       <link rel="stylesheet" href="public/css/share/table.css" />
@@ -88,31 +98,35 @@ export default function Table(props: TablePropsT) {
           id="table_radio_0"
           checked
         />
-        <div class="table-display">Total: {props.totalItems}</div>
+        <div class="table-display">Total: {metadata.totalItems}</div>
         <table>
           <thead>
             <tr>
               <th> </th>
               <th>No</th>
-              {props.headerTitles.map(renderHeaders)}
+              {headerTitles.map(renderHeaders)}
             </tr>
           </thead>
           <tbody>
-            {props.bodyRows.map(renderRows(props.page, props.pageSize))}
+            {bodyRows.map(renderRows(metadata.page, metadata.pageSize))}
           </tbody>
         </table>
         <div class="pagination">
           <button
             type="button"
             id="previous-button"
-            disabled={!props.hasPrevPage}
+            disabled={!metadata.hasPrevPage}
           >
             &laquo; Previous
           </button>
-          {Array.from({ length: props.pageCount }).map(
-            renderPagingNumbers(props.page),
+          {Array.from({ length: metadata.pageCount }).map(
+            renderPagingNumbers(metadata.page),
           )}
-          <button type="button" id="next-button" disabled={!props.hasNextPage}>
+          <button
+            type="button"
+            id="next-button"
+            disabled={!metadata.hasNextPage}
+          >
             Next &raquo;
           </button>
         </div>

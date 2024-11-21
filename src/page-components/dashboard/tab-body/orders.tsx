@@ -56,7 +56,7 @@ const RefillStatusUpdate = () => {
   );
 };
 export function Orders({
-  query,
+  query: { tab, page, pagesize },
   store: {
     user: { userId, role },
   },
@@ -64,11 +64,7 @@ export function Orders({
   const orders = Order.findAllByUserId(userId);
   if (!orders.length) return renderNoOrderYet();
 
-  const { data, metadata } = paginator(orders, {
-    page: +(query.page ?? 1),
-    pageSize: +(query.pagesize ?? 10),
-  });
-  const tableOrders = data.map(
+  const data = orders.map(
     ({ id, updatedAt, userId, createdAt, deliveryFee, price, ...rest }) => {
       return {
         username: Customer.findById(userId)?.username,
@@ -79,8 +75,6 @@ export function Orders({
       };
     },
   );
-  const headerTitles: string[] = createTitleFromObjectKeys(tableOrders[0]);
-  const bodyRows = tableOrders.map(Object.values);
 
   const isCustomer = role === "customer";
   const isOwnerOrAdmin = ["owner", "admin"].includes(role);
@@ -112,14 +106,9 @@ export function Orders({
         title="Orders"
         cssId="order-table"
         cssAddId="order-add"
-        headerTitles={headerTitles}
-        bodyRows={bodyRows}
-        hasNextPage={metadata.hasNextPage}
-        hasPrevPage={metadata.hasPrevPage}
-        page={metadata.page}
-        pageCount={metadata.pageCount}
-        pageSize={metadata.pageSize}
-        totalItems={metadata.totalItems}
+        page={page}
+        pageSize={pagesize}
+        data={data}
         allowAdd={isCustomer}
         allowDelete={false}
       />

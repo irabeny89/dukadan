@@ -30,11 +30,7 @@ export function Feedbacks({ query }: FeedbackPropsT) {
   const feedbacks = Feedback.findAll();
   if (!feedbacks.length) return renderNoFeedbackYet();
 
-  const { data, metadata } = paginator(feedbacks, {
-    page: +(query.page ?? 1),
-    pageSize: +(query.pagesize ?? 10),
-  });
-  const tableFeedbacks = data.map(
+  const data = feedbacks.map(
     ({ id, updatedAt, userId, createdAt, ...rest }) => {
       return {
         username: Customer.findById(userId)?.username,
@@ -43,8 +39,6 @@ export function Feedbacks({ query }: FeedbackPropsT) {
       };
     },
   );
-  const headerTitles: string[] = createTitleFromObjectKeys(tableFeedbacks[0]);
-  const bodyRows = tableFeedbacks.map(Object.values);
 
   return (
     <div>
@@ -62,14 +56,9 @@ export function Feedbacks({ query }: FeedbackPropsT) {
         title="Feedbacks"
         cssId="feedback-table"
         cssAddId=""
-        headerTitles={headerTitles}
-        bodyRows={bodyRows}
-        hasNextPage={metadata.hasNextPage}
-        hasPrevPage={metadata.hasPrevPage}
-        page={metadata.page}
-        pageCount={metadata.pageCount}
-        pageSize={metadata.pageSize}
-        totalItems={metadata.totalItems}
+        data={data}
+        page={query.page}
+        pageSize={query.pagesize}
         allowAdd={false}
         allowDelete={false}
       />
