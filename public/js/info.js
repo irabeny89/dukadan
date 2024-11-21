@@ -13,51 +13,58 @@ const deliveryFeeDialogCloseBtn = document.getElementById(
   "delivery-fee-dialog-close-btn",
 );
 
-gasPriceDialog.onclick = (e) => {
-  const rect = gasPriceDialog.getBoundingClientRect();
-  const isInDialog =
-    rect.top <= e.clientY &&
-    e.clientY <= rect.top + rect.height &&
-    rect.left <= e.clientX &&
-    e.clientX <= rect.left + rect.width;
+if (gasPriceDialog)
+  gasPriceDialog.onclick = (e) => {
+    const rect = gasPriceDialog.getBoundingClientRect();
+    const isInDialog =
+      rect.top <= e.clientY &&
+      e.clientY <= rect.top + rect.height &&
+      rect.left <= e.clientX &&
+      e.clientX <= rect.left + rect.width;
 
-  if (!isInDialog) {
-    gasPriceDialog.close();
-  }
-};
+    if (!isInDialog) {
+      gasPriceDialog.close();
+    }
+  };
 
 document.onclick = (e) => {
   if (e.target === deliveryFeeDialog) deliveryFeeDialog.close();
 };
 
-gasPriceDialogCloseBtn.onclick = () => {
-  gasPriceDialog.close();
-};
+if (gasPriceDialogCloseBtn)
+  gasPriceDialogCloseBtn.onclick = () => {
+    gasPriceDialog.close();
+  };
 
 gasPriceBtn.onclick = () => {
   gasPriceDialog.showModal();
 };
 
-gasPriceForm.onsubmit = async (e) => {
-  e.preventDefault();
-  const pricePerKg = Number(new FormData(gasPriceForm).get("pricePerKg"));
-  const res = await apiClient.setting.update({ pricePerKg });
-  if (res.ok) window.location.reload();
-  else alert("Something went wrong. Try again or contact support.");
-};
+if (gasPriceForm)
+  gasPriceForm.onsubmit = async (e) => {
+    e.preventDefault();
+    const pricePerKg = Number(new FormData(gasPriceForm).get("pricePerKg"));
+    const res = await apiClient.setting.update({ pricePerKg });
+    if (res.ok) window.location.reload();
+    else alert("Something went wrong. Try again or contact support.");
+  };
 
-deliveryFeeDialogCloseBtn.onclick = () => {
-  deliveryFeeDialog.close();
-};
+if (deliveryFeeDialogCloseBtn)
+  deliveryFeeDialogCloseBtn.onclick = () => {
+    deliveryFeeDialog.close();
+  };
 
 deliveryFeeBtn.onclick = () => {
   deliveryFeeDialog.showModal();
 };
 
-deliveryFeeForm.onsubmit = async (e) => {
-  e.preventDefault();
-  const deliveryFee = Number(new FormData(deliveryFeeForm).get("deliveryFee"));
-  const res = await apiClient.setting.update({ deliveryFee });
-  if (res.ok) window.location.reload();
-  else alert("Something went wrong. Try again or contact support.");
-};
+if (deliveryFeeForm)
+  deliveryFeeForm.onsubmit = async (e) => {
+    e.preventDefault();
+    const deliveryFee = Number(
+      new FormData(deliveryFeeForm).get("deliveryFee"),
+    );
+    const res = await apiClient.setting.update({ deliveryFee });
+    if (res.ok) window.location.reload();
+    else alert("Something went wrong. Try again or contact support.");
+  };
