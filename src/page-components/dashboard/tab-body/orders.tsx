@@ -67,13 +67,33 @@ export function Orders({
   const data = orders
     .reverse()
     .map(
-      ({ id, updatedAt, userId, createdAt, deliveryFee, price, ...rest }) => {
+      ({
+        id,
+        updatedAt,
+        userId,
+        createdAt,
+        pricePerKg,
+        deliveryFee,
+        price,
+        status,
+        quantity,
+        cylinderUnit,
+        address,
+        phone,
+        ...rest
+      }) => {
         return {
           id,
-          username: Customer.findById(userId)?.username,
           createdAt: new Date(createdAt ?? "").toLocaleString(),
-          deliveryFee: convertToNaira(deliveryFee),
+          status,
+          cylinderUnit,
+          quantity,
+          pricePerKg: convertToNaira(pricePerKg),
           price: convertToNaira(price),
+          deliveryFee: convertToNaira(deliveryFee),
+          address,
+          phone,
+          username: Customer.findById(userId)?.username,
           ...rest,
         };
       },
