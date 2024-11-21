@@ -1,23 +1,38 @@
 import { DASHBOARD_ORDER_TAB_LINK, apiClient } from "./utils.js";
 
 const LOGIN_FORM_ID = "login-form";
+const SIGNUP_FORM_ID = "signup-form";
+
+const loginForm = document.getElementById(LOGIN_FORM_ID);
+const signupForm = document.getElementById(SIGNUP_FORM_ID);
 
 const searchParams = new URLSearchParams(window.location.search);
 
-async function handleLogin(e, form) {
+async function handleAuth(e) {
   e.preventDefault();
-  const submit = document.getElementById("login-btn");
+
+  const submit = document.querySelector("button");
   // disable submit button to disallow multiple clicks
   submit.disabled = true;
-  // extract input data from form
-  const data = Object.fromEntries(new FormData(form));
-  const apiMap = {
-    customer: apiClient.auth.loginCustomer,
-    owner: apiClient.auth.loginOwner,
-    admin: apiClient.auth.loginAdmin,
-    driver: apiClient.auth.loginDriver,
-  };
+  // extract input data from form element
+  const data = Object.fromEntries(new FormData(e.target));
   const role = searchParams.get("role");
+
+  const apiMap =
+    e.target.id === LOGIN_FORM_ID
+      ? {
+          customer: apiClient.auth.loginCustomer,
+          owner: apiClient.auth.loginOwner,
+          admin: apiClient.auth.loginAdmin,
+          driver: apiClient.auth.loginDriver,
+        }
+      : {
+          customer: apiClient.auth.signupCustomer,
+          owner: apiClient.auth.signupOwner,
+          admin: apiClient.auth.signupAdmin,
+          driver: apiClient.auth.signupDriver,
+        };
+
   const reqPromise =
     role in apiMap ? apiMap[role](data) : apiMap.customer(data);
   const res = await reqPromise;
@@ -27,10 +42,9 @@ async function handleLogin(e, form) {
   else {
     // on failure
     submit.disabled = false;
-    alert(res.statusText);
+    alert("Something went wrong. Contact support.");
   }
 }
 
-const form = document.getElementById(LOGIN_FORM_ID);
-if (form) form.addEventListener("submit", (e) => handleLogin(e, form));
-else console.log("form with id '%s' not found", LOGIN_FORM_ID);
+loginForm.addEventListener("submit", handleAuth);
+signupForm.addEventListener("submit", handleAuth);
