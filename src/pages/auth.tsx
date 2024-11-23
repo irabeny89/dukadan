@@ -31,7 +31,7 @@ export default function AuthPage() {
             </u>
           </div>
           <div id="scroll-tip" class="pulsate-bck">
-            scroll down <br />
+            scroll <br />
             &#8595;
           </div>
         </section>
@@ -41,7 +41,7 @@ export default function AuthPage() {
             <LoginForm />
           </div>
           <div id="scroll-tip" class="pulsate-bck">
-            scroll down <br />
+            scroll <br />
             &#8595;
           </div>
         </section>

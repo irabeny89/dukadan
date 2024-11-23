@@ -51,7 +51,7 @@ signupForm.addEventListener("submit", handleAuth);
 
 document.getElementById("login-label").onclick = () => {
   window.scroll({
-    top: 500,
+    top: 550,
     left: 0,
     behavior: "smooth",
   });
