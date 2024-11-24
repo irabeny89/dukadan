@@ -1,5 +1,4 @@
 import { Html } from "@elysiajs/html";
-import paginator from "../../lib/paginator";
 import { createTitleFromObjectKeys } from "../../utils";
 import AddIcon from "./add-icon";
 import TrashIcon from "./trash-icon";

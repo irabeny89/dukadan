@@ -1,9 +1,8 @@
 import { Html } from "@elysiajs/html";
-import paginator from "../../../lib/paginator";
 import { Customer } from "../../../models/customer.model";
 import { Order } from "../../../models/order.model";
 import type { QueryT, StoreT } from "../../../pages/dashboard";
-import { convertToNaira, createTitleFromObjectKeys } from "../../../utils";
+import { convertToNaira } from "../../../utils";
 import AddIcon from "../../share/add-icon";
 import Modal from "../../share/modal";
 import { OrderCreateForm } from "../../share/order-create";
@@ -36,7 +35,6 @@ export function Orders({
   },
 }: OrderPropsT) {
   const isCustomer = role === "customer";
-  const isOwnerOrAdmin = ["owner", "admin"].includes(role);
 
   const updatedQuery = {
     ...query,
@@ -95,7 +93,7 @@ export function Orders({
           <OrderCreateForm />
         </Modal>
       )}
-      {isOwnerOrAdmin && (
+      {role !== "driver" && (
         <Modal
           title="Update Status"
           id="refill-status-dialog"

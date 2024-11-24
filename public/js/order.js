@@ -1,6 +1,5 @@
 import { apiClient } from "./utils.js";
 
-const pendingStatusBtn = document.getElementById("pending-status-btn");
 const processingStatusBtn = document.getElementById("processing-status-btn");
 const doneStatusBtn = document.getElementById("done-status-btn");
 const addOrderBtn = document.getElementById("order-add");
@@ -19,11 +18,11 @@ const handleStatusChange = async (id, status) => {
     window.location.reload();
   } else alert("Something went wrong. Contact support.");
 };
-if (pendingStatusBtn || processingStatusBtn || doneStatusBtn) {
-  pendingStatusBtn.onclick = () =>
-    handleStatusChange(selectedRowDataId, "pending");
+if (processingStatusBtn) {
   processingStatusBtn.onclick = () =>
     handleStatusChange(selectedRowDataId, "processing");
+}
+if (doneStatusBtn) {
   doneStatusBtn.onclick = () => handleStatusChange(selectedRowDataId, "done");
 }
 
@@ -33,11 +32,11 @@ allTr.forEach((tr) => {
     // set data id from the table role data to refill dialog
     selectedRowDataId = tr.dataset.id;
 
-    const status = tr.querySelector("[key='1']").textContent;
-    const address = tr.querySelector("[key='7']").textContent;
+    const status = tr.querySelector("[key='2']").textContent;
+    const address = tr.querySelector("[key='8']").textContent;
     const cylinderSize =
-      tr.querySelector("[key='3']").textContent +
-      tr.querySelector("[key='2']").textContent;
+      tr.querySelector("[key='4']").textContent +
+      tr.querySelector("[key='3']").textContent;
 
     document.getElementById("customer-address").textContent = address;
     document.getElementById("cylinder-size").textContent = cylinderSize;

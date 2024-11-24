@@ -14,8 +14,8 @@ document.onclick = (e) => {
 
 allTr.forEach((tr) => {
   tr.onclick = () => {
-    const msg = tr.querySelector("[key='2']").textContent;
-    const createdAt = tr.querySelector("[key='1']").textContent;
+    const msg = tr.querySelector("[key='3']").textContent;
+    const createdAt = tr.querySelector("[key='2']").textContent;
     document.getElementById("message").textContent = msg;
     document.getElementById("createdAt").textContent = createdAt;
 
