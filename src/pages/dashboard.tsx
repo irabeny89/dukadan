@@ -37,7 +37,7 @@ export default function DashboardPage({ query, store }: PropsT) {
     <html lang="en">
       <Head
         heads={[
-          <title key="1">Dukadan | Dashboard</title>,
+          <title key="1">GasRefill | Dashboard</title>,
           <link key="2" rel="stylesheet" href="public/css/global.css" />,
           <link key="3" rel="stylesheet" href="public/css/dashboard.css" />,
         ]}

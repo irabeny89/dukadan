@@ -1,9 +1,9 @@
-# Dukadan
+# GasRefill
 
-Dukadan Oil and Gas Nig Ltd online service.
+GasRefill Oil and Gas Nig Ltd online service.
 
 Table Of Content
-- [Dukadan](#dukadan)
+- [GasRefill](#gasrefill)
   - [Getting Started](#getting-started)
   - [Development](#development)
   - [Database](#database)

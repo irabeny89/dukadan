@@ -17,7 +17,7 @@ export default function AuthPage() {
           />,
           <link key="2" rel="stylesheet" href="public/css/auth.css" />,
           <script key="3" type="module" src="public/js/auth-form.js" />,
-          <title key="4">Dukadan | Auth</title>,
+          <title key="4">GasRefill | Auth</title>,
         ]}
       />
 
