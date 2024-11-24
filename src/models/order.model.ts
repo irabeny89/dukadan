@@ -7,8 +7,6 @@ import type { PageQueryT } from "../types";
 import {
   convertValuesToNaira,
   createMetadata,
-  createSqlForPaging,
-  createSqlForPagingWhereId,
   preparePageQuery,
   snakeCaseToCamelCase,
 } from "../utils";
