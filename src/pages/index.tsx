@@ -26,12 +26,12 @@ export default function HomePage() {
               Introducing GasRefill - Your One-Stop Solution for Cooking Gas
               Refills
             </h1>
-            <cite>
+            <p>
               Are you tired of waiting in long queues or making endless phone
               calls to order a cooking gas refill? Look no further! GasRefill is
               an innovative online platform designed to make ordering cooking
               gas refills a breeze.
-            </cite>
+            </p>
             <a href={AUTH_PAGE_LINK}>
               <button id="get-started-btn" class="glow-anim" type="button">
                 Get Cooking Gas Today!
@@ -48,12 +48,12 @@ export default function HomePage() {
           <div id="what-we-offer" class="fixed wide">
             <h2>What We Offer</h2>
             <h3>1. Streamlined Ordering and Management</h3>
-            <cite>
+            <p>
               With GasRefill, customers can easily place orders online and track
               their status in real-time. Our platform provides a seamless
               experience, ensuring that your gas refills are delivered promptly
               and efficiently.
-            </cite>
+            </p>
           </div>
         </section>
 
@@ -61,12 +61,12 @@ export default function HomePage() {
           <div id="what-we-offer" class="fixed wide">
             <h2>What We Offer</h2>
             <h3>2. Order Tracking and Management</h3>
-            <cite>
+            <p>
               GasRefill provides real-time order tracking, enabling customers to
               stay informed about the status of their orders. Our platform also
               allows admins and owners to manage orders efficiently, ensuring
               timely delivery and minimizing delays.
-            </cite>
+            </p>
           </div>
         </section>
 
@@ -74,12 +74,12 @@ export default function HomePage() {
           <div id="what-we-offer" class="fixed wide">
             <h2>What We Offer</h2>
             <h3>3. Feedback Management for Continuous Improvement</h3>
-            <cite>
+            <p>
               At GasRefill, we value your feedback and use it to continuously
               improve our services. Our platform allows customers to provide
               feedback on their experience, helping us refine our services to
               meet your evolving needs.
-            </cite>
+            </p>
           </div>
         </section>
 
@@ -116,12 +116,12 @@ export default function HomePage() {
         <section class="section">
           <div class="fixed white wide">
             <h2>Experience the Convenience of GasRefill Today!</h2>
-            <cite>
+            <p>
               Sign up for GasRefill today and discover a hassle-free way to
               order cooking gas refills online. Our platform is designed to save
               you time, effort, and frustration, ensuring that you can focus on
               what matters most - enjoying delicious meals with your loved ones!
-            </cite>
+            </p>
             <p>Contact us: 080 XXXX XXXX | info@dukadan.com</p>
             <a href={AUTH_PAGE_LINK}>
               <button id="get-started-btn" class="heartbeat" type="button">

@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Averia+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
 
 :root {
     --pry-clr: #0b0a78;
@@ -13,9 +14,16 @@
 * {
     box-sizing: border-box;
     outline: none;
+    font-family: "Averia Libre", system-ui;
+    font-style: normal;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
     font-family: "DM Serif Text", serif;
 }
-
 .pulsate-bck {
     animation: pulsate-bck 1s ease-in-out infinite both;
 }
@@ -36,9 +44,7 @@ body {
     background: #222;
     padding: 0;
     margin: 0;
-    font-weight: 300;
-    font-size: 13px;
-    text-transform: uppercase;
+    font-size: 1rem;
     color: #000;
 }
 
@@ -79,10 +85,15 @@ header h1 {
 }
 
 .section:nth-child(1) {
-    background-color: #fff;
-    color: #000;
+    background-color: rgba(100, 50, 0, 0.7);
+    color: white;
     top: 0;
     z-index: 1;
+    background-image: url("../assets/pic3.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-blend-mode: darken;
 }
 .section:nth-child(1) .fixed {
     transform: translate(-50%, -50%);
@@ -90,10 +101,15 @@ header h1 {
 
 .section:nth-child(2) {
     box-shadow: inset 0 1px 80px rgba(0, 0, 0, 0.14);
-    background-color: var(--sec-clr);
-    color: #fff;
+    background-color: rgba(30, 0, 0, 0.7);
+    color: white;
     top: 100vh;
     z-index: 2;
+    background-image: url("../assets/pic4.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-blend-mode: darken;
 }
 .section:nth-child(2) .fixed {
     transform: translate(-50%, -50%);
@@ -101,10 +117,15 @@ header h1 {
 
 .section:nth-child(3) {
     box-shadow: inset 0 1px 80px rgba(0, 0, 0, 0.14);
-    background-color: #0a0ac2;
-    color: #fff;
+    background-color: rgba(30, 0, 0, 0.7);
+    color: white;
     top: 200vh;
     z-index: 3;
+    background-image: url("../assets/pic4.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-blend-mode: darken;
 }
 .section:nth-child(3) .fixed {
     transform: translate(-50%, -50%);
@@ -112,10 +133,15 @@ header h1 {
 
 .section:nth-child(4) {
     box-shadow: inset 0 1px 80px rgba(0, 0, 0, 0.14);
-    background-color: #fff;
-    color: var(--pry-clr);
+    background-color: rgba(30, 0, 0, 0.7);
+    color: white;
     top: 300vh;
     z-index: 4;
+    background-image: url("../assets/pic4.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-blend-mode: darken;
 }
 .section:nth-child(4) .fixed {
     transform: translate(-50%, -50%);
@@ -123,10 +149,15 @@ header h1 {
 
 .section:nth-child(5) {
     box-shadow: inset 0 1px 80px rgba(0, 0, 0, 0.14);
-    background-color: var(--sec-clr);
-    color: #fff;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
     top: 400vh;
     z-index: 5;
+    background-image: url("../assets/pic1.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-blend-mode: darken;
 }
 .section:nth-child(5) .fixed {
     transform: translate(-50%, -50%);
@@ -134,10 +165,15 @@ header h1 {
 
 .section:nth-child(6) {
     box-shadow: inset 0 1px 80px rgba(0, 0, 0, 0.14);
-    background-color: darkblue;
-    color: #fff;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
     top: 500vh;
     z-index: 6;
+    background-image: url("../assets/hero-image.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-blend-mode: darken;
 }
 .section:nth-child(6) .fixed {
     transform: translate(-50%, -50%);
@@ -145,10 +181,15 @@ header h1 {
 
 .section:nth-child(7) {
     box-shadow: inset 0 1px 80px rgba(0, 0, 0, 0.14);
-    background-color: #c20a85;
+    background-color: rgba(0, 0, 0, 0.7);
     color: #fff;
     top: 600vh;
     z-index: 7;
+    background-image: url("../assets/pic5.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-blend-mode: darken;
 }
 .section:nth-child(7) .fixed {
     transform: translate(-50%, -50%);
