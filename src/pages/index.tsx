@@ -122,7 +122,7 @@ export default function HomePage() {
               you time, effort, and frustration, ensuring that you can focus on
               what matters most - enjoying delicious meals with your loved ones!
             </p>
-            <p>Contact us: 080 XXXX XXXX | info@dukadan.com</p>
+            <p>Contact us: 080 XXXX XXXX | info@gasrefill.com</p>
             <a href={AUTH_PAGE_LINK}>
               <button id="get-started-btn" class="heartbeat" type="button">
                 Get Started

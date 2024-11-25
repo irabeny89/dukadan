@@ -33,7 +33,7 @@ export const getSettings = () => {
     pricePerKg: envVar.pricePerKg,
   };
 
-  const _setting = Setting.findAll();
+  const { data: _setting } = Setting.findAll();
   // if settings already exist on db then update default
   if (_setting.length) {
     const { deliveryFee, maxAdmin, maxDriver, maxOwner, pricePerKg } =
